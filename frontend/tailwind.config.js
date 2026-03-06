@@ -1,14 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: "class",
-  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       fontFamily: {
-        serifDisplay: ['"Playfair Display"', 'serif'], // For headings like "Experience"
-        sansUI: ['Inter', 'sans-serif'],               // For inputs, nav, buttons
+        heading: ["Playfair Display", "serif"],
+        body: ["Inter", "sans-serif"],
       },
     },
   },
   plugins: [],
-}
+};

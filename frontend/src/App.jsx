@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -8,8 +9,10 @@ import InfoSection from "./components/InfoSection";
 import Features from "./components/Features";
 import Footer from "./components/Footer";
 
-function App() {
+import PaymentPage from "./pages/PaymentPage";
+import TicketPage from "./pages/TicketPage";
 
+function App() {
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -19,16 +22,31 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-500">
-
+      
       <Navbar />
 
-      <Hero />
+      <Routes>
+        
+        {/* Home Page */}
+        <Route
+          path="/"
+          element={
+            <>
+              <Hero />
+              <InfoSection />
+              <Features />
+              <Footer />
+            </>
+          }
+        />
 
-      <InfoSection />
+        {/* Payment Page */}
+        <Route path="/payment" element={<PaymentPage />} />
 
-      <Features />
+        {/* Ticket Page */}
+        <Route path="/ticket" element={<TicketPage />} />
 
-      <Footer />
+      </Routes>
 
     </div>
   );
