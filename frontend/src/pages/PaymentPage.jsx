@@ -3,19 +3,35 @@ import Navbar from "../components/Navbar";
 import BookingSummary from "../components/BookingSummary";
 import PaymentMethods from "../components/PaymentMethods";
 import PayButton from "../components/PayButton";
+import AIChatBubble from "../components/AIChatBubble";
+import AIVerification from "../components/AIVerification";
+import AIStatusBar from "../components/AIStatusBar";
+import AIPaymentRecovery from "../components/AIPaymentRecovery";
 
 const PaymentPage = () => {
 
   const [selectedMethod, setSelectedMethod] = useState("upi");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentFailed, setPaymentFailed] = useState(false);
 
   const handlePayment = () => {
+
   setIsProcessing(true);
 
   setTimeout(() => {
-    window.location.href = "/ticket";
+
+    const failed = true; // simulate failure
+
+    if (failed) {
+      setPaymentFailed(true);
+      setIsProcessing(false);
+    } else {
+      window.location.href = "/ticket";
+    }
+
   }, 2000);
 };
+
 
   return (
     <>
@@ -35,6 +51,7 @@ const PaymentPage = () => {
                 Booking.
               </span>
             </h1>
+            <AIChatBubble />
 
             {/* LABEL */}
             <p className="font-sans text-xs uppercase tracking-[0.35em] text-neutral-400 mb-6">
@@ -45,7 +62,7 @@ const PaymentPage = () => {
               selected={selectedMethod}
               onSelect={setSelectedMethod}
             />
-
+            <AIVerification active={isProcessing} />
             <div className="mt-10">
               <PayButton
                 onClick={handlePayment}
@@ -53,6 +70,12 @@ const PaymentPage = () => {
                 amount="₹400.00"
               />
             </div>
+            <AIStatusBar active={isProcessing} />
+            <AIPaymentRecovery
+  visible={paymentFailed}
+  failedMethod={selectedMethod}
+  suggestion="UPI"
+/>
 
           </div>
 
