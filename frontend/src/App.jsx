@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -10,12 +9,14 @@ import InfoSection from "./components/InfoSection";
 import Features from "./components/Features";
 import Footer from "./components/Footer";
 
-import PaymentPage from "./pages/PaymentPage";
-import TicketPage from "./pages/TicketPage";
+import Dashboard from "./pages/Dashboard";
 import Explore from "./pages/Explore";
 import BookTicket from "./pages/BookTicket";
+import PaymentPage from "./pages/PaymentPage";
+import TicketPage from "./pages/TicketPage";
 
 function App() {
+
   const location = useLocation();
 
   useEffect(() => {
@@ -24,15 +25,20 @@ function App() {
       once: true,
     });
   }, []);
-  
+
+  useEffect(() => {
+    AOS.refresh();
+  }, [location]);
+
   return (
     <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-500">
-      
+
+      {/* Hide Navbar on Explore page */}
       {location.pathname !== "/explore" && <Navbar />}
 
       <Routes>
-        
-        {/* Home Page */}
+
+        {/* Landing Page */}
         <Route
           path="/"
           element={
@@ -40,21 +46,29 @@ function App() {
               <Hero />
               <InfoSection />
               <Features />
-              <Footer />
             </>
           }
         />
 
-        {/* Payment Page */}
-        <Route path="/payment" element={<PaymentPage />} />
+        {/* Dashboard */}
+        <Route path="/dashboard" element={<Dashboard />} />
 
-        {/* Ticket Page */}
-        <Route path="/ticket" element={<TicketPage />} />
-
+        {/* Explore Museums */}
         <Route path="/explore" element={<Explore />} />
 
+        {/* Book Ticket */}
         <Route path="/book" element={<BookTicket />} />
+
+        {/* Payment */}
+        <Route path="/payment" element={<PaymentPage />} />
+
+        {/* Ticket */}
+        <Route path="/ticket" element={<TicketPage />} />
+
       </Routes>
+
+      {/* Hide Footer on Explore */}
+      {location.pathname !== "/explore" && <Footer />}
 
     </div>
   );
