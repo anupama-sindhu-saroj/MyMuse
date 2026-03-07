@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -11,19 +12,23 @@ import Footer from "./components/Footer";
 
 import PaymentPage from "./pages/PaymentPage";
 import TicketPage from "./pages/TicketPage";
+import Explore from "./pages/Explore";
+import BookTicket from "./pages/BookTicket";
 
 function App() {
+  const location = useLocation();
+
   useEffect(() => {
     AOS.init({
       duration: 1000,
       once: true,
     });
   }, []);
-
+  
   return (
     <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-500">
       
-      <Navbar />
+      {location.pathname !== "/explore" && <Navbar />}
 
       <Routes>
         
@@ -46,6 +51,9 @@ function App() {
         {/* Ticket Page */}
         <Route path="/ticket" element={<TicketPage />} />
 
+        <Route path="/explore" element={<Explore />} />
+
+        <Route path="/book" element={<BookTicket />} />
       </Routes>
 
     </div>
