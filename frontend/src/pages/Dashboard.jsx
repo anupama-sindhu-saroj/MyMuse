@@ -10,10 +10,13 @@ function Dashboard() {
 
       <div className="wrapper">
 
-        <h1 className="eyecatcher animate">
-          The world's <b>greatest</b> legacies,<br />
-          preserved for your <i>private</i> viewing.
-        </h1>
+   <h1 className="font-serif text-5xl md:text-6xl leading-tight mb-12 animate">
+  The world's greatest legacies,<br />
+
+  <span className="text-neutral-400 dark:text-neutral-500">
+    preserved for your private viewing.
+  </span>
+</h1>
 
         <div className="stats-container animate" style={{ animationDelay: "0.2s" }}>
 
