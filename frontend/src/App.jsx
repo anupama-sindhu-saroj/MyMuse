@@ -8,13 +8,13 @@ import Hero from "./components/Hero";
 import InfoSection from "./components/InfoSection";
 import Features from "./components/Features";
 import Footer from "./components/Footer";
-
+import UserAuth from "./pages/user/UserAuth";
+import UserForgotPassword from "./pages/user/UserForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import Explore from "./pages/Explore";
 import BookTicket from "./pages/BookTicket";
 import PaymentPage from "./pages/PaymentPage";
 import TicketPage from "./pages/TicketPage";
-
 function App() {
 
   const location = useLocation();
@@ -48,7 +48,8 @@ function App() {
             </>
           }
         />
-
+       <Route path="/userauth" element={<UserAuth />} />
+       <Route path="/user-forgot-password" element={<UserForgotPassword />} />
         {/* Dashboard */}
         <Route path="/dashboard" element={<Dashboard />} />
 
