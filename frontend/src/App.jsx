@@ -8,7 +8,7 @@ import Hero from "./components/Hero";
 import InfoSection from "./components/InfoSection";
 import Features from "./components/Features";
 import Footer from "./components/Footer";
-
+import AdminGateway from "./pages/AdminGateway";
 import Dashboard from "./pages/Dashboard";
 import Explore from "./pages/Explore";
 import BookTicket from "./pages/BookTicket";
@@ -51,6 +51,7 @@ function App() {
 
         {/* Dashboard */}
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin" element={<AdminGateway />} />
 
         {/* Explore Museums */}
         <Route path="/explore" element={<Explore />} />
