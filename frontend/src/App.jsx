@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
-
+import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import InfoSection from "./components/InfoSection";
@@ -31,14 +31,13 @@ function App() {
   }, [location]);
 
   return (
+    <ThemeProvider>
     <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-500">
 
-      {/* Hide Navbar on Explore page */}
-      {location.pathname !== "/explore" && <Navbar />}
+    {location.pathname !== "/explore" && location.pathname !== "/book" && <Navbar />}
 
       <Routes>
 
-        {/* Landing Page */}
         <Route
           path="/"
           element={
@@ -66,11 +65,10 @@ function App() {
         <Route path="/ticket" element={<TicketPage />} />
 
       </Routes>
-
-      {/* Hide Footer on Explore */}
-      {location.pathname !== "/explore" && <Footer />}
+      <Footer />
 
     </div>
+    </ThemeProvider>
   );
 }
 
