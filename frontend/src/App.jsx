@@ -10,6 +10,7 @@ import Features from "./components/Features";
 import Footer from "./components/Footer";
 import UserAuth from "./pages/user/UserAuth";
 import UserForgotPassword from "./pages/user/UserForgotPassword";
+import AdminGateway from "./pages/AdminGateway";
 import Dashboard from "./pages/Dashboard";
 import Explore from "./pages/Explore";
 import BookTicket from "./pages/BookTicket";
@@ -52,6 +53,7 @@ function App() {
        <Route path="/user-forgot-password" element={<UserForgotPassword />} />
         {/* Dashboard */}
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin" element={<AdminGateway />} />
 
         {/* Explore Museums */}
         <Route path="/explore" element={<Explore />} />
