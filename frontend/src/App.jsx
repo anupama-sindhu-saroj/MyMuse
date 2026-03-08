@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { ThemeProvider } from "./context/ThemeContext";
@@ -19,10 +19,13 @@ import TicketPage from "./pages/TicketPage";
 import MuseumSignup from "./pages/MuseumSignup";
 import MuseumLogin from "./pages/MuseumLogin";
 import MuseumForgotPassword from "./pages/MuseumForgotPassword";
+
 function App() {
 
   const location = useLocation();
+  const navigate = useNavigate();
 
+  // AOS animation
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -34,48 +37,76 @@ function App() {
     AOS.refresh();
   }, [location]);
 
+  // 🔐 Hidden Admin Shortcut (Ctrl + Shift + A)
+  useEffect(() => {
+
+    const handleShortcut = (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "a") {
+        e.preventDefault();
+        navigate("/admin");
+      }
+    };
+
+    window.addEventListener("keydown", handleShortcut);
+
+    return () => {
+      window.removeEventListener("keydown", handleShortcut);
+    };
+
+  }, [navigate]);
+
   return (
     <ThemeProvider>
-    <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-500">
+      <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-500">
 
-    {location.pathname !== "/explore" && location.pathname !== "/book" && <Navbar />}
+        {location.pathname !== "/explore" &&
+         location.pathname !== "/book" && <Navbar />}
 
-      <Routes>
+        <Routes>
 
-        <Route
-          path="/"
-          element={
-            <>
-              <Hero />
-              <InfoSection />
-              <Features />
-            </>
-          }
-        />
-       <Route path="/userauth" element={<UserAuth />} />
-       <Route path="/user-forgot-password" element={<UserForgotPassword />} />
-        {/* Dashboard */}
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/admin" element={<AdminGateway />} />
+          <Route
+            path="/"
+            element={
+              <>
+                <Hero />
+                <InfoSection />
+                <Features />
+              </>
+            }
+          />
 
-        {/* Explore Museums */}
-        <Route path="/explore" element={<Explore />} />
+          <Route path="/userauth" element={<UserAuth />} />
+          <Route path="/user-forgot-password" element={<UserForgotPassword />} />
 
-        {/* Book Ticket */}
-        <Route path="/book" element={<BookTicket />} />
+          {/* Dashboard */}
+          <Route path="/dashboard" element={<Dashboard />} />
 
-        {/* Payment */}
-        <Route path="/payment" element={<PaymentPage />} />
+          {/* Hidden Admin */}
+          <Route path="/admin" element={<AdminGateway />} />
 
-        {/* Ticket */}
-        <Route path="/ticket" element={<TicketPage />} />
-        <Route path="/museum-signup" element={<MuseumSignup />} />
-        <Route path="/museum-login" element={<MuseumLogin />} />
-        <Route path="/museum-forgot-password" element={<MuseumForgotPassword />} />
-      </Routes>
-      {location.pathname !== "/museum-signup" && location.pathname !== "/museum-login" && location.pathname !== "/museum-forgot-password" && <Footer />}
+          {/* Explore Museums */}
+          <Route path="/explore" element={<Explore />} />
 
-    </div>
+          {/* Book Ticket */}
+          <Route path="/book" element={<BookTicket />} />
+
+          {/* Payment */}
+          <Route path="/payment" element={<PaymentPage />} />
+
+          {/* Ticket */}
+          <Route path="/ticket" element={<TicketPage />} />
+
+          <Route path="/museum-signup" element={<MuseumSignup />} />
+          <Route path="/museum-login" element={<MuseumLogin />} />
+          <Route path="/museum-forgot-password" element={<MuseumForgotPassword />} />
+
+        </Routes>
+
+        {location.pathname !== "/museum-signup" &&
+         location.pathname !== "/museum-login" &&
+         location.pathname !== "/museum-forgot-password" && <Footer />}
+
+      </div>
     </ThemeProvider>
   );
 }

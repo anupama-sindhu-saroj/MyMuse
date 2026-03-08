@@ -5,52 +5,46 @@ import Logo from "./Logo";
 import { ThemeContext } from "../context/ThemeContext";
 
 const Navbar = ({ minimal = false }) => {
+
   const location = useLocation();
   const isHomePage = location.pathname === "/";
-
   const { darkMode, setDarkMode } = useContext(ThemeContext);
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 
-    bg-white text-black 
-    dark:bg-black dark:text-white
-    border-b border-neutral-200 dark:border-neutral-800">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-white text-black dark:bg-black dark:text-white border-b border-neutral-200 dark:border-neutral-800">
 
       <div
-        className={`w-full max-w-[1400px] mx-auto px-10 h-20 flex items-center 
-        ${minimal ? "justify-end" : "justify-between"}`}
+        className={`w-full max-w-[1400px] mx-auto px-10 h-20 flex items-center ${
+          minimal ? "justify-end" : "justify-between"
+        }`}
       >
 
-        {/* Logo (Hidden in minimal mode) */}
+        {/* Logo */}
         {!minimal && <Logo />}
 
         {/* Right Side */}
         <div className="flex items-center gap-4">
 
-          {/* Buttons only on homepage and not minimal */}
+          {/* Buttons only on homepage */}
           {!minimal && isHomePage && (
             <>
-              <Link to="/login">
-                <button className="px-4 py-2 text-sm border border-neutral-300 dark:border-neutral-700 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition">
-                  Login
+              {/* USER LOGIN / SIGNUP */}
+              <Link to="/userauth">
+                <button className="px-5 py-2 text-sm border border-neutral-300 dark:border-neutral-700 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition">
+                  User Login / Sign Up
                 </button>
               </Link>
 
-              <Link to="/signup">
-                <button className="px-4 py-2 text-sm bg-black text-white dark:bg-white dark:text-black rounded-lg hover:opacity-80 transition">
-                  Sign Up
-                </button>
-              </Link>
-
-              <Link to="/admin-login">
-                <button className="px-4 py-2 text-sm border border-neutral-400 dark:border-neutral-600 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition">
-                  Admin
+              {/* MUSEUM LOGIN / SIGNUP */}
+              <Link to="/museum-login">
+                <button className="px-5 py-2 text-sm bg-black text-white dark:bg-white dark:text-black rounded-lg hover:opacity-80 transition">
+                  Museum Login / Sign Up
                 </button>
               </Link>
             </>
           )}
 
-          {/* Dark / Light Toggle */}
+          {/* Dark Mode Toggle */}
           <button
             onClick={() => setDarkMode(!darkMode)}
             className="p-2 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-700 transition"
