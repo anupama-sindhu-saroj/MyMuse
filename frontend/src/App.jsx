@@ -16,6 +16,9 @@ import Explore from "./pages/Explore";
 import BookTicket from "./pages/BookTicket";
 import PaymentPage from "./pages/PaymentPage";
 import TicketPage from "./pages/TicketPage";
+import MuseumSignup from "./pages/MuseumSignup";
+import MuseumLogin from "./pages/MuseumLogin";
+import MuseumForgotPassword from "./pages/MuseumForgotPassword";
 function App() {
 
   const location = useLocation();
@@ -66,9 +69,11 @@ function App() {
 
         {/* Ticket */}
         <Route path="/ticket" element={<TicketPage />} />
-
+        <Route path="/museum-signup" element={<MuseumSignup />} />
+        <Route path="/museum-login" element={<MuseumLogin />} />
+        <Route path="/museum-forgot-password" element={<MuseumForgotPassword />} />
       </Routes>
-      <Footer />
+      {location.pathname !== "/museum-signup" && location.pathname !== "/museum-login" && location.pathname !== "/museum-forgot-password" && <Footer />}
 
     </div>
     </ThemeProvider>
