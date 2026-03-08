@@ -54,26 +54,27 @@ Book Your Journey.
 
 <div className="lg:col-span-5 relative group" data-aos="zoom-in">
 
-<div className="aspect-[4/5] overflow-hidden rounded-2xl border-[16px] border-zinc-100 dark:border-zinc-900 shadow-2xl relative">
+  <div className="aspect-[4/5] overflow-hidden rounded-2xl border-[16px] border-zinc-100 dark:border-zinc-900 shadow-2xl relative">
 
-<img
-src="https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?auto=format&fit=crop&q=80"
-className="w-full h-full object-cover grayscale-[0.3] hover:grayscale-0 transition-all duration-700"
-/>
+    <img
+      src="https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?auto=format&fit=crop&q=80"
+      className="w-full h-full object-cover grayscale-[0.3] hover:grayscale-0 transition-all duration-700"
+      alt="Modern Wing"
+    />
 
-<div className="absolute bottom-6 left-6 right-6 p-6 bg-black/40 dark:bg-black/20 backdrop-blur-md rounded-xl border border-white/10">
+    <div className="absolute bottom-6 left-6 right-6 p-6 bg-black/40 dark:bg-black/20 backdrop-blur-md rounded-xl border border-white/10">
 
-<p className="text-[8px] uppercase tracking-[0.3em] font-black text-white/60 mb-1">
-Curation Alpha
-</p>
+      <p className="text-[8px] uppercase tracking-[0.3em] font-black text-white/60 mb-1">
+        Curation Alpha
+      </p>
 
-<h4 className="text-white font-serif italic text-xl">
-The Modern Wing
-</h4>
+      <h4 className="text-white font-serif italic text-xl">
+        The Modern Wing
+      </h4>
 
-</div>
+    </div>
 
-</div>
+  </div>
 
 </div>
 
