@@ -9,3 +9,27 @@ body {
 h1, h2, h3, h4 {
   font-family: "Playfair Display", serif;
 }
+/* Hide Google Translate top banner */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+/* Remove top space added by banner */
+body {
+  top: 0px !important;
+}
+
+/* Hide Google translate gadget */
+.goog-te-gadget {
+  display: none !important;
+}
+
+/* Hide google logo */
+.goog-logo-link {
+  display: none !important;
+}
+
+/* Prevent page shifting */
+.skiptranslate iframe {
+  display: none !important;
+}
