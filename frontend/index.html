@@ -7,14 +7,38 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <!-- AOS animation -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Google Translate Init -->
+  <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement(
+        {
+          pageLanguage: "en",
+          includedLanguages: "en,hi,fr,es,de",
+          autoDisplay: false
+        },
+        "google_translate_element"
+      );
+    }
+  </script>
 </head>
 
-<body class="bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">  <div id="root"></div>
+<body class="bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
 
+  <div id="root"></div>
+
+  <!-- Hidden translator container -->
+  <div id="google_translate_element" style="display:none"></div>
+
+  <!-- React App -->
   <script type="module" src="/src/main.jsx"></script>
+
+  <!-- Google Translate Script -->
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
