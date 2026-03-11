@@ -1,10 +1,73 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const UserForgotPassword = () => {
 
   const [email, setEmail] = useState("");
+  const [view, setView] = useState("email");
+  const [otp, setOtp] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+
+    try {
+
+      await axios.post(
+        "http://localhost:5000/api/users/forgot-password",
+        { email }
+      );
+
+      alert("Reset OTP sent to your email");
+      setView("otp");
+    } catch (err) {
+
+      console.log(err);
+      alert(err.response?.data?.message || err.message);
+
+    }
+  };
+  const handleVerifyOTP = async (e) => {
+  e.preventDefault();
+
+  try {
+
+    await axios.post(
+      "http://localhost:5000/api/users/verify-reset-otp",
+      { email, otp }
+    );
+
+    alert("OTP verified");
+    setView("reset");
+
+  } catch (err) {
+
+    alert(err.response?.data?.message);
+
+  }
+};
+  const handleResetPassword = async (e) => {
+  e.preventDefault();
+
+  try {
+
+    await axios.post(
+      "http://localhost:5000/api/users/reset-password",
+      { email, newPassword }
+    );
+
+    alert("Password reset successful");
+
+    window.location.href = "/user-login";
+
+  } catch (err) {
+
+    alert(err.response?.data?.message);
+
+  }
+};
 
   const serifFont = { fontFamily: '"Cormorant Garamond", serif' };
 
@@ -38,33 +101,75 @@ const UserForgotPassword = () => {
             </h1>
 
             <p className="text-gray-500 text-sm mb-10">
-              Enter your email and we'll send you a password reset link.
+              Enter your email and we'll send you otp to verify your account.
             </p>
 
-            <form className="space-y-6">
+            {view === "email" && (
+<form className="space-y-6" onSubmit={handleForgotPassword}>
 
-              <div>
+  <div>
+    <label className={labelStyle}>Email Address</label>
 
-                <label className={labelStyle}>
-                  Email Address
-                </label>
+    <input
+      type="email"
+      placeholder="user@gmail.com"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      className={inputStyle}
+      required
+    />
+  </div>
 
-                <input
-                  type="email"
-                  placeholder="visitor@museo.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={inputStyle}
-                  required
-                />
+  <button className={primaryBtn}>
+    Send OTP
+  </button>
 
-              </div>
+</form>
+)}
+{view === "otp" && (
+<form className="space-y-6" onSubmit={handleVerifyOTP}>
 
-              <button className={primaryBtn}>
-                Send Reset Link
-              </button>
+  <div>
+    <label className={labelStyle}>Enter OTP</label>
 
-            </form>
+    <input
+      type="text"
+      placeholder="Enter OTP"
+      value={otp}
+      onChange={(e) => setOtp(e.target.value)}
+      className={inputStyle}
+      required
+    />
+  </div>
+
+  <button className={primaryBtn}>
+    Verify OTP
+  </button>
+
+</form>
+)}
+{view === "reset" && (
+<form className="space-y-6" onSubmit={handleResetPassword}>
+
+  <div>
+    <label className={labelStyle}>New Password</label>
+
+    <input
+      type="password"
+      placeholder="Enter new password"
+      value={newPassword}
+      onChange={(e) => setNewPassword(e.target.value)}
+      className={inputStyle}
+      required
+    />
+  </div>
+
+  <button className={primaryBtn}>
+    Reset Password
+  </button>
+
+</form>
+)}
 
             <Link
               to="/user-login"
@@ -122,5 +227,7 @@ const UserForgotPassword = () => {
   );
 
 };
+
+
 
 export default UserForgotPassword;
