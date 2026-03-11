@@ -1,11 +1,20 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const UserAuth = () => {
 
   const [view, setView] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+
+const [otp, setOtp] = useState("");
+const [userId, setUserId] = useState("");
+const navigate = useNavigate();
 
   const serifFont = { fontFamily: '"Cormorant Garamond", serif' };
 
@@ -17,7 +26,74 @@ const UserAuth = () => {
 
   const primaryBtn =
     "w-full bg-black text-white py-4 rounded-full uppercase tracking-[0.25em] text-[11px] font-semibold hover:opacity-90 transition";
+  const handleSignup = async (e) => {
+  e.preventDefault();
 
+  try {
+
+    const res = await axios.post(
+      "http://localhost:5000/api/users/signup",
+      { name, email, password }
+    );
+
+    setUserId(res.data.userId);
+    setName("");
+    setEmail("");
+    setPassword("");
+    setView("otp");
+
+  } catch (err) {
+
+    alert(err.response?.data?.message || "Signup error");
+
+  }
+};
+    const verifyOTP = async (e) => {
+
+  e.preventDefault();
+
+  try {
+
+    await axios.post(
+      "http://localhost:5000/api/users/verify-otp",
+      { userId, otp }
+    );
+
+    alert("Account verified!");
+
+    setView("login");
+
+  } catch (err) {
+
+    alert(err.response?.data?.message);
+
+  }
+
+}; 
+    const handleLogin = async (e) => {
+
+  e.preventDefault();
+
+  try {
+
+    const res = await axios.post(
+      "http://localhost:5000/api/users/login",
+      { email, password }
+    );
+
+    localStorage.setItem("accessToken", res.data.accessToken);
+localStorage.setItem("refreshToken", res.data.refreshToken);
+
+    alert("Login successful");
+    
+  navigate("/dashboard");
+  } catch (err) {
+
+    alert(err.response?.data?.message);
+
+  }
+
+};
   return (
 
     <div className="min-h-screen flex items-center justify-center px-6 bg-gray-50 dark:bg-[#0f0f0f] transition-colors duration-300">
@@ -56,25 +132,29 @@ const UserAuth = () => {
                     Login to manage your museum's digital infrastructure.
                   </p>
 
-                  <form className="space-y-6">
+                  <form className="space-y-6" onSubmit={handleLogin}>
 
                     <Field
-                      label="Email Address"
-                      type="email"
-                      placeholder="curator@museum.org"
-                      style={inputStyle}
-                      lStyle={labelStyle}
-                    />
+label="Email Address"
+type="email"
+placeholder="user@gmail.com"
+style={inputStyle}
+lStyle={labelStyle}
+value={email}
+onChange={(e)=>setEmail(e.target.value)}
+/>
 
                     <div className="relative">
 
                       <Field
-                        label="Password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="••••••••"
-                        style={inputStyle}
-                        lStyle={labelStyle}
-                      />
+label="Password"
+type={showPassword ? "text" : "password"}
+placeholder="••••••••"
+style={inputStyle}
+lStyle={labelStyle}
+value={password}
+onChange={(e)=>setPassword(e.target.value)}
+/>
 
                       <button
                         type="button"
@@ -118,7 +198,7 @@ const UserAuth = () => {
                     onClick={() => setView("signup")}
                     className="text-sm font-semibold uppercase tracking-wide block mx-auto"
                   >
-                    Sign up your museum
+                    Sign up
                   </button>
 
                 </div>
@@ -135,15 +215,17 @@ const UserAuth = () => {
                     Join The Circle.
                   </h1>
 
-                  <form className="space-y-5">
+                  <form className="space-y-5" onSubmit={handleSignup}>
 
                     <Field
-                      label="Full Name"
-                      type="text"
-                      placeholder="John Doe"
-                      style={inputStyle}
-                      lStyle={labelStyle}
-                    />
+  label="Full Name"
+  type="text"
+  placeholder="John Doe"
+  style={inputStyle}
+  lStyle={labelStyle}
+  value={name}
+  onChange={(e) => setName(e.target.value)}
+/>
 
                     <Field
                       label="Email Address"
@@ -151,6 +233,8 @@ const UserAuth = () => {
                       placeholder="email@example.com"
                       style={inputStyle}
                       lStyle={labelStyle}
+                      value={email}
+onChange={(e) => setEmail(e.target.value)}
                     />
 
                     <Field
@@ -159,6 +243,8 @@ const UserAuth = () => {
                       placeholder="••••••••"
                       style={inputStyle}
                       lStyle={labelStyle}
+                      value={password}
+onChange={(e) => setPassword(e.target.value)}
                     />
 
                     <button className={primaryBtn}>
@@ -177,6 +263,38 @@ const UserAuth = () => {
                 </div>
 
               )}
+              {view === "otp" && (
+
+<div className="space-y-6">
+
+<h1 className="text-5xl" style={serifFont}>
+Verify Email
+</h1>
+
+<p className="text-gray-500">
+Enter the OTP sent to your email.
+</p>
+
+<form onSubmit={verifyOTP} className="space-y-5">
+
+<input
+type="text"
+placeholder="Enter OTP"
+maxLength="6"
+className={inputStyle}
+value={otp}
+onChange={(e)=>setOtp(e.target.value)}
+/>
+
+<button className={primaryBtn}>
+Verify OTP
+</button>
+
+</form>
+
+</div>
+
+)}
 
             </motion.div>
 
@@ -251,10 +369,17 @@ const UserAuth = () => {
   );
 };
 
-const Field = ({ label, type, placeholder, style, lStyle }) => (
+const Field = ({ label, type, placeholder, style, lStyle, value, onChange }) => (
   <div>
     <label className={lStyle}>{label}</label>
-    <input type={type} placeholder={placeholder} className={style} required />
+    <input
+  type={type}
+  placeholder={placeholder}
+  className={style}
+  value={value}
+  onChange={onChange}
+  required
+/>
   </div>
 );
 
