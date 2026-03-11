@@ -16,7 +16,7 @@ const UserForgotPassword = () => {
     try {
 
       await axios.post(
-        "http://localhost:5000/api/users/forgot-password",
+        "http://localhost:5001/api/users/forgot-password",
         { email }
       );
 
@@ -35,7 +35,7 @@ const UserForgotPassword = () => {
   try {
 
     await axios.post(
-      "http://localhost:5000/api/users/verify-reset-otp",
+      "http://localhost:5001/api/users/verify-reset-otp",
       { email, otp }
     );
 
@@ -54,7 +54,7 @@ const UserForgotPassword = () => {
   try {
 
     await axios.post(
-      "http://localhost:5000/api/users/reset-password",
+      "http://localhost:5001/api/users/reset-password",
       { email, newPassword }
     );
 
