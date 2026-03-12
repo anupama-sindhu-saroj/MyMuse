@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+
 
 const UserAuth = () => {
 
@@ -91,6 +93,27 @@ localStorage.setItem("refreshToken", res.data.refreshToken);
 
     alert(err.response?.data?.message);
 
+  }
+
+};
+const handleGoogleLogin = async (credentialResponse) => {
+
+  try {
+
+    const res = await axios.post(
+      "http://localhost:5001/api/users/google-login",
+      { token: credentialResponse.credential }
+    );
+
+    localStorage.setItem("accessToken", res.data.accessToken);
+    localStorage.setItem("refreshToken", res.data.refreshToken);
+
+    alert("Google login successful");
+
+    navigate("/dashboard");
+
+  } catch (error) {
+    alert("Google login failed");
   }
 
 };
@@ -187,6 +210,12 @@ onChange={(e)=>setPassword(e.target.value)}
                     <button className={primaryBtn}>
                       Login to Dashboard
                     </button>
+                    <div className="flex justify-center mt-4">
+                    <GoogleLogin
+                    onSuccess={handleGoogleLogin}
+                    onError={() => console.log("Google Login Failed")}
+                    />
+                    </div>
 
                   </form>
 

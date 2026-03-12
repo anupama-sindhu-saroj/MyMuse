@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import otpGenerator from "otp-generator";
 import { sendOTP } from "../utils/sendEmail.js";
 import validator from "validator";
+import { OAuth2Client } from "google-auth-library";
 
 export const signupUser = async (req, res) => {
   try {
@@ -247,4 +248,54 @@ export const getProfile = async (req, res) => {
 
   }
 
+};
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+export const googleLogin = async (req, res) => {
+  try {
+
+    const { token } = req.body;
+
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID
+    });
+
+    const payload = ticket.getPayload();
+
+    const { email, name } = payload;
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+
+      user = await User.create({
+        name,
+        email,
+        googleUser: true,
+        isVerified: true
+      });
+
+    }
+
+    const accessToken = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    const refreshToken = jwt.sign(
+      { id: user._id },
+      process.env.JWT_REFRESH_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.json({ accessToken, refreshToken });
+
+  } catch (error) {
+
+    res.status(500).json({ message: "Google login failed" });
+
+  }
 };
