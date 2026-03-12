@@ -24,7 +24,7 @@ export default function ForgotPassword() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
+    }, 5001);
 
     return () => clearInterval(interval);
   }, []);
