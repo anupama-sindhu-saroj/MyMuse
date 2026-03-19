@@ -1,22 +1,24 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 
+const API = "http://localhost:5001/api/users";
 
 const UserAuth = () => {
 
   const [view, setView] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
-  const [name, setName] = useState("");
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
 
-const [otp, setOtp] = useState("");
-const [userId, setUserId] = useState("");
-const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [otp, setOtp] = useState("");
+  const [userId, setUserId] = useState("");
+
+  const navigate = useNavigate();
 
   const serifFont = { fontFamily: '"Cormorant Garamond", serif' };
 
@@ -28,51 +30,78 @@ const navigate = useNavigate();
 
   const primaryBtn =
     "w-full bg-black text-white py-4 rounded-full uppercase tracking-[0.25em] text-[11px] font-semibold hover:opacity-90 transition";
+
+
+  /* ---------------- SIGNUP ---------------- */
+
   const handleSignup = async (e) => {
-  e.preventDefault();
 
-  try {
+    e.preventDefault();
 
-    const res = await axios.post(
-      "http://localhost:5001/api/users/signup",
-      { name, email, password }
-    );
+    try {
 
-    setUserId(res.data.userId);
-    setName("");
-    setEmail("");
-    setPassword("");
-    setView("otp");
+      const res = await axios.post(`${API}/signup`, {
+        name,
+        email,
+        password
+      });
 
-  } catch (err) {
+      setUserId(res.data.userId);
 
-    alert(err.response?.data?.message || "Signup error");
+      setName("");
+      setEmail("");
+      setPassword("");
 
-  }
-};
-    const verifyOTP = async (e) => {
+      setView("otp");
 
-  e.preventDefault();
+    } catch (err) {
 
-  try {
+      alert(err.response?.data?.message || "Signup failed");
 
-    await axios.post(
-      "http://localhost:5001/api/users/verify-otp",
-      { userId, otp }
-    );
+    }
 
-    alert("Account verified!");
+  };
 
-    setView("login");
 
-  } catch (err) {
+  /* ---------------- VERIFY OTP ---------------- */
 
-    alert(err.response?.data?.message);
+  const verifyOTP = async (e) => {
 
-  }
+    e.preventDefault();
 
-}; 
-    const handleLogin = async (e) => {
+    try {
+
+      await axios.post(`${API}/verify-otp`, {
+        userId,
+        otp
+      });
+
+      alert("Account verified successfully");
+
+      setView("login");
+
+    } catch (err) {
+
+      alert(err.response?.data?.message || "OTP verification failed");
+
+    }
+
+  };
+
+
+  /* ---------------- LOGIN ---------------- */
+
+  const handleLogin = async (e) => {
+
+    e.preventDefault();
+
+    try {
+
+      const res = await axios.post(`${API}/login`, {
+        email,
+        password
+      });
+      const handleLogin = async (e) => {
 
   e.preventDefault();
 
@@ -83,12 +112,15 @@ const navigate = useNavigate();
       { email, password }
     );
 
-    localStorage.setItem("accessToken", res.data.accessToken);
-localStorage.setItem("refreshToken", res.data.refreshToken);
+    console.log("LOGIN RESPONSE:", res.data);   // ADD THIS
 
-    alert("Login successful");
-    
-  navigate("/dashboard");
+    localStorage.setItem("accessToken", res.data.accessToken);
+    localStorage.setItem("refreshToken", res.data.refreshToken);
+
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+
+    navigate("/dashboard");
+
   } catch (err) {
 
     alert(err.response?.data?.message);
@@ -96,7 +128,31 @@ localStorage.setItem("refreshToken", res.data.refreshToken);
   }
 
 };
-const handleGoogleLogin = async (credentialResponse) => {
+
+      const { accessToken, refreshToken, user } = res.data;
+
+      /* SAVE AUTH DATA */
+
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      alert("Login successful");
+
+      navigate("/dashboard");
+
+    } catch (err) {
+
+      alert(err.response?.data?.message || "Login failed");
+
+    }
+
+  };
+
+
+  /* ---------------- GOOGLE LOGIN ---------------- */
+
+  const handleGoogleLogin = async (credentialResponse) => {
 
   try {
 
@@ -105,23 +161,29 @@ const handleGoogleLogin = async (credentialResponse) => {
       { token: credentialResponse.credential }
     );
 
+    console.log("GOOGLE LOGIN RESPONSE:", res.data);
+
     localStorage.setItem("accessToken", res.data.accessToken);
     localStorage.setItem("refreshToken", res.data.refreshToken);
 
-    alert("Google login successful");
+    localStorage.setItem("user", JSON.stringify(res.data.user));
 
     navigate("/dashboard");
 
   } catch (error) {
+
     alert("Google login failed");
+
   }
 
 };
+
   return (
 
     <div className="min-h-screen flex items-center justify-center px-6 bg-gray-50 dark:bg-[#0f0f0f] transition-colors duration-300">
 
       <div className="w-full max-w-7xl grid md:grid-cols-2 items-center gap-20">
+
 
         {/* LEFT PANEL */}
 
@@ -141,6 +203,7 @@ const handleGoogleLogin = async (credentialResponse) => {
               transition={{ duration: 0.35 }}
             >
 
+
               {/* LOGIN */}
 
               {view === "login" && (
@@ -148,7 +211,7 @@ const handleGoogleLogin = async (credentialResponse) => {
                 <div className="space-y-8">
 
                   <h1 className="text-7xl leading-none" style={serifFont}>
-                    Welcome<br/>Back.
+                    Welcome<br />Back.
                   </h1>
 
                   <p className="text-gray-500">
@@ -158,38 +221,36 @@ const handleGoogleLogin = async (credentialResponse) => {
                   <form className="space-y-6" onSubmit={handleLogin}>
 
                     <Field
-label="Email Address"
-type="email"
-placeholder="user@gmail.com"
-style={inputStyle}
-lStyle={labelStyle}
-value={email}
-onChange={(e)=>setEmail(e.target.value)}
-/>
+                      label="Email Address"
+                      type="email"
+                      placeholder="user@gmail.com"
+                      style={inputStyle}
+                      lStyle={labelStyle}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
 
                     <div className="relative">
 
                       <Field
-label="Password"
-type={showPassword ? "text" : "password"}
-placeholder="••••••••"
-style={inputStyle}
-lStyle={labelStyle}
-value={password}
-onChange={(e)=>setPassword(e.target.value)}
-/>
+                        label="Password"
+                        type={showPassword ? "text" : "password"}
+                        placeholder="••••••••"
+                        style={inputStyle}
+                        lStyle={labelStyle}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
 
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
                         className="absolute right-4 top-[36px] text-xs text-gray-400 uppercase"
                       >
-                        Show
+                        {showPassword ? "Hide" : "Show"}
                       </button>
 
                     </div>
-
-                    {/* Remember + Forgot */}
 
                     <div className="flex justify-between text-xs text-gray-500">
 
@@ -198,10 +259,7 @@ onChange={(e)=>setPassword(e.target.value)}
                         Remember me
                       </label>
 
-                      <Link
-                        to="/user-forgot-password"
-                        className="uppercase"
-                      >
+                      <Link to="/user-forgot-password" className="uppercase">
                         Forgot password?
                       </Link>
 
@@ -210,11 +268,14 @@ onChange={(e)=>setPassword(e.target.value)}
                     <button className={primaryBtn}>
                       Login to Dashboard
                     </button>
+
                     <div className="flex justify-center mt-4">
-                    <GoogleLogin
-                    onSuccess={handleGoogleLogin}
-                    onError={() => console.log("Google Login Failed")}
-                    />
+
+                      <GoogleLogin
+                        onSuccess={handleGoogleLogin}
+                        onError={() => console.log("Google Login Failed")}
+                      />
+
                     </div>
 
                   </form>
@@ -234,6 +295,7 @@ onChange={(e)=>setPassword(e.target.value)}
 
               )}
 
+
               {/* SIGNUP */}
 
               {view === "signup" && (
@@ -247,14 +309,14 @@ onChange={(e)=>setPassword(e.target.value)}
                   <form className="space-y-5" onSubmit={handleSignup}>
 
                     <Field
-  label="Full Name"
-  type="text"
-  placeholder="John Doe"
-  style={inputStyle}
-  lStyle={labelStyle}
-  value={name}
-  onChange={(e) => setName(e.target.value)}
-/>
+                      label="Full Name"
+                      type="text"
+                      placeholder="John Doe"
+                      style={inputStyle}
+                      lStyle={labelStyle}
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
 
                     <Field
                       label="Email Address"
@@ -263,7 +325,7 @@ onChange={(e)=>setPassword(e.target.value)}
                       style={inputStyle}
                       lStyle={labelStyle}
                       value={email}
-onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
 
                     <Field
@@ -273,7 +335,7 @@ onChange={(e) => setEmail(e.target.value)}
                       style={inputStyle}
                       lStyle={labelStyle}
                       value={password}
-onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
 
                     <button className={primaryBtn}>
@@ -292,38 +354,43 @@ onChange={(e) => setPassword(e.target.value)}
                 </div>
 
               )}
+
+
+              {/* OTP */}
+
               {view === "otp" && (
 
-<div className="space-y-6">
+                <div className="space-y-6">
 
-<h1 className="text-5xl" style={serifFont}>
-Verify Email
-</h1>
+                  <h1 className="text-5xl" style={serifFont}>
+                    Verify Email
+                  </h1>
 
-<p className="text-gray-500">
-Enter the OTP sent to your email.
-</p>
+                  <p className="text-gray-500">
+                    Enter the OTP sent to your email.
+                  </p>
 
-<form onSubmit={verifyOTP} className="space-y-5">
+                  <form onSubmit={verifyOTP} className="space-y-5">
 
-<input
-type="text"
-placeholder="Enter OTP"
-maxLength="6"
-className={inputStyle}
-value={otp}
-onChange={(e)=>setOtp(e.target.value)}
-/>
+                    <input
+                      type="text"
+                      placeholder="Enter OTP"
+                      maxLength="6"
+                      className={inputStyle}
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                      required
+                    />
 
-<button className={primaryBtn}>
-Verify OTP
-</button>
+                    <button className={primaryBtn}>
+                      Verify OTP
+                    </button>
 
-</form>
+                  </form>
 
-</div>
+                </div>
 
-)}
+              )}
 
             </motion.div>
 
@@ -331,85 +398,52 @@ Verify OTP
 
         </div>
 
-        {/* RIGHT PANEL */}
 
-        {/* RIGHT PANEL: ARTISTIC VISUAL */}
-<div className="hidden md:flex justify-center items-center h-full relative z-10">
-  <div className="relative w-[500px] h-[680px] rounded-[40px] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] group bg-white">
-    
-    {/* Light Shade Artistic Floral Image */}
-    <motion.img
-      initial={{ opacity: 0, scale: 1.1 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 1.5, ease: "easeOut" }}
-      // Light, high-end botanical photography
-      src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=80&w=1200" 
-      alt="Artistic Florals"
-      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[4000ms] group-hover:scale-105 saturate-[0.9] brightness-[1.05]"
-    />
+        {/* RIGHT IMAGE */}
 
-    {/* Soft Light Overlay (Replaced the heavy black gradient) */}
-    <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-white/40 z-10" />
-    
-    {/* Subtle Dark Vignette at the very bottom just for text legibility */}
-    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent z-15" />
+        <div className="hidden md:flex justify-center items-center h-full">
 
-    {/* Floating Glassmorphism Info Card (Lighter Theme) */}
-    <motion.div 
-      initial={{ y: 20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.5, duration: 0.8 }}
-      // Adjusted to be a white glass effect for the light theme
-      className="absolute bottom-10 left-8 right-8 bg-white/40 backdrop-blur-2xl border border-white/50 rounded-[30px] p-8 text-black z-20 shadow-xl"
-    >
-      <div className="flex justify-between items-start mb-6">
-        <div>
-          <p className="text-[10px] uppercase tracking-[0.5em] text-gray-500 mb-1 font-bold">Nature Archive</p>
-          <h3 className="text-4xl font-light tracking-tight italic leading-none" style={serifFont}>
-            Ephemeral <br/>Beauty.
-          </h3>
+          <div className="relative w-[500px] h-[680px] rounded-[40px] overflow-hidden shadow-xl">
+
+            <motion.img
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.5 }}
+              src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=80&w=1200"
+              className="absolute inset-0 w-full h-full object-cover"
+              alt="Museum"
+            />
+
+          </div>
+
         </div>
-        <div className="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center">
-          <div className="w-1.5 h-1.5 bg-black rounded-full animate-pulse shadow-[0_0_8px_rgba(0,0,0,0.2)]"></div>
-        </div>
-      </div>
-
-      <p className="text-[11px] leading-relaxed text-gray-600 max-w-[240px] mb-6 tracking-widest font-light">
-        BOTANICAL PRESERVATION IN THE DIGITAL AGE.
-      </p>
-
-      <div className="flex items-center gap-3">
-        <div className="h-[1px] w-8 bg-black/20"></div>
-        <span className="text-[9px] uppercase tracking-[0.4em] font-bold text-gray-400">Section No. 104</span>
-      </div>
-    </motion.div>
-
-    {/* Vertical Branding */}
-    <div className="absolute top-10 right-8 text-black/20 text-[9px] uppercase tracking-[1.5em] [writing-mode:vertical-lr] z-20 font-medium">
-      MUSEO • BOTANICA
-    </div>
-  </div>
-</div>
 
       </div>
 
     </div>
 
   );
+
 };
 
+
 const Field = ({ label, type, placeholder, style, lStyle, value, onChange }) => (
+
   <div>
+
     <label className={lStyle}>{label}</label>
+
     <input
-  type={type}
-  placeholder={placeholder}
-  className={style}
-  value={value}
-  onChange={onChange}
-  required
-/>
+      type={type}
+      placeholder={placeholder}
+      className={style}
+      value={value}
+      onChange={onChange}
+      required
+    />
+
   </div>
+
 );
 
-export default UserAuth; 
+export default UserAuth;
