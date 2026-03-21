@@ -1,9 +1,15 @@
+import axios from "axios";
+import { useRef } from "react";
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "../styles/museumSignup.css";
 
 export default function MuseumLogin() {
+
+  const emailRef = useRef();
+const passwordRef = useRef();
 
   const [showPassword, setShowPassword] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -19,7 +25,33 @@ export default function MuseumLogin() {
     "The Modern Wing",
     "Chiaroscuro Forms"
   ];
+  const handleLogin = async (e) => {
 
+  e.preventDefault();
+
+  try {
+
+    const res = await axios.post(
+      "http://localhost:5000/api/museums/login",
+      {
+        email: emailRef.current.value,
+        password: passwordRef.current.value
+      }
+    );
+
+    localStorage.setItem("museumToken", res.data.accessToken);
+
+    alert("Login successful");
+
+    window.location.href = "/dashboard";
+
+  } catch (err) {
+
+    alert(err.response?.data?.message || "Login failed");
+
+  }
+
+};
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -58,8 +90,7 @@ export default function MuseumLogin() {
               Login to manage your museum's digital infrastructure.
             </p>
           </div>
-
-          <form className="max-w-xl space-y-5 pt-2">
+          <form onSubmit={handleLogin} className="max-w-xl space-y-5 pt-2">
 
             {/* EMAIL */}
             <div className="space-y-2">
@@ -68,6 +99,7 @@ export default function MuseumLogin() {
               </label>
 
               <input
+                ref={emailRef}
                 type="email"
                 placeholder="curator@museum.org"
                 required
@@ -84,6 +116,7 @@ export default function MuseumLogin() {
               <div className="relative">
 
                 <input
+                   ref={passwordRef}
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   required

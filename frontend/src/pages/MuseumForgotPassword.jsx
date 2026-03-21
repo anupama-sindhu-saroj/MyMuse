@@ -1,3 +1,6 @@
+import axios from "axios";
+import { useRef } from "react";
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -8,6 +11,9 @@ export default function ForgotPassword() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showRecovery, setShowRecovery] = useState(false);
   const [email, setEmail] = useState("");
+  const emailRef = useRef();
+const otpRef = useRef();
+const newPasswordRef = useRef();
 
   const images = [
     "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1200",
@@ -36,6 +42,68 @@ export default function ForgotPassword() {
       alert("Please provide your institutional email.");
     }
   };
+  const sendResetOTP = async () => {
+
+  try {
+
+    await axios.post(
+      "http://localhost:5000/api/museums/forgot-password",
+      { email: emailRef.current.value }
+    );
+
+    alert("OTP sent to your email");
+
+  } catch (err) {
+
+    alert(err.response?.data?.message || "Failed to send OTP");
+
+  }
+
+};
+const verifyResetOTP = async () => {
+
+  try {
+
+    await axios.post(
+      "http://localhost:5000/api/museums/verify-reset-otp",
+      {
+        email: emailRef.current.value,
+        otp: otpRef.current.value
+      }
+    );
+
+    alert("OTP verified");
+
+  } catch (err) {
+
+    alert(err.response?.data?.message || "Invalid OTP");
+
+  }
+
+};
+const resetPassword = async () => {
+
+  try {
+      await verifyResetOTP();
+    await axios.post(
+      "http://localhost:5000/api/museums/reset-password",
+      {
+        email: emailRef.current.value,
+        newPassword: newPasswordRef.current.value
+      }
+    );
+
+    alert("Password reset successful");
+
+    window.location.href = "/museum-login";
+
+  } catch (err) {
+
+    alert(err.response?.data?.message || "Reset failed");
+
+  }
+
+};
 
   return (
     <div className="min-h-screen flex flex-col overflow-hidden">
@@ -75,6 +143,7 @@ export default function ForgotPassword() {
               </label>
 
               <input
+                ref={emailRef}
                 type="email"
                 placeholder="admin@museum.org"
                 value={email}
@@ -88,7 +157,11 @@ export default function ForgotPassword() {
 
             <button
               type="button"
-              onClick={initiateRecovery}
+              onClick={() => {
+  initiateRecovery();
+  sendResetOTP();
+}}
+              
               className="w-full py-4 border border-black text-black dark:border-white dark:text-white text-[10px] font-bold uppercase tracking-[0.3em] rounded-full hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"
             >
               Send Verification Code
@@ -117,13 +190,14 @@ export default function ForgotPassword() {
                   <div className="flex gap-4 justify-center">
 
                     {[...Array(4)].map((_, i) => (
-                      <input
-                        key={i}
-                        type="text"
-                        maxLength="1"
-                        className="otp-box bg-transparent"
-                      />
-                    ))}
+  <input
+    key={i}
+    type="text"
+    maxLength="1"
+    ref={i === 0 ? otpRef : null}
+    className="otp-box bg-transparent"
+  />
+))}
 
                   </div>
                 </div>
@@ -139,6 +213,7 @@ export default function ForgotPassword() {
                   />
 
                   <input
+                    ref={newPasswordRef}
                     type="password"
                     placeholder="Confirm Password"
                     className="museo-input w-full px-6 py-4 rounded-xl text-sm dark:bg-neutral-900 dark:border-neutral-700"
@@ -147,7 +222,8 @@ export default function ForgotPassword() {
                 </div>
 
                 <button
-                  type="submit"
+                  type="button"
+onClick={resetPassword}
                   className="w-full py-5 bg-black text-white dark:bg-white dark:text-black text-[11px] font-bold uppercase tracking-[0.4em] rounded-full shadow-2xl hover:scale-[1.01] transition-all"
                 >
                   Update Credentials & Login

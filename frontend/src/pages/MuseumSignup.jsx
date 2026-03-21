@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -33,35 +34,82 @@ export default function MuseumSignup() {
     "Chiaroscuro Forms"
   ];
 
-  const sendOTP = () => {
+  const sendOTP = async () => {
 
-    const inputs = [
-      museumName.current.value,
-      email.current.value,
-      phone.current.value,
-      location.current.value,
-      password.current.value,
-      confirmPassword.current.value
-    ];
+  const inputs = [
+    museumName.current.value,
+    email.current.value,
+    phone.current.value,
+    location.current.value,
+    password.current.value,
+    confirmPassword.current.value
+  ];
 
-    const allFilled = inputs.every(v => v.trim() !== "");
+  const allFilled = inputs.every(v => v.trim() !== "");
 
-    if (!allFilled) {
-      alert("Please fill all institutional details.");
-      return;
-    }
+  if (!allFilled) {
+    alert("Please fill all institutional details.");
+    return;
+  }
 
-    if (password.current.value !== confirmPassword.current.value) {
-      alert("Passwords do not match.");
-      return;
-    }
+  if (password.current.value !== confirmPassword.current.value) {
+    alert("Passwords do not match.");
+    return;
+  }
+
+  try {
+
+    const res = await axios.post(
+      "http://localhost:5000/api/museums/signup",
+      {
+        museumName: museumName.current.value,
+        email: email.current.value,
+        phone: phone.current.value,
+        location: location.current.value,
+        password: password.current.value
+      }
+    );
 
     setOtpVisible(true);
     setSubmitEnabled(true);
 
     sendBtn.current.innerText = "Code Dispatched";
     sendBtn.current.classList.replace("text-black", "text-green-700");
-  };
+
+    localStorage.setItem("museumId", res.data.museumId);
+
+  } catch (err) {
+
+    alert(err.response?.data?.message || "Signup failed");
+
+  }
+
+};
+const verifyOTP = async () => {
+
+  const otp = otpInputs.current.map(input => input.value).join("");
+
+  try {
+
+    await axios.post(
+      "http://localhost:5000/api/museums/verify-otp",
+      {
+        museumId: localStorage.getItem("museumId"),
+        otp
+      }
+    );
+
+    alert("Museum verified successfully! Please login.");
+
+    window.location.href = "/museum-login";
+
+  } catch (err) {
+
+    alert(err.response?.data?.message || "OTP verification failed");
+
+  }
+
+};
 
   const moveNext = (e, index) => {
     if (e.target.value.length === 1 && index < otpInputs.current.length - 1) {
