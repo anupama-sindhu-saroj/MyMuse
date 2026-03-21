@@ -50,15 +50,33 @@ Book Your Journey.
 </button>
 
 <select
-onChange={(e)=>changeLanguage(e.target.value)}
-className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-sm px-6 py-4 rounded-full outline-none text-black dark:text-white"
+  onChange={(e)=>changeLanguage(e.target.value)}
+  className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-sm px-6 py-4 rounded-full outline-none text-black dark:text-white"
 >
 
-<option value="en">English</option>
-<option value="hi">Hindi</option>
-<option value="fr">French</option>
-<option value="es">Spanish</option>
-<option value="de">German</option>
+  {/* 🌍 Global */}
+  <option value="en">English</option>
+  <option value="hi">Hindi</option>
+
+  {/* 🇮🇳 Indian Languages */}
+  <option value="bn">Bengali</option>
+  <option value="pa">Punjabi</option>
+  <option value="mr">Marathi</option>
+  <option value="gu">Gujarati</option>
+  <option value="ta">Tamil</option>
+  <option value="te">Telugu</option>
+  <option value="kn">Kannada</option>
+  <option value="ml">Malayalam</option>
+  <option value="or">Odia</option>
+  <option value="as">Assamese</option>
+  <option value="ur">Urdu</option>
+
+  {/* 🌎 Other popular */}
+  <option value="fr">French</option>
+  <option value="es">Spanish</option>
+  <option value="de">German</option>
+  <option value="zh-CN">Chinese</option>
+  <option value="ar">Arabic</option>
 
 </select>
 
