@@ -28,6 +28,8 @@ class Settings(BaseSettings):
 
     GOOGLE_CLIENT_ID: str = ""
     GOOGLE_CLIENT_SECRET: str = ""
+    
+    UNSPLASH_ACCESS_KEY: str = ""
 
     class Config:
         env_file = ".env"
