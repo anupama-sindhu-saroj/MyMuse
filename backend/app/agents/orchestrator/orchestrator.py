@@ -1,6 +1,6 @@
 from app.agents.orchestrator.router_chain import detect_intent
 from app.chains.memory import get_memory
-
+from app.agents.booking.booking_agent import booking_agent
 async def handle_message(user_id: str, user_message: str) -> dict:
     memory = get_memory(user_id)
     chat_history = memory.messages
@@ -20,10 +20,24 @@ async def handle_message(user_id: str, user_message: str) -> dict:
 
     # FRIEND'S WORK - placeholder until they finish ⏳
     elif intent == "BOOK_TICKET":
-        response = "Booking system coming soon! 🎟️"
+        result = await booking_agent(
+            message=user_message,
+            session_id=user_id,
+            user_data={"user_id": user_id}
+        )
+        memory.add_ai_message(result["reply"])
+        return {
+            "intent": "BOOK_TICKET",
+            "response": result["reply"],
+            "booking_data": result.get("booking_data")
+        }
 
     elif intent == "FAQ":
-        response = "FAQ system coming soon! ❓"
+        from app.agents.faq.faq_agent import faq_agent
+        response = await faq_agent(
+            message=user_message,
+            session_id=user_id
+        )
 
     elif intent == "CANCEL_TICKET":
         response = "Cancellation system coming soon! ❌"
