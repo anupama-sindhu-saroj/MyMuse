@@ -30,7 +30,7 @@ const newPasswordRef = useRef();
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5001);
+    }, 8000);
 
     return () => clearInterval(interval);
   }, []);
@@ -47,7 +47,7 @@ const newPasswordRef = useRef();
   try {
 
     await axios.post(
-      "http://localhost:5000/api/museums/forgot-password",
+      "http://localhost:8000/api/museums/forgot-password",
       { email: emailRef.current.value }
     );
 
@@ -61,32 +61,33 @@ const newPasswordRef = useRef();
 
 };
 const verifyResetOTP = async () => {
-
   try {
-
+    const otp = otpInputs.current.map(input => input.value).join(""); // ← join all 4
     await axios.post(
-      "http://localhost:5000/api/museums/verify-reset-otp",
+      "http://localhost:8000/api/museums/verify-reset-otp",
       {
         email: emailRef.current.value,
-        otp: otpRef.current.value
+        otp: otp                    // ← use joined otp
       }
     );
-
     alert("OTP verified");
-
   } catch (err) {
-
     alert(err.response?.data?.message || "Invalid OTP");
-
   }
-
 };
 const resetPassword = async () => {
-
   try {
-      await verifyResetOTP();
+    const otp = otpInputs.current.map(input => input.value).join("");
+    
+    // First verify OTP
     await axios.post(
-      "http://localhost:5000/api/museums/reset-password",
+      "http://localhost:8000/api/museums/verify-reset-otp",
+      { email: emailRef.current.value, otp }
+    );
+
+    // Then reset password
+    await axios.post(
+      "http://localhost:8000/api/museums/reset-password",
       {
         email: emailRef.current.value,
         newPassword: newPasswordRef.current.value
@@ -94,17 +95,12 @@ const resetPassword = async () => {
     );
 
     alert("Password reset successful");
-
     window.location.href = "/museum-login";
 
   } catch (err) {
-
     alert(err.response?.data?.message || "Reset failed");
-
   }
-
 };
-
   return (
     <div className="min-h-screen flex flex-col overflow-hidden">
 
@@ -189,12 +185,19 @@ const resetPassword = async () => {
 
                   <div className="flex gap-4 justify-center">
 
-                    {[...Array(4)].map((_, i) => (
+                    const otpInputs = useRef([]);
+
+{[...Array(4)].map((_, i) => (
   <input
     key={i}
     type="text"
     maxLength="1"
-    ref={i === 0 ? otpRef : null}
+    ref={el => otpInputs.current[i] = el}
+    onInput={(e) => {
+      if (e.target.value.length === 1 && i < 3) {
+        otpInputs.current[i + 1]?.focus();
+      }
+    }}
     className="otp-box bg-transparent"
   />
 ))}

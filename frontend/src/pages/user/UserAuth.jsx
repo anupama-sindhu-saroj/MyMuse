@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { GoogleLogin } from "@react-oauth/google";
 
-const API = "http://localhost:5001/api/users";
+const API = "http://localhost:8000/api/users";
 
 const UserAuth = () => {
 
@@ -108,7 +108,7 @@ const UserAuth = () => {
   try {
 
     const res = await axios.post(
-      "http://localhost:5001/api/users/login",
+      "http://localhost:8000/api/users/login",
       { email, password }
     );
 
@@ -157,7 +157,7 @@ const UserAuth = () => {
   try {
 
     const res = await axios.post(
-      "http://localhost:5001/api/users/google-login",
+      "http://localhost:8000/api/users/google-login",
       { token: credentialResponse.credential }
     );
 

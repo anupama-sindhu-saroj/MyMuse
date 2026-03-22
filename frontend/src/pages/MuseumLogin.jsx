@@ -32,7 +32,7 @@ const passwordRef = useRef();
   try {
 
     const res = await axios.post(
-      "http://localhost:5000/api/museums/login",
+      "http://localhost:8000/api/museums/login",
       {
         email: emailRef.current.value,
         password: passwordRef.current.value
@@ -55,7 +55,7 @@ const passwordRef = useRef();
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5001);
+    }, 8000);
 
     return () => clearInterval(interval);
   }, []);
