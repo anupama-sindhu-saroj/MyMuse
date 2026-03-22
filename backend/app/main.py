@@ -7,13 +7,10 @@ from contextlib import asynccontextmanager
 from app.core.config import settings
 from app.core.logger import get_logger
 from app.db.database import connect_db, close_db
-<<<<<<< HEAD
 from app.api import auth, museum_auth
-=======
 from app.api.chat import router as chat_router
 from app.api.booking import router as booking_router
 from app.api.museums import router as museums_router
->>>>>>> bfc1448 (booking agent work in progress)
 
 logger = get_logger(__name__)
 
