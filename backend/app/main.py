@@ -14,10 +14,18 @@ from app.api.museums import router as museums_router
 
 logger = get_logger(__name__)
 
+# Optional payment router
+try:
+    from app.api.payment import router as payment_router
+    has_payment = True
+except ImportError:
+    has_payment = False
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await connect_db()
     logger.info(f"{settings.APP_NAME} ready")
+    print("🚀 Server ready at http://localhost:8000")
     yield
     await close_db()
 
@@ -47,19 +55,17 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     errors = exc.errors()
     first_error = errors[0] if errors else {}
     message = first_error.get("msg", "Invalid request data")
-    return JSONResponse(
-        status_code=400,
-        content={"message": message},
-    )
+    return JSONResponse(status_code=400, content={"message": message})
 
 app.include_router(auth.router,        prefix="/api/users",   tags=["User Auth"])
 app.include_router(museum_auth.router, prefix="/api/museums", tags=["Museum Auth"])
 app.include_router(chat_router)
 app.include_router(booking_router)
 app.include_router(museums_router)
+
 if has_payment:
     app.include_router(payment_router)
 
 @app.get("/")
 async def root():
-    return {"message": f"{settings.APP_NAME} is running"}
+    return {"message": f"{settings.APP_NAME} is running ✅"}

@@ -10,10 +10,13 @@ import asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import datetime
 import random
-
+import os
+from dotenv import load_dotenv
+load_dotenv()
 # ── Config ────────────────────────────────────────────────────
-MONGO_URI = "mongodb+srv://museouser:VPo4fRN7F0xAsbpM@museo.pqfi0se.mongodb.net/museumDB?appName=MUSEO"
-DB_NAME = "museumDB"
+
+MONGO_URI = os.getenv("MONGO_URI")
+DB_NAME = os.getenv("MONGO_DB_NAME", "museumDB")
 
 # 4 team members — museum owners
 OWNERS = [
