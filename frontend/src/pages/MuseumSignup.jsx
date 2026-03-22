@@ -15,9 +15,7 @@ export default function MuseumSignup() {
   const location = useRef();
   const password = useRef();
   const confirmPassword = useRef();
-
   const sendBtn = useRef();
-
   const otpInputs = useRef([]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -35,81 +33,76 @@ export default function MuseumSignup() {
   ];
 
   const sendOTP = async () => {
+    const inputs = [
+      museumName.current.value,
+      email.current.value,
+      phone.current.value,
+      location.current.value,
+      password.current.value,
+      confirmPassword.current.value
+    ];
 
-  const inputs = [
-    museumName.current.value,
-    email.current.value,
-    phone.current.value,
-    location.current.value,
-    password.current.value,
-    confirmPassword.current.value
-  ];
+    const allFilled = inputs.every(v => v.trim() !== "");
 
-  const allFilled = inputs.every(v => v.trim() !== "");
+    if (!allFilled) {
+      alert("Please fill all institutional details.");
+      return;
+    }
 
-  if (!allFilled) {
-    alert("Please fill all institutional details.");
-    return;
-  }
+    if (password.current.value !== confirmPassword.current.value) {
+      alert("Passwords do not match.");
+      return;
+    }
 
-  if (password.current.value !== confirmPassword.current.value) {
-    alert("Passwords do not match.");
-    return;
-  }
+    try {
+      const res = await axios.post(
+        "http://localhost:8000/api/museums/signup",
+        {
+          museumName: museumName.current.value,
+          email: email.current.value,
+          phone: phone.current.value,
+          location: location.current.value,
+          password: password.current.value
+        }
+      );
 
-  try {
+      setOtpVisible(true);
+      setSubmitEnabled(true);
 
-    const res = await axios.post(
-      "http://localhost:5000/api/museums/signup",
-      {
-        museumName: museumName.current.value,
-        email: email.current.value,
-        phone: phone.current.value,
-        location: location.current.value,
-        password: password.current.value
-      }
-    );
+      sendBtn.current.innerText = "Code Dispatched";
+      sendBtn.current.classList.replace("text-black", "text-green-700");
 
-    setOtpVisible(true);
-    setSubmitEnabled(true);
+      localStorage.setItem("museumId", res.data.museumId);
 
-    sendBtn.current.innerText = "Code Dispatched";
-    sendBtn.current.classList.replace("text-black", "text-green-700");
+    } catch (err) {
+      alert(err.response?.data?.message || "Signup failed");
+    }
+  };
 
-    localStorage.setItem("museumId", res.data.museumId);
+  const verifyOTP = async () => {
+    const otp = otpInputs.current.map(input => input.value).join("");
 
-  } catch (err) {
+    if (otp.length !== 4) {
+      alert("Please enter the complete 4-digit OTP");
+      return;
+    }
 
-    alert(err.response?.data?.message || "Signup failed");
+    try {
+      await axios.post(
+        "http://localhost:8000/api/museums/verify-otp",
+        {
+          museumId: localStorage.getItem("museumId"),
+          otp
+        }
+      );
 
-  }
+      alert("Museum verified successfully! Please login.");
+      window.location.href = "/museum-login";
 
-};
-const verifyOTP = async () => {
-
-  const otp = otpInputs.current.map(input => input.value).join("");
-
-  try {
-
-    await axios.post(
-      "http://localhost:5000/api/museums/verify-otp",
-      {
-        museumId: localStorage.getItem("museumId"),
-        otp
-      }
-    );
-
-    alert("Museum verified successfully! Please login.");
-
-    window.location.href = "/museum-login";
-
-  } catch (err) {
-
-    alert(err.response?.data?.message || "OTP verification failed");
-
-  }
-
-};
+    } catch (err) {
+      alert(err.response?.data?.message || "OTP verification failed");
+    }
+  };
 
   const moveNext = (e, index) => {
     if (e.target.value.length === 1 && index < otpInputs.current.length - 1) {
@@ -118,13 +111,10 @@ const verifyOTP = async () => {
   };
 
   useEffect(() => {
-
     const interval = setInterval(() => {
       setCurrentIndex(prev => (prev + 1) % images.length);
-    }, 5001);
-
+    }, 8000);
     return () => clearInterval(interval);
-
   }, []);
 
   return (
@@ -153,21 +143,51 @@ const verifyOTP = async () => {
             </h1>
           </div>
 
-          <form className="max-w-xl space-y-3 pt-2">
+          <div className="max-w-xl space-y-3 pt-2">
 
             <div className="grid grid-cols-2 gap-3">
-              <input ref={museumName} type="text" placeholder="Museum Name" className="museo-input w-full px-5 py-3 rounded-xl text-sm"/>
-              <input ref={email} type="email" placeholder="Institutional Email" className="museo-input w-full px-5 py-3 rounded-xl text-sm"/>
+              <input
+                ref={museumName}
+                type="text"
+                placeholder="Museum Name"
+                className="museo-input w-full px-5 py-3 rounded-xl text-sm"
+              />
+              <input
+                ref={email}
+                type="email"
+                placeholder="Institutional Email"
+                className="museo-input w-full px-5 py-3 rounded-xl text-sm"
+              />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <input ref={phone} type="tel" placeholder="Phone Number" className="museo-input w-full px-5 py-3 rounded-xl text-sm"/>
-              <input ref={location} type="text" placeholder="Location" className="museo-input w-full px-5 py-3 rounded-xl text-sm"/>
+              <input
+                ref={phone}
+                type="tel"
+                placeholder="Phone Number"
+                className="museo-input w-full px-5 py-3 rounded-xl text-sm"
+              />
+              <input
+                ref={location}
+                type="text"
+                placeholder="Location"
+                className="museo-input w-full px-5 py-3 rounded-xl text-sm"
+              />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <input ref={password} type="password" placeholder="Password" className="museo-input w-full px-5 py-3 rounded-xl text-sm"/>
-              <input ref={confirmPassword} type="password" placeholder="Confirm" className="museo-input w-full px-5 py-3 rounded-xl text-sm"/>
+              <input
+                ref={password}
+                type="password"
+                placeholder="Password"
+                className="museo-input w-full px-5 py-3 rounded-xl text-sm"
+              />
+              <input
+                ref={confirmPassword}
+                type="password"
+                placeholder="Confirm"
+                className="museo-input w-full px-5 py-3 rounded-xl text-sm"
+              />
             </div>
 
             <button
@@ -179,63 +199,64 @@ const verifyOTP = async () => {
               Send Verification Code
             </button>
 
-            {/* OTP SECTION */}
-            <div className={`bg-neutral-50 p-5 rounded-2xl border border-neutral-100 space-y-3 shadow-sm ${otpVisible ? "visible" : ""}`} id="otpSection">
+            {/* OTP SECTION — shown only after signup success */}
+            {otpVisible && (
+              <div className="bg-neutral-50 p-5 rounded-2xl border border-neutral-100 space-y-3 shadow-sm">
 
-              <div className="flex justify-between items-center px-1">
-                <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">
-                  Identity Verification
-                </label>
+                <div className="flex justify-between items-center px-1">
+                  <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">
+                    Identity Verification
+                  </label>
+                  <button
+                    type="button"
+                    onClick={sendOTP}
+                    className="text-[9px] underline uppercase tracking-widest font-bold hover:opacity-100 transition"
+                  >
+                    Resend OTP
+                  </button>
+                </div>
 
-                <button type="button" className="text-[9px] underline uppercase tracking-widest font-bold hover:opacity-100 transition">
-                  Resend OTP
-                </button>
+                <div className="flex gap-4 justify-center">
+                  {[0, 1, 2, 3].map((i) => (
+                    <input
+                      key={i}
+                      maxLength="1"
+                      ref={el => otpInputs.current[i] = el}
+                      onInput={(e) => moveNext(e, i)}
+                      className="otp-box bg-transparent"
+                    />
+                  ))}
+                </div>
+
               </div>
-
-              <div className="flex gap-4 justify-center">
-
-                {[0,1,2,3].map((i)=>(
-                  <input
-                    key={i}
-                    maxLength="1"
-                    ref={el => otpInputs.current[i] = el}
-                    onInput={(e)=>moveNext(e,i)}
-                    className="otp-box bg-transparent"
-                  />
-                ))}
-
-              </div>
-            </div>
+            )}
 
             <button
-              type="submit"
+              type="button"
+              onClick={verifyOTP}
               disabled={!submitEnabled}
               className={`w-full py-4 bg-black text-white dark:bg-white dark:text-black text-[11px] font-bold uppercase tracking-[0.4em] rounded-full shadow-2xl ${
-                submitEnabled
-                ? ""
-                : "opacity-20 cursor-not-allowed"
+                submitEnabled ? "hover:scale-[1.01] transition-all" : "opacity-20 cursor-not-allowed"
               }`}
             >
               Verify & Initialize Access
             </button>
-            <div className="flex items-center justify-center gap-8 pt-2">
 
+            <div className="flex items-center justify-center gap-8 pt-2">
               <a href="/museum-login" className="group flex flex-col items-center">
                 <span className="text-[9px] uppercase tracking-widest font-bold opacity-40 group-hover:opacity-100 transition">
                   Registered?
                 </span>
-
                 <span className="text-[10px] uppercase tracking-[0.2em] font-black border-b border-black/10 group-hover:border-black transition">
                   Login
                 </span>
               </a>
-
-                </div>
-              </form>
             </div>
 
-        {/* RIGHT SIDE IMAGE SLIDER */}
+          </div>
+        </div>
 
+        {/* RIGHT SIDE IMAGE SLIDER */}
         <div className="w-full lg:w-1/2 flex justify-center items-center relative">
 
           <div className="absolute w-[600px] h-[600px] bg-neutral-200/30 blur-[100px] rounded-full -z-10"></div>
@@ -243,30 +264,24 @@ const verifyOTP = async () => {
           <div className="relative w-full max-w-[500px] aspect-[3/4] rounded-[2rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)]">
 
             <div className="image-container w-full h-full relative">
-
-              {images.map((img,i)=>(
+              {images.map((img, i) => (
                 <img
                   key={i}
                   src={img}
                   className={i === currentIndex ? "active" : ""}
                 />
               ))}
-
             </div>
 
             <div className="absolute bottom-8 left-8 right-8 bg-white/40 backdrop-blur-xl border border-white/40 p-8 rounded-2xl shadow-sm">
-
               <p className="text-[10px] uppercase tracking-[0.4em] text-black font-bold opacity-60">
                 System Curation
               </p>
-
               <h3 className="font-serif text-3xl italic mt-2">
                 {titles[currentIndex]}
               </h3>
-
               <div className="mt-4 flex gap-2">
-
-                {images.map((_,i)=>(
+                {images.map((_, i) => (
                   <span
                     key={i}
                     className={`w-2 h-2 rounded-full ${
@@ -274,9 +289,7 @@ const verifyOTP = async () => {
                     }`}
                   />
                 ))}
-
               </div>
-
             </div>
 
           </div>
