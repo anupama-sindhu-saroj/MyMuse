@@ -74,7 +74,10 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 # =========================
 app.include_router(auth.router, prefix="/api/users", tags=["User Auth"])
 app.include_router(museum_auth.router, prefix="/api/museums", tags=["Museum Auth"])
+from fastapi import FastAPI
+from app.services.translate_service import translate_text
 
+app = FastAPI()
 
 # =========================
 # ✅ OTHER ROUTES
@@ -106,3 +109,15 @@ def translate_api(text: str, lang: str):
 @app.get("/")
 async def root():
     return {"message": f"{settings.APP_NAME} is running ✅"}
+def home():
+    return {"message": "API is working 🚀"}
+
+
+@app.get("/translate/")
+def translate_api(text: str, lang: str):
+    translated = translate_text(text, lang)
+    return {
+        "original": text,
+        "translated": translated,
+        "target_language": lang
+    }

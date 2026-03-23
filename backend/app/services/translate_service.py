@@ -1,29 +1,25 @@
 from google.cloud import translate_v2 as translate
-from app.config.settings import settings
+import os
 
-translate_client = translate.Client()
+# Force credentials path
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+    "credentials",
+    "translate-key.json"
+)
 
-# Simple in-memory cache
-cache = {}
+# Create client (IMPORTANT: no manual credentials here)
+client = translate.Client()
+
 
 def translate_text(text: str, target_lang: str):
-    if not text or target_lang == "en":
-        return text
-
-    key = f"{text}-{target_lang}"
-    if key in cache:
-        return cache[key]
-
     try:
-        result = translate_client.translate(
-            text,
-            target_language=target_lang
-        )
-        translated = result["translatedText"]
+        result = client.translate(text, target_language=target_lang)
 
-        cache[key] = translated
-        return translated
+        print("RAW RESPONSE:", result)
+
+        return result.get("translatedText", text)
 
     except Exception as e:
-        print("Translation Error:", e)
+        print("❌ ERROR:", e)
         return text

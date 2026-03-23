@@ -4,36 +4,41 @@ export default function AISidebar({ externalMessage, onLocationDetected }) {
   const [messages, setMessages] = useState([
     {
       type: "ai",
-      text: "Hello! I'm Alpha. Ask me about museums near you, timings, prices, or current exhibitions anywhere in the world!"
+      text: "Hello! I'm Alpha. Ask me about museums near you, timings, prices, or exhibitions anywhere in the world!"
     }
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState(null);
-  const bottomRef = useRef(null);
-  const processedRef = useRef(null); // track last processed external message
 
-  // Detect user location on load
+  const bottomRef = useRef(null);
+  const processedRef = useRef(null);
+
+  // 🌍 Detect user location
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (pos) => {
           const { latitude, longitude } = pos.coords;
+
           try {
             const res = await fetch(
               `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
             );
             const data = await res.json();
+
             const city =
-            data.address?.city ||
-            data.address?.town ||
-            data.address?.suburb ||
-            data.address?.county ||
-            data.address?.state_district ||
-            data.address?.state ||
-            "your area";
+              data.address?.city ||
+              data.address?.town ||
+              data.address?.suburb ||
+              data.address?.county ||
+              data.address?.state_district ||
+              data.address?.state ||
+              "your area";
+
             setLocation(city);
             onLocationDetected?.(city);
+
             setMessages((prev) => [
               ...prev,
               {
@@ -48,7 +53,6 @@ export default function AISidebar({ externalMessage, onLocationDetected }) {
           }
         },
         () => {
-          // Location denied — that's fine
           setMessages((prev) => [
             ...prev,
             {
@@ -61,54 +65,73 @@ export default function AISidebar({ externalMessage, onLocationDetected }) {
     }
   }, []);
 
-  // Auto scroll
+  // 🔽 Auto scroll
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // When header sends a search query to sidebar
+  // 🔽 Handle search from header
   useEffect(() => {
-    if (
-      externalMessage &&
-      externalMessage !== processedRef.current
-    ) {
+    if (externalMessage && externalMessage !== processedRef.current) {
       processedRef.current = externalMessage;
       callApi(externalMessage);
     }
   }, [externalMessage]);
 
+  // 🚀 MAIN API FUNCTION (UPDATED)
   async function callApi(text, userLocation = location) {
     setLoading(true);
+
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chat`, {
+      const lang = localStorage.getItem("lang") || "en"; // 🔥 IMPORTANT
+
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chat/`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
           message: text,
-          session_id: "explore_guest",
-          location: userLocation
+          lang: lang,            // ✅ SEND LANGUAGE
+          location: userLocation,
+          session_id: "explore_guest"
         })
       });
+
       const data = await res.json();
-      setMessages((prev) => [...prev, { type: "ai", text: data.reply }]);
-    } catch {
+
       setMessages((prev) => [
         ...prev,
-        { type: "ai", text: "Sorry, I'm having trouble connecting. Please try again." }
+        { type: "ai", text: data.reply }
+      ]);
+
+    } catch (error) {
+      console.error("Chat Error:", error);
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          type: "ai",
+          text: "Sorry, I'm having trouble connecting. Please try again."
+        }
       ]);
     } finally {
       setLoading(false);
     }
   }
 
+  // 📩 Send message
   const sendMessage = async () => {
     const text = input.trim();
     if (!text || loading) return;
+
     setMessages((prev) => [...prev, { type: "user", text }]);
     setInput("");
+
     await callApi(text);
   };
 
+  // ⌨️ Enter key support
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -122,11 +145,16 @@ export default function AISidebar({ externalMessage, onLocationDetected }) {
 
         <h3 className="text-xl font-bold mb-6">Curation Alpha</h3>
 
+        {/* CHAT AREA */}
         <div className="space-y-4 mb-8 h-[500px] overflow-y-auto pr-1">
           {messages.map((msg, i) => (
             <div
               key={i}
-              className={msg.type === "user" ? "flex justify-end" : "flex justify-start"}
+              className={
+                msg.type === "user"
+                  ? "flex justify-end"
+                  : "flex justify-start"
+              }
             >
               <div
                 className={`max-w-[85%] p-4 rounded-2xl text-sm whitespace-pre-wrap ${
@@ -147,9 +175,11 @@ export default function AISidebar({ externalMessage, onLocationDetected }) {
               </div>
             </div>
           )}
+
           <div ref={bottomRef} />
         </div>
 
+        {/* INPUT */}
         <div className="flex gap-2">
           <input
             type="text"
@@ -160,6 +190,7 @@ export default function AISidebar({ externalMessage, onLocationDetected }) {
             className="flex-1 border rounded-xl p-4 bg-transparent text-sm outline-none"
             disabled={loading}
           />
+
           <button
             onClick={sendMessage}
             disabled={loading || !input.trim()}
