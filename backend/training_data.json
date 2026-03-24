@@ -1,71 +1,126 @@
 [
   {
+    "text": "Book tickets for Contemporary Masters Collection",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
     "text": "looks good",
     "label": "confirm",
     "value": "true"
   },
   {
-    "text": "the 10 timing",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "time slot 2",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "General Admittance please",
+    "text": "I'd like to attend Technology Through Ages",
     "label": "show",
-    "value": "General Admittance"
+    "value": "Technology Through Ages"
   },
   {
-    "text": "I prefer 2 pm",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "I prefer 4pm",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "I want Ancient Egypt",
-    "label": "show",
-    "value": "Ancient Egypt"
-  },
-  {
-    "text": "The dinosaur one",
-    "label": "show",
-    "value": "Dinosaur Exhibit"
-  },
-  {
-    "text": "visit on 27 March",
-    "label": "date",
-    "value": "2026-03-27"
-  },
-  {
-    "text": "visit tomorrow",
-    "label": "date",
-    "value": "2026-03-24"
-  },
-  {
-    "text": "yes please book",
+    "text": "100%",
     "label": "confirm",
     "value": "true"
   },
   {
-    "text": "visit on 02 April",
-    "label": "date",
-    "value": "2026-04-02"
+    "text": "Take me to Interactive Science Lab",
+    "label": "show",
+    "value": "Interactive Science Lab"
   },
   {
-    "text": "group of 5",
+    "text": "all good confirm",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "3pm please",
+    "label": "time_slot",
+    "value": "3:00 PM"
+  },
+  {
+    "text": "great",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "I want Contemporary Masters Collection",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
+    "text": "at 4 o'clock",
+    "label": "time_slot",
+    "value": "4:00 PM"
+  },
+  {
+    "text": "Book me for Regional Cuisine & Culture Tour",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "I want tickets to Freedom Struggle Gallery",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "I want Tribal Heritage Gallery",
+    "label": "show",
+    "value": "Tribal Heritage Gallery"
+  },
+  {
+    "text": "sure",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "I want to visit Ancient Civilizations Gallery",
+    "label": "show",
+    "value": "Ancient Civilizations Gallery"
+  },
+  {
+    "text": "i want to book 2 tickets for victoria memorial",
     "label": "tickets",
-    "value": "{\"adult\": 5, \"child\": 0, \"senior\": 0}"
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
   },
   {
-    "text": "yes book it",
+    "text": "2 nos",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "visit on 28 March",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "thanks",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "I want to go this weekend",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "Show: Folk Arts & Crafts Show",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "Can I book General Admittance?",
+    "label": "show",
+    "value": "General Admittance"
+  },
+  {
+    "text": "The folk one",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "saturday works for me",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "finalize",
     "label": "confirm",
     "value": "true"
   },
@@ -75,24 +130,54 @@
     "value": "10:00 AM"
   },
   {
-    "text": "yes please",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "afternoon slot",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "1 adult and 3 children",
+    "text": "6 tickets",
     "label": "tickets",
-    "value": "{\"adult\": 1, \"child\": 3, \"senior\": 0}"
+    "value": "{\"adult\": 6, \"child\": 0, \"senior\": 0}"
   },
   {
-    "text": "at 4",
+    "text": "visit on 27 March",
+    "label": "date",
+    "value": "2026-03-27"
+  },
+  {
+    "text": "okay cool",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "I want tickets to Technology Through Ages",
+    "label": "show",
+    "value": "Technology Through Ages"
+  },
+  {
+    "text": "I want tickets to Contemporary Masters Collection",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
+    "text": "Interested in ancient show",
+    "label": "show",
+    "value": "Ancient Civilizations Gallery"
+  },
+  {
+    "text": "9am slot",
     "label": "time_slot",
-    "value": "4:00 PM"
+    "value": "9:00 AM"
+  },
+  {
+    "text": "3 nos",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "Interested in space show",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "I want Colonial Era Exhibition",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
   },
   {
     "text": "2 seniors",
@@ -100,164 +185,54 @@
     "value": "{\"adult\": 0, \"child\": 0, \"senior\": 2}"
   },
   {
-    "text": "3 adults 2 children",
-    "label": "tickets",
-    "value": "{\"adult\": 3, \"child\": 2, \"senior\": 0}"
-  },
-  {
-    "text": "visit on 26 March",
-    "label": "date",
-    "value": "2026-03-26"
-  },
-  {
-    "text": "Modern Art Collection please",
+    "text": "Show: Interactive Science Lab",
     "label": "show",
-    "value": "Modern Art Collection"
+    "value": "Interactive Science Lab"
   },
   {
-    "text": "at 10",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "at 12 o'clock",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "I want to go this weekend",
-    "label": "date",
-    "value": "2026-03-28"
-  },
-  {
-    "text": "tell me more",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "time slot 2pm",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "any discounts",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "Can I book Modern Art Collection?",
-    "label": "show",
-    "value": "Modern Art Collection"
-  },
-  {
-    "text": "24 March",
-    "label": "date",
-    "value": "2026-03-24"
-  },
-  {
-    "text": "2 nos",
-    "label": "tickets",
-    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "on 27 March",
-    "label": "date",
-    "value": "2026-03-27"
-  },
-  {
-    "text": "afternoon please",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "please confirm",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "at noon o'clock",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "tickets for 5",
-    "label": "tickets",
-    "value": "{\"adult\": 5, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "at 4 o'clock",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "sure go ahead",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "The ancient one",
-    "label": "show",
-    "value": "Ancient Egypt"
-  },
-  {
-    "text": "Interested in dinosaur exhibit",
-    "label": "show",
-    "value": "Dinosaur Exhibit"
-  },
-  {
-    "text": "at 10am o'clock",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "on 24 March",
-    "label": "date",
-    "value": "2026-03-24"
-  },
-  {
-    "text": "I want Space & Cosmos Gallery",
-    "label": "show",
-    "value": "Space & Cosmos Gallery"
-  },
-  {
-    "text": "only 1",
+    "text": "one ticket",
     "label": "tickets",
     "value": "{\"adult\": 1, \"child\": 0, \"senior\": 0}"
   },
   {
-    "text": "noon slot",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "26 March",
-    "label": "date",
-    "value": "2026-03-26"
-  },
-  {
-    "text": "5 tickets",
-    "label": "tickets",
-    "value": "{\"adult\": 5, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "time slot 10am",
+    "text": "I prefer morning",
     "label": "time_slot",
     "value": "10:00 AM"
   },
   {
-    "text": "Book tickets for Space & Cosmos Gallery",
+    "text": "We want to go to Traditional Music & Dance",
     "label": "show",
-    "value": "Space & Cosmos Gallery"
+    "value": "Traditional Music & Dance"
   },
   {
-    "text": "go ahead",
-    "label": "confirm",
-    "value": "true"
+    "text": "Interested in tribal show",
+    "label": "show",
+    "value": "Tribal Heritage Gallery"
   },
   {
-    "text": "10 am please",
+    "text": "Book tickets for Regional Cuisine & Culture Tour",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "time slot 9",
     "label": "time_slot",
-    "value": "10:00 AM"
+    "value": "9:00 AM"
+  },
+  {
+    "text": "Can I book Modern Art Exhibition?",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "I want Interactive Science Lab",
+    "label": "show",
+    "value": "Interactive Science Lab"
+  },
+  {
+    "text": "I want to visit Sculpture & Crafts Tour",
+    "label": "show",
+    "value": "Sculpture & Crafts Tour"
   },
   {
     "text": "2 slot",
@@ -265,89 +240,14 @@
     "value": "2:00 PM"
   },
   {
-    "text": "2 people",
-    "label": "tickets",
-    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "on 25 March",
-    "label": "date",
-    "value": "2026-03-25"
-  },
-  {
-    "text": "I prefer 4",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "the afternoon timing",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "evening please",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "I'd like to attend Space & Cosmos Gallery",
-    "label": "show",
-    "value": "Space & Cosmos Gallery"
-  },
-  {
-    "text": "visit saturday",
-    "label": "date",
-    "value": "2026-03-28"
-  },
-  {
-    "text": "the evening timing",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "at 10 am",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "yep",
+    "text": "i want to confirm",
     "label": "confirm",
     "value": "true"
   },
   {
-    "text": "The space one",
-    "label": "show",
-    "value": "Space & Cosmos Gallery"
-  },
-  {
-    "text": "Can I book Space & Cosmos Gallery?",
-    "label": "show",
-    "value": "Space & Cosmos Gallery"
-  },
-  {
-    "text": "on this weekend",
-    "label": "date",
-    "value": "2026-03-28"
-  },
-  {
-    "text": "4 tickets please",
-    "label": "tickets",
-    "value": "{\"adult\": 4, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "Ancient Egypt please",
-    "label": "show",
-    "value": "Ancient Egypt"
-  },
-  {
-    "text": "I prefer 10",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "the 2pm timing",
-    "label": "time_slot",
-    "value": "2:00 PM"
+    "text": "timings of shows",
+    "label": "other",
+    "value": "none"
   },
   {
     "text": "time slot 10 am",
@@ -355,14 +255,889 @@
     "value": "10:00 AM"
   },
   {
-    "text": "saturday please",
+    "text": "add one more child",
+    "label": "tickets",
+    "value": "{\"adult\": 0, \"child\": 1, \"senior\": 0}"
+  },
+  {
+    "text": "the upcoming this weekend",
     "label": "date",
     "value": "2026-03-28"
+  },
+  {
+    "text": "Book tickets for Classical Indian Art Gallery",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "yes i confirm",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Sculpture & Crafts Tour please",
+    "label": "show",
+    "value": "Sculpture & Crafts Tour"
+  },
+  {
+    "text": "make it 3 adults total",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "Take me to Sculpture & Crafts Tour",
+    "label": "show",
+    "value": "Sculpture & Crafts Tour"
+  },
+  {
+    "text": "the 10 timing",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "Archaeology & Artifacts Tour please",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
+  },
+  {
+    "text": "5pm slot",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "family of 5",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 2, \"senior\": 0}"
+  },
+  {
+    "text": "The general one",
+    "label": "show",
+    "value": "General Admittance"
+  },
+  {
+    "text": "I'm interested in Technology Through Ages",
+    "label": "show",
+    "value": "Technology Through Ages"
+  },
+  {
+    "text": "We'd like to see Regional Cuisine & Culture Tour",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "tell me the price",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "what are the timings",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "I prefer afternoon",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "tomorrow works for me",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "Book tickets for General Admittance",
+    "label": "show",
+    "value": "General Admittance"
+  },
+  {
+    "text": "I'm interested in Classical Indian Art Gallery",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "all good",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "31 March",
+    "label": "date",
+    "value": "2026-03-31"
+  },
+  {
+    "text": "Can I book Classical Indian Art Gallery?",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "visit on 02 April",
+    "label": "date",
+    "value": "2026-04-02"
+  },
+  {
+    "text": "i want to book 2 tickets for victoria memorial",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "time slot 1",
+    "label": "time_slot",
+    "value": "1:00 PM"
+  },
+  {
+    "text": "Show: General Admittance",
+    "label": "show",
+    "value": "General Admittance"
+  },
+  {
+    "text": "take my booking",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "the 4pm timing",
+    "label": "time_slot",
+    "value": "4:00 PM"
+  },
+  {
+    "text": "5 please",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "book and pay",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "11 please",
+    "label": "time_slot",
+    "value": "11:00 AM"
+  },
+  {
+    "text": "9am please",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "at noon o'clock",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "Classical Indian Art Gallery please",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "start over",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "time slot 10",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "what is the address",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "Technology Through Ages please",
+    "label": "show",
+    "value": "Technology Through Ages"
+  },
+  {
+    "text": "what can you do",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "i need 4 tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 4, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "I want to visit Classical Indian Art Gallery",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "I'm interested in Modern Art Exhibition",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "I want to visit Interactive Science Lab",
+    "label": "show",
+    "value": "Interactive Science Lab"
+  },
+  {
+    "text": "how about today",
+    "label": "date",
+    "value": "2026-03-24"
+  },
+  {
+    "text": "We want to go to Technology Through Ages",
+    "label": "show",
+    "value": "Technology Through Ages"
+  },
+  {
+    "text": "book 3 tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "The interactive one",
+    "label": "show",
+    "value": "Interactive Science Lab"
+  },
+  {
+    "text": "ok proceed to payment",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "opening hours",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "what are the timings of shows",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "I'd like to attend Robotics & AI Exhibition",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
+  },
+  {
+    "text": "perfect that's right",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "at noon",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "10 please",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "I'd like to attend Traditional Music & Dance",
+    "label": "show",
+    "value": "Traditional Music & Dance"
+  },
+  {
+    "text": "Take me to Regional Cuisine & Culture Tour",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "at 11am",
+    "label": "time_slot",
+    "value": "11:00 AM"
+  },
+  {
+    "text": "time slot 2",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "hello there",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "evening please",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "book now",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Take me to Folk Arts & Crafts Show",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "at 11",
+    "label": "time_slot",
+    "value": "11:00 AM"
+  },
+  {
+    "text": "the upcoming sunday",
+    "label": "date",
+    "value": "2026-03-29"
+  },
+  {
+    "text": "the upcoming tomorrow would work for me",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "2 adults 1 senior citizen",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 1}"
+  },
+  {
+    "text": "Can I book Regional Cuisine & Culture Tour?",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "We'd like to see Contemporary Masters Collection",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
+    "text": "at afternoon",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "proceed to pay",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "maybe",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "We'd like to see Classical Indian Art Gallery",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "how about tomorrow",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "yes that works",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "what museums do you have",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "please finalize the booking",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "04 April",
+    "label": "date",
+    "value": "2026-04-04"
+  },
+  {
+    "text": "at 2",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "visit on 01 April",
+    "label": "date",
+    "value": "2026-04-01"
+  },
+  {
+    "text": "We'd like to see General Admittance",
+    "label": "show",
+    "value": "General Admittance"
+  },
+  {
+    "text": "25 March",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "student discount",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "at 5pm o'clock",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "get me 2 tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "I want to visit Archaeology & Artifacts Tour",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
+  },
+  {
+    "text": "today works for me",
+    "label": "date",
+    "value": "2026-03-24"
+  },
+  {
+    "text": "time slot 2pm",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "this weekend works for me",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "2pm please",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "what exhibitions are on",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "finalize and pay",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "I prefer 4",
+    "label": "time_slot",
+    "value": "4:00 PM"
+  },
+  {
+    "text": "Book me for Interactive Science Lab",
+    "label": "show",
+    "value": "Interactive Science Lab"
+  },
+  {
+    "text": "I want Classical Indian Art Gallery",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "Book me for Folk Arts & Crafts Show",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "how much is it",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "at 9",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "I want tickets to Ancient Civilizations Gallery",
+    "label": "show",
+    "value": "Ancient Civilizations Gallery"
+  },
+  {
+    "text": "finalize my booking",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Interested in traditional show",
+    "label": "show",
+    "value": "Traditional Music & Dance"
+  },
+  {
+    "text": "that's correct",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "We'd like to see Folk Arts & Crafts Show",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "sounds good",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "10 slot",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "I want to visit Traditional Music & Dance",
+    "label": "show",
+    "value": "Traditional Music & Dance"
+  },
+  {
+    "text": "on 31 March",
+    "label": "date",
+    "value": "2026-03-31"
+  },
+  {
+    "text": "at 11 o'clock",
+    "label": "time_slot",
+    "value": "11:00 AM"
+  },
+  {
+    "text": "10am slot",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "tell me the timings",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "Show: Regional Cuisine & Culture Tour",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "one more child ticket please",
+    "label": "tickets",
+    "value": "{\"adult\": 0, \"child\": 1, \"senior\": 0}"
+  },
+  {
+    "text": "The contemporary one",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
+    "text": "The space one",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "noon please",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "reset",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "The classical one",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "01 April",
+    "label": "date",
+    "value": "2026-04-01"
+  },
+  {
+    "text": "i want to change my booking",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "I want tickets to Folk Arts & Crafts Show",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "visit sunday",
+    "label": "date",
+    "value": "2026-03-29"
+  },
+  {
+    "text": "I prefer 2",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "the noon timing",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "I'd like to attend Folk Arts & Crafts Show",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "Interested in classical show",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "Can I book Space & Astronomy Show?",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "the 12 timing",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "Interested in robotics show",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
+  },
+  {
+    "text": "The technology one",
+    "label": "show",
+    "value": "Technology Through Ages"
+  },
+  {
+    "text": "yes please confirm",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "yes please",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "We want to go to General Admittance",
+    "label": "show",
+    "value": "General Admittance"
+  },
+  {
+    "text": "I'd like to attend Archaeology & Artifacts Tour",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
+  },
+  {
+    "text": "Book me for General Admittance",
+    "label": "show",
+    "value": "General Admittance"
+  },
+  {
+    "text": "show timings please",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "I want Space & Astronomy Show",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "let's do it",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "goodbye",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "good evening",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "the upcoming this weekend would work for me",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "I'm interested in General Admittance",
+    "label": "show",
+    "value": "General Admittance"
+  },
+  {
+    "text": "29 March",
+    "label": "date",
+    "value": "2026-03-29"
+  },
+  {
+    "text": "just 1 ticket",
+    "label": "tickets",
+    "value": "{\"adult\": 1, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "I prefer 11am",
+    "label": "time_slot",
+    "value": "11:00 AM"
+  },
+  {
+    "text": "modify booking",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "I want tickets to Colonial Era Exhibition",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
+  },
+  {
+    "text": "add another child ticket",
+    "label": "tickets",
+    "value": "{\"adult\": 0, \"child\": 1, \"senior\": 0}"
+  },
+  {
+    "text": "11am please",
+    "label": "time_slot",
+    "value": "11:00 AM"
+  },
+  {
+    "text": "I want tickets to Robotics & AI Exhibition",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
   },
   {
     "text": "tickets for 4",
     "label": "tickets",
     "value": "{\"adult\": 4, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "sunday please",
+    "label": "date",
+    "value": "2026-03-29"
+  },
+  {
+    "text": "the 11 timing",
+    "label": "time_slot",
+    "value": "11:00 AM"
+  },
+  {
+    "text": "time slot afternoon",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "go ahead",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "howdy",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "Show: Classical Indian Art Gallery",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "yes let's book",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "time slot 10am",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "We'd like to see Archaeology & Artifacts Tour",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
+  },
+  {
+    "text": "just me",
+    "label": "tickets",
+    "value": "{\"adult\": 1, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "I prefer 12pm",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "Interested in folk show",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "I'm interested in Space & Astronomy Show",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "I want Robotics & AI Exhibition",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
+  },
+  {
+    "text": "visit tomorrow",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "which museum is best",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "can we come tomorrow",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "12pm slot",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "I prefer saturday",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "Contemporary Masters Collection please",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
+    "text": "I want to go today",
+    "label": "date",
+    "value": "2026-03-24"
+  },
+  {
+    "text": "Book tickets for Archaeology & Artifacts Tour",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
+  },
+  {
+    "text": "3 tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "booking for saturday",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "at 10 am o'clock",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "Traditional Music & Dance please",
+    "label": "show",
+    "value": "Traditional Music & Dance"
+  },
+  {
+    "text": "tomorrow please",
+    "label": "date",
+    "value": "2026-03-25"
   },
   {
     "text": "the 10 am timing",
@@ -375,409 +1150,44 @@
     "value": "10:00 AM"
   },
   {
-    "text": "29 March",
-    "label": "date",
-    "value": "2026-03-29"
+    "text": "1 slot",
+    "label": "time_slot",
+    "value": "1:00 PM"
   },
   {
-    "text": "book for 01 April",
-    "label": "date",
-    "value": "2026-04-01"
-  },
-  {
-    "text": "this weekend please",
-    "label": "date",
-    "value": "2026-03-28"
-  },
-  {
-    "text": "I want to go saturday",
-    "label": "date",
-    "value": "2026-03-28"
-  },
-  {
-    "text": "need 2 tickets",
-    "label": "tickets",
-    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "yes confirm please",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "25 March",
-    "label": "date",
-    "value": "2026-03-25"
-  },
-  {
-    "text": "visit on 29 March",
-    "label": "date",
-    "value": "2026-03-29"
-  },
-  {
-    "text": "I'd like to attend Ancient Egypt",
+    "text": "Interested in technology show",
     "label": "show",
-    "value": "Ancient Egypt"
+    "value": "Technology Through Ages"
   },
   {
-    "text": "Interested in space exhibit",
-    "label": "show",
-    "value": "Space & Cosmos Gallery"
-  },
-  {
-    "text": "one ticket",
-    "label": "tickets",
-    "value": "{\"adult\": 1, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "Show me Space & Cosmos Gallery",
-    "label": "show",
-    "value": "Space & Cosmos Gallery"
-  },
-  {
-    "text": "thank you",
+    "text": "how far is it",
     "label": "other",
     "value": "none"
   },
   {
-    "text": "at evening o'clock",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "just 1 ticket",
-    "label": "tickets",
-    "value": "{\"adult\": 1, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "time slot evening",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "10 please",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "that's fine",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "perfect book it",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "I prefer 4 pm",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "book for 25 March",
-    "label": "date",
-    "value": "2026-03-25"
-  },
-  {
-    "text": "two tickets",
-    "label": "tickets",
-    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "Show me Ancient Egypt",
-    "label": "show",
-    "value": "Ancient Egypt"
-  },
-  {
-    "text": "bye",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "book for 28 March",
-    "label": "date",
-    "value": "2026-03-28"
-  },
-  {
-    "text": "tickets for 3",
+    "text": "3 of us are coming",
     "label": "tickets",
     "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
   },
   {
-    "text": "the 12pm timing",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "12pm slot",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "on 31 March",
-    "label": "date",
-    "value": "2026-03-31"
-  },
-  {
-    "text": "Show me Modern Art Collection",
-    "label": "show",
-    "value": "Modern Art Collection"
-  },
-  {
-    "text": "finalize",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "on 03 April",
-    "label": "date",
-    "value": "2026-04-03"
-  },
-  {
-    "text": "I prefer 10 am",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "I'd like to attend Modern Art Collection",
-    "label": "show",
-    "value": "Modern Art Collection"
-  },
-  {
-    "text": "3 adults 2 kids",
-    "label": "tickets",
-    "value": "{\"adult\": 3, \"child\": 2, \"senior\": 0}"
-  },
-  {
-    "text": "4pm slot",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "I'm interested in Modern Art Collection",
-    "label": "show",
-    "value": "Modern Art Collection"
-  },
-  {
-    "text": "can we come this weekend",
+    "text": "the upcoming saturday would work",
     "label": "date",
     "value": "2026-03-28"
   },
   {
-    "text": "the 4 timing",
+    "text": "5 slot",
     "label": "time_slot",
-    "value": "4:00 PM"
+    "value": "5:00 PM"
   },
   {
-    "text": "how much does it cost",
+    "text": "Book me for Archaeology & Artifacts Tour",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
+  },
+  {
+    "text": "thank you so much",
     "label": "other",
     "value": "none"
-  },
-  {
-    "text": "I prefer 12pm",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "Book tickets for General Admittance",
-    "label": "show",
-    "value": "General Admittance"
-  },
-  {
-    "text": "2 adults and 1 senior",
-    "label": "tickets",
-    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 1}"
-  },
-  {
-    "text": "three tickets",
-    "label": "tickets",
-    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "time slot 4",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "reset",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "visit on 01 April",
-    "label": "date",
-    "value": "2026-04-01"
-  },
-  {
-    "text": "the 4 pm timing",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "I prefer afternoon",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "the 4pm timing",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "yes finalize",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "I want tickets to Ancient Egypt",
-    "label": "show",
-    "value": "Ancient Egypt"
-  },
-  {
-    "text": "I'm interested in Ancient Egypt",
-    "label": "show",
-    "value": "Ancient Egypt"
-  },
-  {
-    "text": "I want to go today",
-    "label": "date",
-    "value": "2026-03-23"
-  },
-  {
-    "text": "2pm please",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "4 slot",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "Can I book Dinosaur Exhibit?",
-    "label": "show",
-    "value": "Dinosaur Exhibit"
-  },
-  {
-    "text": "do it",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "28 March",
-    "label": "date",
-    "value": "2026-03-28"
-  },
-  {
-    "text": "We'd like to see General Admittance",
-    "label": "show",
-    "value": "General Admittance"
-  },
-  {
-    "text": "is it open today",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "what exhibitions are on",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "proceed",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "3 tickets",
-    "label": "tickets",
-    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "I want to visit Modern Art Collection",
-    "label": "show",
-    "value": "Modern Art Collection"
-  },
-  {
-    "text": "what can you do",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "Interested in modern exhibit",
-    "label": "show",
-    "value": "Modern Art Collection"
-  },
-  {
-    "text": "on 28 March",
-    "label": "date",
-    "value": "2026-03-28"
-  },
-  {
-    "text": "today please",
-    "label": "date",
-    "value": "2026-03-23"
-  },
-  {
-    "text": "I want General Admittance",
-    "label": "show",
-    "value": "General Admittance"
-  },
-  {
-    "text": "The general one",
-    "label": "show",
-    "value": "General Admittance"
-  },
-  {
-    "text": "at 4pm",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "2 entries",
-    "label": "tickets",
-    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "I prefer morning",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "yup",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "what museums do you have",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "27 March",
-    "label": "date",
-    "value": "2026-03-27"
-  },
-  {
-    "text": "tomorrow please",
-    "label": "date",
-    "value": "2026-03-24"
-  },
-  {
-    "text": "I'd like to attend Dinosaur Exhibit",
-    "label": "show",
-    "value": "Dinosaur Exhibit"
-  },
-  {
-    "text": "Space & Cosmos Gallery please",
-    "label": "show",
-    "value": "Space & Cosmos Gallery"
-  },
-  {
-    "text": "visit on 25 March",
-    "label": "date",
-    "value": "2026-03-25"
   },
   {
     "text": "want 2 tickets",
@@ -785,229 +1195,89 @@
     "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
   },
   {
-    "text": "10 slot",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "time slot 12pm",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "okay",
+    "text": "yes confirm booking",
     "label": "confirm",
     "value": "true"
   },
   {
-    "text": "I'd like to attend General Admittance",
-    "label": "show",
-    "value": "General Admittance"
-  },
-  {
-    "text": "I prefer noon",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "morning slot",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "time slot noon",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "2 pm slot",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "refund policy",
+    "text": "hello",
     "label": "other",
     "value": "none"
   },
   {
-    "text": "i want to change my booking",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "the 12 timing",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "five tickets",
-    "label": "tickets",
-    "value": "{\"adult\": 5, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "four tickets",
-    "label": "tickets",
-    "value": "{\"adult\": 4, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "go for it",
+    "text": "yes that's correct",
     "label": "confirm",
     "value": "true"
   },
   {
-    "text": "10am please",
+    "text": "Book tickets for Technology Through Ages",
+    "label": "show",
+    "value": "Technology Through Ages"
+  },
+  {
+    "text": "3pm slot",
+    "label": "time_slot",
+    "value": "3:00 PM"
+  },
+  {
+    "text": "I'm interested in Contemporary Masters Collection",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
+    "text": "that looks right",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "the morning timing",
     "label": "time_slot",
     "value": "10:00 AM"
   },
   {
-    "text": "visit on 31 March",
-    "label": "date",
-    "value": "2026-03-31"
-  },
-  {
-    "text": "Interested in ancient exhibit",
+    "text": "We'd like to see Tribal Heritage Gallery",
     "label": "show",
-    "value": "Ancient Egypt"
+    "value": "Tribal Heritage Gallery"
   },
   {
-    "text": "I want to go sunday",
-    "label": "date",
-    "value": "2026-03-29"
-  },
-  {
-    "text": "what are the prices",
+    "text": "are you open on sunday",
     "label": "other",
     "value": "none"
   },
   {
-    "text": "Book me for Dinosaur Exhibit",
+    "text": "I want Sculpture & Crafts Tour",
     "label": "show",
-    "value": "Dinosaur Exhibit"
+    "value": "Sculpture & Crafts Tour"
   },
   {
-    "text": "all good",
-    "label": "confirm",
-    "value": "true"
+    "text": "cancel",
+    "label": "other",
+    "value": "none"
   },
   {
-    "text": "I prefer 12",
+    "text": "at 9am o'clock",
     "label": "time_slot",
-    "value": "12:00 PM"
+    "value": "9:00 AM"
   },
   {
-    "text": "We'd like to see Ancient Egypt",
-    "label": "show",
-    "value": "Ancient Egypt"
-  },
-  {
-    "text": "at 2",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "ok book it",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "me and my friend",
-    "label": "tickets",
-    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "at 12",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "We want to go to Space & Cosmos Gallery",
-    "label": "show",
-    "value": "Space & Cosmos Gallery"
-  },
-  {
-    "text": "can we come today",
-    "label": "date",
-    "value": "2026-03-23"
-  },
-  {
-    "text": "on today",
-    "label": "date",
-    "value": "2026-03-23"
-  },
-  {
-    "text": "Book me for Ancient Egypt",
-    "label": "show",
-    "value": "Ancient Egypt"
-  },
-  {
-    "text": "We want to go to General Admittance",
-    "label": "show",
-    "value": "General Admittance"
-  },
-  {
-    "text": "the 2 pm timing",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "morning please",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "time slot afternoon",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "12 please",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "booking for today",
-    "label": "date",
-    "value": "2026-03-23"
-  },
-  {
-    "text": "02 April",
-    "label": "date",
-    "value": "2026-04-02"
-  },
-  {
-    "text": "can we come tomorrow",
+    "text": "the upcoming today would work for me",
     "label": "date",
     "value": "2026-03-24"
   },
   {
-    "text": "need 3 tickets",
-    "label": "tickets",
-    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
+    "text": "anything else",
+    "label": "other",
+    "value": "none"
   },
   {
-    "text": "noon please",
-    "label": "time_slot",
-    "value": "12:00 PM"
+    "text": "please confirm",
+    "label": "confirm",
+    "value": "true"
   },
   {
-    "text": "I want tickets to Dinosaur Exhibit",
-    "label": "show",
-    "value": "Dinosaur Exhibit"
-  },
-  {
-    "text": "I want tickets to General Admittance",
-    "label": "show",
-    "value": "General Admittance"
-  },
-  {
-    "text": "book for 26 March",
-    "label": "date",
-    "value": "2026-03-26"
-  },
-  {
-    "text": "I'm interested in Dinosaur Exhibit",
-    "label": "show",
-    "value": "Dinosaur Exhibit"
+    "text": "recommend something",
+    "label": "other",
+    "value": "none"
   },
   {
     "text": "on 29 March",
@@ -1015,39 +1285,64 @@
     "value": "2026-03-29"
   },
   {
-    "text": "Book tickets for Ancient Egypt",
+    "text": "I'm interested in Ancient Civilizations Gallery",
     "label": "show",
-    "value": "Ancient Egypt"
+    "value": "Ancient Civilizations Gallery"
   },
   {
-    "text": "4 adults",
-    "label": "tickets",
-    "value": "{\"adult\": 4, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "group of 10",
-    "label": "tickets",
-    "value": "{\"adult\": 10, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "at afternoon o'clock",
+    "text": "at 2 o'clock",
     "label": "time_slot",
-    "value": "12:00 PM"
+    "value": "2:00 PM"
   },
   {
-    "text": "can i cancel my booking",
+    "text": "I want to visit Freedom Struggle Gallery",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "1 adult ticket please",
+    "label": "tickets",
+    "value": "{\"adult\": 1, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "booking for sunday",
+    "label": "date",
+    "value": "2026-03-29"
+  },
+  {
+    "text": "I prefer 4pm",
+    "label": "time_slot",
+    "value": "4:00 PM"
+  },
+  {
+    "text": "visit on 26 March",
+    "label": "date",
+    "value": "2026-03-26"
+  },
+  {
+    "text": "03 April",
+    "label": "date",
+    "value": "2026-04-03"
+  },
+  {
+    "text": "what are the prices",
     "label": "other",
     "value": "none"
   },
   {
-    "text": "12pm please",
-    "label": "time_slot",
-    "value": "12:00 PM"
+    "text": "visit on 03 April",
+    "label": "date",
+    "value": "2026-04-03"
   },
   {
-    "text": "I'm interested in Space & Cosmos Gallery",
-    "label": "show",
-    "value": "Space & Cosmos Gallery"
+    "text": "on 27 March",
+    "label": "date",
+    "value": "2026-03-27"
+  },
+  {
+    "text": "booking for 2 adults",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
   },
   {
     "text": "book for 2",
@@ -1055,72 +1350,272 @@
     "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
   },
   {
-    "text": "1 adult 2 children",
-    "label": "tickets",
-    "value": "{\"adult\": 1, \"child\": 2, \"senior\": 0}"
+    "text": "booking for today",
+    "label": "date",
+    "value": "2026-03-24"
   },
   {
-    "text": "Book me for Space & Cosmos Gallery",
-    "label": "show",
-    "value": "Space & Cosmos Gallery"
-  },
-  {
-    "text": "at 10 am o'clock",
+    "text": "at 11am o'clock",
     "label": "time_slot",
-    "value": "10:00 AM"
+    "value": "11:00 AM"
   },
   {
-    "text": "Can I book Ancient Egypt?",
-    "label": "show",
-    "value": "Ancient Egypt"
+    "text": "2 adults and 1 child",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 1, \"senior\": 0}"
   },
   {
-    "text": "can we come sunday",
+    "text": "on sunday",
     "label": "date",
     "value": "2026-03-29"
   },
   {
-    "text": "confirm",
+    "text": "yes please book",
     "label": "confirm",
     "value": "true"
   },
   {
-    "text": "is parking available",
+    "text": "We'd like to see Modern Art Exhibition",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "I'm interested in Freedom Struggle Gallery",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "Can I book Folk Arts & Crafts Show?",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "book it",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Show: Freedom Struggle Gallery",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "four tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 4, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "3 passes",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "I prefer this weekend",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "i want to pay now",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "on 28 March",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "I'd like to attend Ancient Civilizations Gallery",
+    "label": "show",
+    "value": "Ancient Civilizations Gallery"
+  },
+  {
+    "text": "Take me to Classical Indian Art Gallery",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "everything looks good",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "time slot 3pm",
+    "label": "time_slot",
+    "value": "3:00 PM"
+  },
+  {
+    "text": "Book me for Colonial Era Exhibition",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
+  },
+  {
+    "text": "three tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "noon slot",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "book 2 adult tickets please",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "time slot 9am",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "2 adults 1 kid",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 1, \"senior\": 0}"
+  },
+  {
+    "text": "tickets for 5",
+    "label": "tickets",
+    "value": "{\"adult\": 5, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "We want to go to Colonial Era Exhibition",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
+  },
+  {
+    "text": "I want to visit Robotics & AI Exhibition",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
+  },
+  {
+    "text": "2 adults and 1 child",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 1, \"senior\": 0}"
+  },
+  {
+    "text": "I want tickets to Tribal Heritage Gallery",
+    "label": "show",
+    "value": "Tribal Heritage Gallery"
+  },
+  {
+    "text": "give me a moment",
     "label": "other",
     "value": "none"
   },
   {
-    "text": "goodbye",
-    "label": "other",
-    "value": "none"
+    "text": "Interested in archaeology show",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
   },
   {
-    "text": "at 4 pm",
+    "text": "confirmed please",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Interested in sculpture show",
+    "label": "show",
+    "value": "Sculpture & Crafts Tour"
+  },
+  {
+    "text": "ok",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "I want Regional Cuisine & Culture Tour",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "The regional one",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "at 4pm o'clock",
     "label": "time_slot",
     "value": "4:00 PM"
   },
   {
-    "text": "I want Modern Art Collection",
-    "label": "show",
-    "value": "Modern Art Collection"
-  },
-  {
-    "text": "what time do you close",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "help",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "ok confirm",
+    "text": "ok finalize",
     "label": "confirm",
     "value": "true"
   },
   {
-    "text": "great",
+    "text": "We want to go to Modern Art Exhibition",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "9 am slot",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "sunday works for me",
+    "label": "date",
+    "value": "2026-03-29"
+  },
+  {
+    "text": "I prefer 5",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "Take me to Freedom Struggle Gallery",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "booking for tomorrow",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "Book tickets for Traditional Music & Dance",
+    "label": "show",
+    "value": "Traditional Music & Dance"
+  },
+  {
+    "text": "Take me to Ancient Civilizations Gallery",
+    "label": "show",
+    "value": "Ancient Civilizations Gallery"
+  },
+  {
+    "text": "We want to go to Classical Indian Art Gallery",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "book for 04 April",
+    "label": "date",
+    "value": "2026-04-04"
+  },
+  {
+    "text": "visit on 25 March",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "I want tickets to Space & Astronomy Show",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "sure thing",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "on saturday",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "yes proceed with booking",
     "label": "confirm",
     "value": "true"
   },
@@ -1130,514 +1625,89 @@
     "value": "true"
   },
   {
-    "text": "3 nos",
-    "label": "tickets",
-    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "time slot 4 pm",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "recommend something",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "book it",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "Show me General Admittance",
-    "label": "show",
-    "value": "General Admittance"
-  },
-  {
-    "text": "2 adults 2 kids 1 senior",
-    "label": "tickets",
-    "value": "{\"adult\": 2, \"child\": 2, \"senior\": 1}"
-  },
-  {
-    "text": "Book tickets for Modern Art Collection",
-    "label": "show",
-    "value": "Modern Art Collection"
-  },
-  {
-    "text": "1 adult 1 child 1 senior",
-    "label": "tickets",
-    "value": "{\"adult\": 1, \"child\": 1, \"senior\": 1}"
-  },
-  {
-    "text": "03 April",
-    "label": "date",
-    "value": "2026-04-03"
-  },
-  {
-    "text": "correct",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "We want to go to Modern Art Collection",
-    "label": "show",
-    "value": "Modern Art Collection"
-  },
-  {
-    "text": "the morning timing",
+    "text": "10am please",
     "label": "time_slot",
     "value": "10:00 AM"
   },
   {
-    "text": "evening slot",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "Show me Dinosaur Exhibit",
-    "label": "show",
-    "value": "Dinosaur Exhibit"
-  },
-  {
-    "text": "the noon timing",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "visit sunday",
+    "text": "the upcoming sunday would work for me",
     "label": "date",
     "value": "2026-03-29"
   },
   {
-    "text": "booking for saturday",
+    "text": "yes i want to book",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "the 3pm timing",
+    "label": "time_slot",
+    "value": "3:00 PM"
+  },
+  {
+    "text": "Take me to Traditional Music & Dance",
+    "label": "show",
+    "value": "Traditional Music & Dance"
+  },
+  {
+    "text": "Show: Sculpture & Crafts Tour",
+    "label": "show",
+    "value": "Sculpture & Crafts Tour"
+  },
+  {
+    "text": "I want Ancient Civilizations Gallery",
+    "label": "show",
+    "value": "Ancient Civilizations Gallery"
+  },
+  {
+    "text": "how about this weekend",
     "label": "date",
     "value": "2026-03-28"
   },
   {
-    "text": "visit today",
-    "label": "date",
-    "value": "2026-03-23"
+    "text": "what time are the shows",
+    "label": "other",
+    "value": "none"
   },
   {
-    "text": "get me 2 tickets",
+    "text": "sure go ahead",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "yes book it for me",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "I'm interested in Robotics & AI Exhibition",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
+  },
+  {
+    "text": "I prefer 9",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "ok confirm",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "finalize the booking",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "I prefer 3pm",
+    "label": "time_slot",
+    "value": "3:00 PM"
+  },
+  {
+    "text": "two tickets",
     "label": "tickets",
     "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "at 4 pm o'clock",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "finalize booking",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "yes that's correct",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "couple tickets",
-    "label": "tickets",
-    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "visit on 24 March",
-    "label": "date",
-    "value": "2026-03-24"
-  },
-  {
-    "text": "Interested in general exhibit",
-    "label": "show",
-    "value": "General Admittance"
-  },
-  {
-    "text": "want 4 tickets",
-    "label": "tickets",
-    "value": "{\"adult\": 4, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "2 adults 1 kid",
-    "label": "tickets",
-    "value": "{\"adult\": 2, \"child\": 1, \"senior\": 0}"
-  },
-  {
-    "text": "perfect",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "at morning",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "I want tickets to Space & Cosmos Gallery",
-    "label": "show",
-    "value": "Space & Cosmos Gallery"
-  },
-  {
-    "text": "at 2pm",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "4 please",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "We want to go to Ancient Egypt",
-    "label": "show",
-    "value": "Ancient Egypt"
-  },
-  {
-    "text": "can we come saturday",
-    "label": "date",
-    "value": "2026-03-28"
-  },
-  {
-    "text": "The modern one",
-    "label": "show",
-    "value": "Modern Art Collection"
-  },
-  {
-    "text": "on 01 April",
-    "label": "date",
-    "value": "2026-04-01"
-  },
-  {
-    "text": "on tomorrow",
-    "label": "date",
-    "value": "2026-03-24"
-  },
-  {
-    "text": "family of 4",
-    "label": "tickets",
-    "value": "{\"adult\": 2, \"child\": 2, \"senior\": 0}"
-  },
-  {
-    "text": "I prefer 2pm",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "what is the address",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "at 2 pm o'clock",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "i need help",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "2 please",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "the 10am timing",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "hi",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "book now",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "at 2 pm",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "Book me for General Admittance",
-    "label": "show",
-    "value": "General Admittance"
-  },
-  {
-    "text": "2 pm please",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "3 passes",
-    "label": "tickets",
-    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "2 adults and 1 child",
-    "label": "tickets",
-    "value": "{\"adult\": 2, \"child\": 1, \"senior\": 0}"
-  },
-  {
-    "text": "booking for sunday",
-    "label": "date",
-    "value": "2026-03-29"
-  },
-  {
-    "text": "confirmed please",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "sure",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "visit on 03 April",
-    "label": "date",
-    "value": "2026-04-03"
-  },
-  {
-    "text": "3 people",
-    "label": "tickets",
-    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "which museum is best",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "I want to visit Dinosaur Exhibit",
-    "label": "show",
-    "value": "Dinosaur Exhibit"
-  },
-  {
-    "text": "4pm please",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "book for 03 April",
-    "label": "date",
-    "value": "2026-04-03"
-  },
-  {
-    "text": "book 3 tickets",
-    "label": "tickets",
-    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "confirmed",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "4 pm please",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "time slot 4pm",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "time slot 12",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "confirm booking",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "visit this weekend",
-    "label": "date",
-    "value": "2026-03-28"
-  },
-  {
-    "text": "yes go ahead",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "at 2 o'clock",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "book for 27 March",
-    "label": "date",
-    "value": "2026-03-27"
-  },
-  {
-    "text": "yes i confirm",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "ok proceed to payment",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "booking for this weekend",
-    "label": "date",
-    "value": "2026-03-28"
-  },
-  {
-    "text": "book for 29 March",
-    "label": "date",
-    "value": "2026-03-29"
-  },
-  {
-    "text": "Can I book General Admittance?",
-    "label": "show",
-    "value": "General Admittance"
-  },
-  {
-    "text": "let's do it",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "that's correct",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "done",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "I want to visit General Admittance",
-    "label": "show",
-    "value": "General Admittance"
-  },
-  {
-    "text": "Dinosaur Exhibit please",
-    "label": "show",
-    "value": "Dinosaur Exhibit"
-  },
-  {
-    "text": "yes",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "I want tickets to Modern Art Collection",
-    "label": "show",
-    "value": "Modern Art Collection"
-  },
-  {
-    "text": "Book tickets for Dinosaur Exhibit",
-    "label": "show",
-    "value": "Dinosaur Exhibit"
-  },
-  {
-    "text": "absolutely",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "thanks",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "4 pm slot",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "visit on 28 March",
-    "label": "date",
-    "value": "2026-03-28"
-  },
-  {
-    "text": "10am slot",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "the 2 timing",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "01 April",
-    "label": "date",
-    "value": "2026-04-01"
-  },
-  {
-    "text": "I prefer 2",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "cancel",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "hello",
-    "label": "other",
-    "value": "none"
-  },
-  {
-    "text": "on 02 April",
-    "label": "date",
-    "value": "2026-04-02"
-  },
-  {
-    "text": "at 12pm",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "I prefer evening",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "12 slot",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "on sunday",
-    "label": "date",
-    "value": "2026-03-29"
-  },
-  {
-    "text": "book for 31 March",
-    "label": "date",
-    "value": "2026-03-31"
-  },
-  {
-    "text": "yes that's right",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "6 tickets",
-    "label": "tickets",
-    "value": "{\"adult\": 6, \"child\": 0, \"senior\": 0}"
-  },
-  {
-    "text": "i want to confirm",
-    "label": "confirm",
-    "value": "true"
   },
   {
     "text": "how do i get there",
@@ -1645,37 +1715,292 @@
     "value": "none"
   },
   {
-    "text": "sunday please",
+    "text": "I want Folk Arts & Crafts Show",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "28 March",
     "label": "date",
-    "value": "2026-03-29"
+    "value": "2026-03-28"
   },
   {
-    "text": "1 senior ticket",
-    "label": "tickets",
-    "value": "{\"adult\": 0, \"child\": 0, \"senior\": 1}"
-  },
-  {
-    "text": "at noon",
+    "text": "2 please",
     "label": "time_slot",
-    "value": "12:00 PM"
+    "value": "2:00 PM"
   },
   {
-    "text": "yes proceed",
+    "text": "visit on 04 April",
+    "label": "date",
+    "value": "2026-04-04"
+  },
+  {
+    "text": "at evening o'clock",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "We'd like to see Sculpture & Crafts Tour",
+    "label": "show",
+    "value": "Sculpture & Crafts Tour"
+  },
+  {
+    "text": "definitely",
     "label": "confirm",
     "value": "true"
   },
   {
-    "text": "book 2 tickets",
-    "label": "tickets",
-    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+    "text": "yes that's my booking",
+    "label": "confirm",
+    "value": "true"
   },
   {
-    "text": "2 adult tickets",
-    "label": "tickets",
-    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+    "text": "I'm interested in Archaeology & Artifacts Tour",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
   },
   {
-    "text": "just me",
+    "text": "at afternoon o'clock",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "Book tickets for Tribal Heritage Gallery",
+    "label": "show",
+    "value": "Tribal Heritage Gallery"
+  },
+  {
+    "text": "on tomorrow",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "please add one more child ticket for it",
+    "label": "tickets",
+    "value": "{\"adult\": 0, \"child\": 1, \"senior\": 0}"
+  },
+  {
+    "text": "Folk Arts & Crafts Show please",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "at 3pm o'clock",
+    "label": "time_slot",
+    "value": "3:00 PM"
+  },
+  {
+    "text": "Book me for Contemporary Masters Collection",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
+    "text": "I want tickets to Sculpture & Crafts Tour",
+    "label": "show",
+    "value": "Sculpture & Crafts Tour"
+  },
+  {
+    "text": "5 tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 5, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "on 25 March",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "proceed",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Interested in regional show",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "on today",
+    "label": "date",
+    "value": "2026-03-24"
+  },
+  {
+    "text": "i confirm",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "tickets for 3",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "I prefer 5pm",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "visit today",
+    "label": "date",
+    "value": "2026-03-24"
+  },
+  {
+    "text": "book for 25 March",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "I'd like to attend Tribal Heritage Gallery",
+    "label": "show",
+    "value": "Tribal Heritage Gallery"
+  },
+  {
+    "text": "I prefer 9 am",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "wheelchair access",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "the 2pm timing",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "I want Technology Through Ages",
+    "label": "show",
+    "value": "Technology Through Ages"
+  },
+  {
+    "text": "at 10 am",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "We'd like to see Colonial Era Exhibition",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
+  },
+  {
+    "text": "We want to go to Interactive Science Lab",
+    "label": "show",
+    "value": "Interactive Science Lab"
+  },
+  {
+    "text": "I'd like to attend Contemporary Masters Collection",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
+    "text": "at 12 o'clock",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "yes finalize",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "I'm interested in Colonial Era Exhibition",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
+  },
+  {
+    "text": "Book me for Tribal Heritage Gallery",
+    "label": "show",
+    "value": "Tribal Heritage Gallery"
+  },
+  {
+    "text": "at morning o'clock",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "27 March",
+    "label": "date",
+    "value": "2026-03-27"
+  },
+  {
+    "text": "on 02 April",
+    "label": "date",
+    "value": "2026-04-02"
+  },
+  {
+    "text": "i want to finalize",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "this weekend please",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "want 4 tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 4, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "at 3pm",
+    "label": "time_slot",
+    "value": "3:00 PM"
+  },
+  {
+    "text": "I'm interested in Folk Arts & Crafts Show",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "Can I book Ancient Civilizations Gallery?",
+    "label": "show",
+    "value": "Ancient Civilizations Gallery"
+  },
+  {
+    "text": "Show: Contemporary Masters Collection",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
+    "text": "the 2 timing",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "reschedule",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "time slot 11",
+    "label": "time_slot",
+    "value": "11:00 AM"
+  },
+  {
+    "text": "We want to go to Sculpture & Crafts Tour",
+    "label": "show",
+    "value": "Sculpture & Crafts Tour"
+  },
+  {
+    "text": "the 10am timing",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "when do you open",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "Book me for Ancient Civilizations Gallery",
+    "label": "show",
+    "value": "Ancient Civilizations Gallery"
+  },
+  {
+    "text": "only 1",
     "label": "tickets",
     "value": "{\"adult\": 1, \"child\": 0, \"senior\": 0}"
   },
@@ -1685,9 +2010,114 @@
     "value": "12:00 PM"
   },
   {
-    "text": "book for 24 March",
+    "text": "the upcoming this weekend would work",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "afternoon slot",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "We want to go to Folk Arts & Crafts Show",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "I want tickets to Archaeology & Artifacts Tour",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
+  },
+  {
+    "text": "1 adult and 1 child",
+    "label": "tickets",
+    "value": "{\"adult\": 1, \"child\": 1, \"senior\": 0}"
+  },
+  {
+    "text": "I prefer 1",
+    "label": "time_slot",
+    "value": "1:00 PM"
+  },
+  {
+    "text": "visit saturday",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "the 11am timing",
+    "label": "time_slot",
+    "value": "11:00 AM"
+  },
+  {
+    "text": "book for 31 March",
+    "label": "date",
+    "value": "2026-03-31"
+  },
+  {
+    "text": "the upcoming today would work",
     "label": "date",
     "value": "2026-03-24"
+  },
+  {
+    "text": "i changed my mind",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "1 senior ticket",
+    "label": "tickets",
+    "value": "{\"adult\": 0, \"child\": 0, \"senior\": 1}"
+  },
+  {
+    "text": "4 people total",
+    "label": "tickets",
+    "value": "{\"adult\": 4, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "I want General Admittance",
+    "label": "show",
+    "value": "General Admittance"
+  },
+  {
+    "text": "I prefer today",
+    "label": "date",
+    "value": "2026-03-24"
+  },
+  {
+    "text": "I'm interested in Tribal Heritage Gallery",
+    "label": "show",
+    "value": "Tribal Heritage Gallery"
+  },
+  {
+    "text": "Freedom Struggle Gallery please",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "the upcoming sunday would work",
+    "label": "date",
+    "value": "2026-03-29"
+  },
+  {
+    "text": "pay now",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "that's correct book it",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Take me to Modern Art Exhibition",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "perfect",
+    "label": "confirm",
+    "value": "true"
   },
   {
     "text": "time slot morning",
@@ -1695,104 +2125,34 @@
     "value": "10:00 AM"
   },
   {
-    "text": "at 4pm o'clock",
-    "label": "time_slot",
-    "value": "4:00 PM"
+    "text": "i want to book 3 tickets for national museum",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
   },
   {
-    "text": "I want Dinosaur Exhibit",
-    "label": "show",
-    "value": "Dinosaur Exhibit"
-  },
-  {
-    "text": "please book",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "We want to go to Dinosaur Exhibit",
-    "label": "show",
-    "value": "Dinosaur Exhibit"
-  },
-  {
-    "text": "I want to visit Space & Cosmos Gallery",
-    "label": "show",
-    "value": "Space & Cosmos Gallery"
-  },
-  {
-    "text": "10 am slot",
-    "label": "time_slot",
-    "value": "10:00 AM"
-  },
-  {
-    "text": "time slot 2 pm",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "yes confirm booking",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "I want to visit Ancient Egypt",
-    "label": "show",
-    "value": "Ancient Egypt"
-  },
-  {
-    "text": "We'd like to see Space & Cosmos Gallery",
-    "label": "show",
-    "value": "Space & Cosmos Gallery"
-  },
-  {
-    "text": "at afternoon",
-    "label": "time_slot",
-    "value": "12:00 PM"
-  },
-  {
-    "text": "at 2pm o'clock",
-    "label": "time_slot",
-    "value": "2:00 PM"
-  },
-  {
-    "text": "i confirm",
-    "label": "confirm",
-    "value": "true"
-  },
-  {
-    "text": "do you have student tickets",
+    "text": "sounds interesting",
     "label": "other",
     "value": "none"
   },
   {
-    "text": "at morning o'clock",
+    "text": "11am slot",
     "label": "time_slot",
-    "value": "10:00 AM"
+    "value": "11:00 AM"
   },
   {
-    "text": "at evening",
-    "label": "time_slot",
-    "value": "4:00 PM"
-  },
-  {
-    "text": "We'd like to see Modern Art Collection",
+    "text": "We'd like to see Ancient Civilizations Gallery",
     "label": "show",
-    "value": "Modern Art Collection"
+    "value": "Ancient Civilizations Gallery"
   },
   {
-    "text": "on 26 March",
-    "label": "date",
-    "value": "2026-03-26"
-  },
-  {
-    "text": "at 10am",
+    "text": "I prefer evening",
     "label": "time_slot",
-    "value": "10:00 AM"
+    "value": "5:00 PM"
   },
   {
-    "text": "2pm slot",
+    "text": "at 5pm",
     "label": "time_slot",
-    "value": "2:00 PM"
+    "value": "5:00 PM"
   },
   {
     "text": "book for 02 April",
@@ -1800,29 +2160,569 @@
     "value": "2026-04-02"
   },
   {
-    "text": "on saturday",
-    "label": "date",
-    "value": "2026-03-28"
+    "text": "do it",
+    "label": "confirm",
+    "value": "true"
   },
   {
-    "text": "I changed my mind",
+    "text": "the 1pm timing",
+    "label": "time_slot",
+    "value": "1:00 PM"
+  },
+  {
+    "text": "how much does it cost",
     "label": "other",
     "value": "none"
   },
   {
-    "text": "We'd like to see Dinosaur Exhibit",
-    "label": "show",
-    "value": "Dinosaur Exhibit"
+    "text": "I want to go saturday",
+    "label": "date",
+    "value": "2026-03-28"
   },
   {
-    "text": "I want to go tomorrow",
+    "text": "ok book it",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Show: Technology Through Ages",
+    "label": "show",
+    "value": "Technology Through Ages"
+  },
+  {
+    "text": "Book tickets for Interactive Science Lab",
+    "label": "show",
+    "value": "Interactive Science Lab"
+  },
+  {
+    "text": "confirm",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "We want to go to Robotics & AI Exhibition",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
+  },
+  {
+    "text": "can you add one more child ticket for it",
+    "label": "tickets",
+    "value": "{\"adult\": 0, \"child\": 1, \"senior\": 0}"
+  },
+  {
+    "text": "what does it cost",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "is it open today",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "take me to payment",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "visit on 29 March",
+    "label": "date",
+    "value": "2026-03-29"
+  },
+  {
+    "text": "the upcoming today",
     "label": "date",
     "value": "2026-03-24"
   },
   {
-    "text": "31 March",
+    "text": "today please",
     "label": "date",
-    "value": "2026-03-31"
+    "value": "2026-03-24"
+  },
+  {
+    "text": "group of 10",
+    "label": "tickets",
+    "value": "{\"adult\": 10, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "26 March",
+    "label": "date",
+    "value": "2026-03-26"
+  },
+  {
+    "text": "at 9 am",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "I'm interested in Interactive Science Lab",
+    "label": "show",
+    "value": "Interactive Science Lab"
+  },
+  {
+    "text": "confirm my booking",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "I want Traditional Music & Dance",
+    "label": "show",
+    "value": "Traditional Music & Dance"
+  },
+  {
+    "text": "2 entries",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "coming as a family of 5",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 2, \"senior\": 0}"
+  },
+  {
+    "text": "12 slot",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "correct",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "group of 5",
+    "label": "tickets",
+    "value": "{\"adult\": 5, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "Can I book Robotics & AI Exhibition?",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
+  },
+  {
+    "text": "submit",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "at 10",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "the 4 timing",
+    "label": "time_slot",
+    "value": "4:00 PM"
+  },
+  {
+    "text": "at 4",
+    "label": "time_slot",
+    "value": "4:00 PM"
+  },
+  {
+    "text": "I'd like to attend Sculpture & Crafts Tour",
+    "label": "show",
+    "value": "Sculpture & Crafts Tour"
+  },
+  {
+    "text": "closed today",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "The robotics one",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
+  },
+  {
+    "text": "what time do you close",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "I want to visit Folk Arts & Crafts Show",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "please finalize",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "We'd like to see Interactive Science Lab",
+    "label": "show",
+    "value": "Interactive Science Lab"
+  },
+  {
+    "text": "Book me for Freedom Struggle Gallery",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "yep",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "family of 4",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 2, \"senior\": 0}"
+  },
+  {
+    "text": "what time does it start",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "hi there",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "on 26 March",
+    "label": "date",
+    "value": "2026-03-26"
+  },
+  {
+    "text": "We'd like to see Technology Through Ages",
+    "label": "show",
+    "value": "Technology Through Ages"
+  },
+  {
+    "text": "any discounts",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "book for 03 April",
+    "label": "date",
+    "value": "2026-04-03"
+  },
+  {
+    "text": "book for 28 March",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "visit this weekend",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "good afternoon",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "five tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 5, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "Tribal Heritage Gallery please",
+    "label": "show",
+    "value": "Tribal Heritage Gallery"
+  },
+  {
+    "text": "evening slot",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "Colonial Era Exhibition please",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
+  },
+  {
+    "text": "at 12pm",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "9 am please",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "I want to visit Regional Cuisine & Culture Tour",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "correct proceed",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "time slot 4pm",
+    "label": "time_slot",
+    "value": "4:00 PM"
+  },
+  {
+    "text": "I'm interested in Traditional Music & Dance",
+    "label": "show",
+    "value": "Traditional Music & Dance"
+  },
+  {
+    "text": "Book me for Technology Through Ages",
+    "label": "show",
+    "value": "Technology Through Ages"
+  },
+  {
+    "text": "proceed to checkout",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "1pm slot",
+    "label": "time_slot",
+    "value": "1:00 PM"
+  },
+  {
+    "text": "saturday please",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "the 9am timing",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "good morning",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "need 2 tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "how about sunday",
+    "label": "date",
+    "value": "2026-03-29"
+  },
+  {
+    "text": "let me think",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "much appreciated",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "We want to go to Freedom Struggle Gallery",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "yes go ahead",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "at 1pm o'clock",
+    "label": "time_slot",
+    "value": "1:00 PM"
+  },
+  {
+    "text": "at 5 o'clock",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "I'm interested in Regional Cuisine & Culture Tour",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "see you",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "at 10am",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "at 9 o'clock",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "I want to go tomorrow",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "hiya",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "yes",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Book me for Sculpture & Crafts Tour",
+    "label": "show",
+    "value": "Sculpture & Crafts Tour"
+  },
+  {
+    "text": "I prefer 1pm",
+    "label": "time_slot",
+    "value": "1:00 PM"
+  },
+  {
+    "text": "where is it",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "i'm satisfied confirm",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Show: Tribal Heritage Gallery",
+    "label": "show",
+    "value": "Tribal Heritage Gallery"
+  },
+  {
+    "text": "We want to go to Space & Astronomy Show",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "Take me to Colonial Era Exhibition",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
+  },
+  {
+    "text": "Can I book Archaeology & Artifacts Tour?",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
+  },
+  {
+    "text": "perfect book it",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "1 adult 1 child 1 senior",
+    "label": "tickets",
+    "value": "{\"adult\": 1, \"child\": 1, \"senior\": 1}"
+  },
+  {
+    "text": "i need help",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "the upcoming tomorrow would work",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "i want 2 tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "The ancient one",
+    "label": "show",
+    "value": "Ancient Civilizations Gallery"
+  },
+  {
+    "text": "is it accessible",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "help me",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "I prefer 3",
+    "label": "time_slot",
+    "value": "3:00 PM"
+  },
+  {
+    "text": "The sculpture one",
+    "label": "show",
+    "value": "Sculpture & Crafts Tour"
+  },
+  {
+    "text": "Book me for Modern Art Exhibition",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "10 am please",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "can we come this weekend",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "the 9 am timing",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "11 slot",
+    "label": "time_slot",
+    "value": "11:00 AM"
+  },
+  {
+    "text": "3 adults 2 kids",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 2, \"senior\": 0}"
+  },
+  {
+    "text": "12pm please",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "of course",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "i agree",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "on this weekend",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "confirmed",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "3 people",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "2 people",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
   },
   {
     "text": "1 adult ticket",
@@ -1830,39 +2730,504 @@
     "value": "{\"adult\": 1, \"child\": 0, \"senior\": 0}"
   },
   {
-    "text": "start over",
+    "text": "2 tickets for us",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "Book tickets for Colonial Era Exhibition",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
+  },
+  {
+    "text": "bye",
     "label": "other",
     "value": "none"
   },
   {
-    "text": "modify booking",
+    "text": "do you have student tickets",
     "label": "other",
     "value": "none"
   },
   {
-    "text": "ok",
+    "text": "please book",
     "label": "confirm",
     "value": "true"
   },
   {
-    "text": "I'm interested in General Admittance",
+    "text": "I'd like to attend Freedom Struggle Gallery",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "I prefer 9am",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "Take me to Robotics & AI Exhibition",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
+  },
+  {
+    "text": "I want to visit Technology Through Ages",
+    "label": "show",
+    "value": "Technology Through Ages"
+  },
+  {
+    "text": "book 2 tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "approved",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Can I book Technology Through Ages?",
+    "label": "show",
+    "value": "Technology Through Ages"
+  },
+  {
+    "text": "time slot evening",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "4pm please",
+    "label": "time_slot",
+    "value": "4:00 PM"
+  },
+  {
+    "text": "Show: Modern Art Exhibition",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "any suggestions",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "Show: Ancient Civilizations Gallery",
+    "label": "show",
+    "value": "Ancient Civilizations Gallery"
+  },
+  {
+    "text": "I want to visit Modern Art Exhibition",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "Can I book Sculpture & Crafts Tour?",
+    "label": "show",
+    "value": "Sculpture & Crafts Tour"
+  },
+  {
+    "text": "Can I book Interactive Science Lab?",
+    "label": "show",
+    "value": "Interactive Science Lab"
+  },
+  {
+    "text": "okay",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "yes checkout",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "the 1 timing",
+    "label": "time_slot",
+    "value": "1:00 PM"
+  },
+  {
+    "text": "can we come today",
+    "label": "date",
+    "value": "2026-03-24"
+  },
+  {
+    "text": "hey",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "4 please",
+    "label": "time_slot",
+    "value": "4:00 PM"
+  },
+  {
+    "text": "Interested in freedom show",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "lock it in",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "3 adults and 2 children",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 2, \"senior\": 0}"
+  },
+  {
+    "text": "yes finalize the booking",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "I'd like to attend General Admittance",
     "label": "show",
     "value": "General Admittance"
   },
   {
-    "text": "Book me for Modern Art Collection",
-    "label": "show",
-    "value": "Modern Art Collection"
+    "text": "tickets for victoria memorial",
+    "label": "tickets",
+    "value": "{\"adult\": 1, \"child\": 0, \"senior\": 0}"
   },
   {
-    "text": "time slot 10",
+    "text": "Show: Traditional Music & Dance",
+    "label": "show",
+    "value": "Traditional Music & Dance"
+  },
+  {
+    "text": "I want tickets to General Admittance",
+    "label": "show",
+    "value": "General Admittance"
+  },
+  {
+    "text": "not sure",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "ok finalize my booking",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "can i cancel my booking",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "finalize now",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "We want to go to Tribal Heritage Gallery",
+    "label": "show",
+    "value": "Tribal Heritage Gallery"
+  },
+  {
+    "text": "yup",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "I prefer sunday",
+    "label": "date",
+    "value": "2026-03-29"
+  },
+  {
+    "text": "the 3 timing",
+    "label": "time_slot",
+    "value": "3:00 PM"
+  },
+  {
+    "text": "go for it",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "the 12pm timing",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "9 slot",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "Can I book Freedom Struggle Gallery?",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "2 adults 2 kids 1 senior",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 2, \"senior\": 1}"
+  },
+  {
+    "text": "I prefer 10 am",
     "label": "time_slot",
     "value": "10:00 AM"
   },
   {
-    "text": "booking for tomorrow",
+    "text": "forget it",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "We'd like to see Traditional Music & Dance",
+    "label": "show",
+    "value": "Traditional Music & Dance"
+  },
+  {
+    "text": "We want to go to Contemporary Masters Collection",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
+    "text": "at 1 o'clock",
+    "label": "time_slot",
+    "value": "1:00 PM"
+  },
+  {
+    "text": "we are a group of 6",
+    "label": "tickets",
+    "value": "{\"adult\": 6, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "how about saturday",
     "label": "date",
-    "value": "2026-03-24"
+    "value": "2026-03-28"
+  },
+  {
+    "text": "when are the shows",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "Book me for Robotics & AI Exhibition",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
+  },
+  {
+    "text": "can we come saturday",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "Space & Astronomy Show please",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "family of 3",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 1, \"senior\": 0}"
+  },
+  {
+    "text": "Take me to Archaeology & Artifacts Tour",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
+  },
+  {
+    "text": "book 2 tickets for salar jung museum",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "Book tickets for Space & Astronomy Show",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "family of 4",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 2, \"senior\": 0}"
+  },
+  {
+    "text": "Interested in modern show",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "time slot 9 am",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "tell me more",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "I'd like to attend Regional Cuisine & Culture Tour",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "hi",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "General Admittance please",
+    "label": "show",
+    "value": "General Admittance"
+  },
+  {
+    "text": "at 9 am o'clock",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "time slot 11am",
+    "label": "time_slot",
+    "value": "11:00 AM"
+  },
+  {
+    "text": "ok let's go",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "the upcoming tomorrow",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "yes proceed",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Show: Colonial Era Exhibition",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
+  },
+  {
+    "text": "I want Modern Art Exhibition",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "finalize it",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "1 please",
+    "label": "time_slot",
+    "value": "1:00 PM"
+  },
+  {
+    "text": "Interactive Science Lab please",
+    "label": "show",
+    "value": "Interactive Science Lab"
+  },
+  {
+    "text": "I'd like to attend Modern Art Exhibition",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "afternoon please",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "at morning",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "The freedom one",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "I prefer 12",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "what is this",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "I want to visit Space & Astronomy Show",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "time slot 1pm",
+    "label": "time_slot",
+    "value": "1:00 PM"
+  },
+  {
+    "text": "The modern one",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "The traditional one",
+    "label": "show",
+    "value": "Traditional Music & Dance"
+  },
+  {
+    "text": "Can I book Traditional Music & Dance?",
+    "label": "show",
+    "value": "Traditional Music & Dance"
+  },
+  {
+    "text": "i want a refund",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "family of 6",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 3, \"senior\": 0}"
+  },
+  {
+    "text": "The colonial one",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
+  },
+  {
+    "text": "I want to visit Tribal Heritage Gallery",
+    "label": "show",
+    "value": "Tribal Heritage Gallery"
+  },
+  {
+    "text": "2 adults and 1 senior",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 1}"
+  },
+  {
+    "text": "Modern Art Exhibition please",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "4 adults",
+    "label": "tickets",
+    "value": "{\"adult\": 4, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "the afternoon timing",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "change to 2 adults",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "time slot 12",
+    "label": "time_slot",
+    "value": "12:00 PM"
   },
   {
     "text": "we are 5 people",
@@ -1870,8 +3235,718 @@
     "value": "{\"adult\": 5, \"child\": 0, \"senior\": 0}"
   },
   {
-    "text": "sounds good",
+    "text": "I want Freedom Struggle Gallery",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "Book me for Classical Indian Art Gallery",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "visit on 31 March",
+    "label": "date",
+    "value": "2026-03-31"
+  },
+  {
+    "text": "at 3 o'clock",
+    "label": "time_slot",
+    "value": "3:00 PM"
+  },
+  {
+    "text": "book for 27 March",
+    "label": "date",
+    "value": "2026-03-27"
+  },
+  {
+    "text": "Ancient Civilizations Gallery please",
+    "label": "show",
+    "value": "Ancient Civilizations Gallery"
+  },
+  {
+    "text": "me and my friend",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "we need tickets for 4",
+    "label": "tickets",
+    "value": "{\"adult\": 4, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "I want tickets to Traditional Music & Dance",
+    "label": "show",
+    "value": "Traditional Music & Dance"
+  },
+  {
+    "text": "cheers",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "show schedule",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "2 adult tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "Take me to Technology Through Ages",
+    "label": "show",
+    "value": "Technology Through Ages"
+  },
+  {
+    "text": "on 04 April",
+    "label": "date",
+    "value": "2026-04-04"
+  },
+  {
+    "text": "at 9am",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "The tribal one",
+    "label": "show",
+    "value": "Tribal Heritage Gallery"
+  },
+  {
+    "text": "add 2 more adults",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "I want to go sunday",
+    "label": "date",
+    "value": "2026-03-29"
+  },
+  {
+    "text": "We'd like to see Space & Astronomy Show",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "need 3 tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "The archaeology one",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
+  },
+  {
+    "text": "yeah go ahead",
     "label": "confirm",
     "value": "true"
+  },
+  {
+    "text": "I'd like to attend Classical Indian Art Gallery",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "Book tickets for Robotics & AI Exhibition",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
+  },
+  {
+    "text": "4 slot",
+    "label": "time_slot",
+    "value": "4:00 PM"
+  },
+  {
+    "text": "one second",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "Can I book Tribal Heritage Gallery?",
+    "label": "show",
+    "value": "Tribal Heritage Gallery"
+  },
+  {
+    "text": "Interested in interactive show",
+    "label": "show",
+    "value": "Interactive Science Lab"
+  },
+  {
+    "text": "the upcoming saturday would work for me",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "Can I book Contemporary Masters Collection?",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
+    "text": "9 please",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "Book tickets for Freedom Struggle Gallery",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "yes all details are correct",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "12 please",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "at 10am o'clock",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "Book tickets for Sculpture & Crafts Tour",
+    "label": "show",
+    "value": "Sculpture & Crafts Tour"
+  },
+  {
+    "text": "refund policy",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "at 3",
+    "label": "time_slot",
+    "value": "3:00 PM"
+  },
+  {
+    "text": "on 03 April",
+    "label": "date",
+    "value": "2026-04-03"
+  },
+  {
+    "text": "time slot 3",
+    "label": "time_slot",
+    "value": "3:00 PM"
+  },
+  {
+    "text": "Take me to Tribal Heritage Gallery",
+    "label": "show",
+    "value": "Tribal Heritage Gallery"
+  },
+  {
+    "text": "I'm interested in Sculpture & Crafts Tour",
+    "label": "show",
+    "value": "Sculpture & Crafts Tour"
+  },
+  {
+    "text": "time slot 5pm",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "booking for this weekend",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "what else",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "at 2pm o'clock",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "1 adult and 3 children",
+    "label": "tickets",
+    "value": "{\"adult\": 1, \"child\": 3, \"senior\": 0}"
+  },
+  {
+    "text": "at 1pm",
+    "label": "time_slot",
+    "value": "1:00 PM"
+  },
+  {
+    "text": "2 tickets for this museum",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "is parking available",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "Show: Space & Astronomy Show",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "We'd like to see Robotics & AI Exhibition",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
+  },
+  {
+    "text": "I prefer tomorrow",
+    "label": "date",
+    "value": "2026-03-25"
+  },
+  {
+    "text": "We want to go to Regional Cuisine & Culture Tour",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "yes that's right",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "time slot 4",
+    "label": "time_slot",
+    "value": "4:00 PM"
+  },
+  {
+    "text": "4pm slot",
+    "label": "time_slot",
+    "value": "4:00 PM"
+  },
+  {
+    "text": "at evening",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "02 April",
+    "label": "date",
+    "value": "2026-04-02"
+  },
+  {
+    "text": "time slot 12pm",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "I'd like to attend Colonial Era Exhibition",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
+  },
+  {
+    "text": "I want tickets to Regional Cuisine & Culture Tour",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "at 2pm",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "I want tickets to Modern Art Exhibition",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "at 12",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "couple tickets",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "thanks a lot",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "3 please",
+    "label": "time_slot",
+    "value": "3:00 PM"
+  },
+  {
+    "text": "Book me for Traditional Music & Dance",
+    "label": "show",
+    "value": "Traditional Music & Dance"
+  },
+  {
+    "text": "I prefer 10",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "Robotics & AI Exhibition please",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
+  },
+  {
+    "text": "I want to visit Colonial Era Exhibition",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
+  },
+  {
+    "text": "yes confirm please",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "absolutely",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Book me for Space & Astronomy Show",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "We want to go to Ancient Civilizations Gallery",
+    "label": "show",
+    "value": "Ancient Civilizations Gallery"
+  },
+  {
+    "text": "I want to visit Contemporary Masters Collection",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
+    "text": "1 adult 2 children",
+    "label": "tickets",
+    "value": "{\"adult\": 1, \"child\": 2, \"senior\": 0}"
+  },
+  {
+    "text": "please go ahead and book",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "finalize booking",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Regional Cuisine & Culture Tour please",
+    "label": "show",
+    "value": "Regional Cuisine & Culture Tour"
+  },
+  {
+    "text": "I want Archaeology & Artifacts Tour",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
+  },
+  {
+    "text": "2pm slot",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "the 5 timing",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "can we come sunday",
+    "label": "date",
+    "value": "2026-03-29"
+  },
+  {
+    "text": "on 01 April",
+    "label": "date",
+    "value": "2026-04-01"
+  },
+  {
+    "text": "We'd like to see Freedom Struggle Gallery",
+    "label": "show",
+    "value": "Freedom Struggle Gallery"
+  },
+  {
+    "text": "Take me to Contemporary Masters Collection",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
+    "text": "We want to go to Archaeology & Artifacts Tour",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
+  },
+  {
+    "text": "yes submit my booking",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "thank you",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "5pm please",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "Show: Robotics & AI Exhibition",
+    "label": "show",
+    "value": "Robotics & AI Exhibition"
+  },
+  {
+    "text": "the 5pm timing",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "Show: Archaeology & Artifacts Tour",
+    "label": "show",
+    "value": "Archaeology & Artifacts Tour"
+  },
+  {
+    "text": "what are the show timings",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "I prefer 2pm",
+    "label": "time_slot",
+    "value": "2:00 PM"
+  },
+  {
+    "text": "morning slot",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "3 adults 2 children",
+    "label": "tickets",
+    "value": "{\"adult\": 3, \"child\": 2, \"senior\": 0}"
+  },
+  {
+    "text": "that's fine",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "at 1",
+    "label": "time_slot",
+    "value": "1:00 PM"
+  },
+  {
+    "text": "let's finalize",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Interested in general show",
+    "label": "show",
+    "value": "General Admittance"
+  },
+  {
+    "text": "the evening timing",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "I prefer 11",
+    "label": "time_slot",
+    "value": "11:00 AM"
+  },
+  {
+    "text": "Take me to Space & Astronomy Show",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "Can I book Colonial Era Exhibition?",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
+  },
+  {
+    "text": "I want to visit General Admittance",
+    "label": "show",
+    "value": "General Admittance"
+  },
+  {
+    "text": "I'd like to attend Interactive Science Lab",
+    "label": "show",
+    "value": "Interactive Science Lab"
+  },
+  {
+    "text": "1pm please",
+    "label": "time_slot",
+    "value": "1:00 PM"
+  },
+  {
+    "text": "time slot noon",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "yes book it",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "I prefer noon",
+    "label": "time_slot",
+    "value": "12:00 PM"
+  },
+  {
+    "text": "4 tickets please",
+    "label": "tickets",
+    "value": "{\"adult\": 4, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "book for 29 March",
+    "label": "date",
+    "value": "2026-03-29"
+  },
+  {
+    "text": "I want tickets to Interactive Science Lab",
+    "label": "show",
+    "value": "Interactive Science Lab"
+  },
+  {
+    "text": "i'm ready to pay",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "the upcoming saturday",
+    "label": "date",
+    "value": "2026-03-28"
+  },
+  {
+    "text": "at 5",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "confirm booking",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "Book tickets for Folk Arts & Crafts Show",
+    "label": "show",
+    "value": "Folk Arts & Crafts Show"
+  },
+  {
+    "text": "we are a family of 4",
+    "label": "tickets",
+    "value": "{\"adult\": 2, \"child\": 2, \"senior\": 0}"
+  },
+  {
+    "text": "I'd like to attend Space & Astronomy Show",
+    "label": "show",
+    "value": "Space & Astronomy Show"
+  },
+  {
+    "text": "Book tickets for Ancient Civilizations Gallery",
+    "label": "show",
+    "value": "Ancient Civilizations Gallery"
+  },
+  {
+    "text": "time slot 5",
+    "label": "time_slot",
+    "value": "5:00 PM"
+  },
+  {
+    "text": "the 9 timing",
+    "label": "time_slot",
+    "value": "9:00 AM"
+  },
+  {
+    "text": "Interested in contemporary show",
+    "label": "show",
+    "value": "Contemporary Masters Collection"
+  },
+  {
+    "text": "never mind",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "10 am slot",
+    "label": "time_slot",
+    "value": "10:00 AM"
+  },
+  {
+    "text": "Take me to General Admittance",
+    "label": "show",
+    "value": "General Admittance"
+  },
+  {
+    "text": "ready to pay",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "3 slot",
+    "label": "time_slot",
+    "value": "3:00 PM"
+  },
+  {
+    "text": "Book tickets for Modern Art Exhibition",
+    "label": "show",
+    "value": "Modern Art Exhibition"
+  },
+  {
+    "text": "done",
+    "label": "confirm",
+    "value": "true"
+  },
+  {
+    "text": "i want to book tickets for indian museum",
+    "label": "tickets",
+    "value": "{\"adult\": 1, \"child\": 0, \"senior\": 0}"
+  },
+  {
+    "text": "at 4pm",
+    "label": "time_slot",
+    "value": "4:00 PM"
+  },
+  {
+    "text": "book for 26 March",
+    "label": "date",
+    "value": "2026-03-26"
+  },
+  {
+    "text": "help",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "Interested in colonial show",
+    "label": "show",
+    "value": "Colonial Era Exhibition"
+  },
+  {
+    "text": "book for 01 April",
+    "label": "date",
+    "value": "2026-04-01"
+  },
+  {
+    "text": "pricing",
+    "label": "other",
+    "value": "none"
+  },
+  {
+    "text": "I want tickets to Classical Indian Art Gallery",
+    "label": "show",
+    "value": "Classical Indian Art Gallery"
+  },
+  {
+    "text": "morning please",
+    "label": "time_slot",
+    "value": "10:00 AM"
   }
 ]

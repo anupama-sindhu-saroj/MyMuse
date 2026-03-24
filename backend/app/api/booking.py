@@ -109,3 +109,28 @@ async def get_booking(
     booking["id"] = str(booking["_id"])
     del booking["_id"]
     return booking
+
+class FinalizeBookingRequest(BaseModel):
+    session_id: str
+
+
+@router.post("/api/bookings/finalize")
+async def finalize_booking(
+    data: FinalizeBookingRequest,
+    current_user: dict = Depends(get_current_user)
+):
+    from app.agents.booking.booking_agent import get_session, delete_session, save_booking_to_db
+
+    booking = await get_session(data.session_id)
+
+    if not booking:
+        raise HTTPException(400, "No active booking session")
+
+    booking_id = await save_booking_to_db(booking, current_user["id"])
+
+    await delete_session(data.session_id)
+
+    return {
+        "booking_id": booking_id,
+        "message": "Booking confirmed. Redirecting to payment."
+    }

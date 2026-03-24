@@ -101,33 +101,6 @@ const UserAuth = () => {
         email,
         password
       });
-      const handleLogin = async (e) => {
-
-  e.preventDefault();
-
-  try {
-
-    const res = await axios.post(
-      "http://localhost:8000/api/users/login",
-      { email, password }
-    );
-
-    console.log("LOGIN RESPONSE:", res.data);   // ADD THIS
-
-    localStorage.setItem("accessToken", res.data.accessToken);
-    localStorage.setItem("refreshToken", res.data.refreshToken);
-
-    localStorage.setItem("user", JSON.stringify(res.data.user));
-
-    navigate("/dashboard");
-
-  } catch (err) {
-
-    alert(err.response?.data?.message);
-
-  }
-
-};
 
       const { accessToken, refreshToken, user } = res.data;
 
@@ -136,6 +109,7 @@ const UserAuth = () => {
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", accessToken);
 
       alert("Login successful");
 

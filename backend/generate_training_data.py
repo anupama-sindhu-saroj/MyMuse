@@ -7,20 +7,32 @@ import json
 import random
 from datetime import datetime, timedelta
 
-# ── Training examples ─────────────────────────────────────────
+# ── FIX 2: Shows now match EXACTLY what seed_museums.py puts in MongoDB ───────
 SHOWS = [
     "General Admittance",
-    "Dinosaur Exhibit",
-    "Space & Cosmos Gallery",
-    "Ancient Egypt",
-    "Modern Art Collection"
+    "Ancient Civilizations Gallery",
+    "Colonial Era Exhibition",
+    "Freedom Struggle Gallery",
+    "Archaeology & Artifacts Tour",
+    "Classical Indian Art Gallery",
+    "Modern Art Exhibition",
+    "Sculpture & Crafts Tour",
+    "Contemporary Masters Collection",
+    "Space & Astronomy Show",
+    "Technology Through Ages",
+    "Interactive Science Lab",
+    "Robotics & AI Exhibition",
+    "Tribal Heritage Gallery",
+    "Folk Arts & Crafts Show",
+    "Traditional Music & Dance",
+    "Regional Cuisine & Culture Tour",
 ]
 
 DATES = []
 today = datetime.now()
 for i in range(1, 30):
     d = today + timedelta(days=i)
-    if d.weekday() != 0:  # skip Monday
+    if d.weekday() != 0:  # skip Monday (closed)
         DATES.append(d.strftime("%Y-%m-%d"))
 
 DATE_WORDS = {
@@ -31,7 +43,6 @@ DATE_WORDS = {
     "this weekend": None,
 }
 
-# Find next Saturday and Sunday
 for i in range(1, 8):
     d = today + timedelta(days=i)
     if d.weekday() == 5:
@@ -40,21 +51,29 @@ for i in range(1, 8):
     if d.weekday() == 6:
         DATE_WORDS["sunday"] = d.strftime("%Y-%m-%d")
 
-TIME_SLOTS = ["10:00 AM", "12:00 PM", "2:00 PM", "4:00 PM"]
+TIME_SLOTS = ["9:00 AM", "11:00 AM", "1:00 PM", "3:00 PM", "5:00 PM"]
 TIME_WORDS = {
+    "9": "9:00 AM", "9am": "9:00 AM", "9 am": "9:00 AM",
     "10": "10:00 AM", "10am": "10:00 AM", "10 am": "10:00 AM", "morning": "10:00 AM",
-    "12": "12:00 PM", "12pm": "12:00 PM", "noon": "12:00 PM", "afternoon": "12:00 PM",
-    "2": "2:00 PM", "2pm": "2:00 PM", "2 pm": "2:00 PM",
-    "4": "4:00 PM", "4pm": "4:00 PM", "4 pm": "4:00 PM", "evening": "4:00 PM"
+    "11": "11:00 AM", "11am": "11:00 AM",
+    "12": "12:00 PM", "12pm": "12:00 PM", "noon": "12:00 PM",
+    "1": "1:00 PM", "1pm": "1:00 PM",
+    "2": "2:00 PM", "2pm": "2:00 PM", "afternoon": "2:00 PM",
+    "3": "3:00 PM", "3pm": "3:00 PM",
+    "4": "4:00 PM", "4pm": "4:00 PM",
+    "5": "5:00 PM", "5pm": "5:00 PM", "evening": "5:00 PM",
 }
+
 
 def generate_examples():
     examples = []
 
-    # ── Show extraction examples ──────────────────────────────
+    # ── Show extraction examples ──────────────────────────────────────────────
     for show in SHOWS:
         show_lower = show.lower()
-        show_key = show_lower.split()[0]
+        # Use first meaningful word for short-form references
+        words = [w for w in show_lower.split() if len(w) > 3]
+        short = words[0] if words else show_lower.split()[0]
 
         templates = [
             f"I want to visit {show}",
@@ -64,13 +83,14 @@ def generate_examples():
             f"We'd like to see {show}",
             f"{show} please",
             f"I want {show}",
-            f"Show me {show}",
             f"I'd like to attend {show}",
-            f"Interested in {show_key} exhibit",
-            f"The {show_key} one",
+            f"Interested in {short} show",
+            f"The {short} one",
             f"We want to go to {show}",
             f"Book me for {show}",
             f"I want tickets to {show}",
+            f"Take me to {show}",
+            f"Show: {show}",
         ]
         for t in templates:
             examples.append({
@@ -79,7 +99,7 @@ def generate_examples():
                 "value": show
             })
 
-    # ── Ticket count examples ─────────────────────────────────
+    # ── Ticket count examples ─────────────────────────────────────────────────
     ticket_templates = [
         ("1 adult ticket", {"adult": 1, "child": 0, "senior": 0}),
         ("2 adult tickets", {"adult": 2, "child": 0, "senior": 0}),
@@ -130,6 +150,41 @@ def generate_examples():
         ("tickets for 5", {"adult": 5, "child": 0, "senior": 0}),
         ("2 entries", {"adult": 2, "child": 0, "senior": 0}),
         ("3 passes", {"adult": 3, "child": 0, "senior": 0}),
+        ("2 adults and 1 child", {"adult": 2, "child": 1, "senior": 0}),   # duplicate intentionally for weight
+        ("1 adult and 1 child", {"adult": 1, "child": 1, "senior": 0}),
+        ("3 adults and 2 children", {"adult": 3, "child": 2, "senior": 0}),
+        ("2 adults 1 senior citizen", {"adult": 2, "child": 0, "senior": 1}),
+        ("4 people total", {"adult": 4, "child": 0, "senior": 0}),
+        ("we are a group of 6", {"adult": 6, "child": 0, "senior": 0}),
+        ("booking for 2 adults", {"adult": 2, "child": 0, "senior": 0}),
+        ("1 adult ticket please", {"adult": 1, "child": 0, "senior": 0}),
+        ("i want to book 2 tickets for victoria memorial", {"adult": 2, "child": 0, "senior": 0}),
+("i want 2 tickets", {"adult": 2, "child": 0, "senior": 0}),
+("can you add one more child ticket for it", {"adult": 0, "child": 1, "senior": 0}),
+("add one more child", {"adult": 0, "child": 1, "senior": 0}),
+("please add one more child ticket for it", {"adult": 0, "child": 1, "senior": 0}),
+("add another child ticket", {"adult": 0, "child": 1, "senior": 0}),
+("one more child ticket please", {"adult": 0, "child": 1, "senior": 0}),
+("add 2 more adults", {"adult": 2, "child": 0, "senior": 0}),
+("make it 3 adults total", {"adult": 3, "child": 0, "senior": 0}),
+("change to 2 adults", {"adult": 2, "child": 0, "senior": 0}),
+("i need 4 tickets", {"adult": 4, "child": 0, "senior": 0}),
+("book 2 adult tickets please", {"adult": 2, "child": 0, "senior": 0}),
+("2 tickets for us", {"adult": 2, "child": 0, "senior": 0}),
+("3 of us are coming", {"adult": 3, "child": 0, "senior": 0}),
+("we need tickets for 4", {"adult": 4, "child": 0, "senior": 0}),
+("i want to book 2 tickets for victoria memorial", {"adult": 2, "child": 0, "senior": 0}),
+("i want to book 3 tickets for national museum", {"adult": 3, "child": 0, "senior": 0}),
+("i want to book tickets for indian museum", {"adult": 1, "child": 0, "senior": 0}),
+("book 2 tickets for salar jung museum", {"adult": 2, "child": 0, "senior": 0}),
+("2 tickets for this museum", {"adult": 2, "child": 0, "senior": 0}),
+("tickets for victoria memorial", {"adult": 1, "child": 0, "senior": 0}),
+("family of 4", {"adult": 2, "child": 2, "senior": 0}),
+("family of 5", {"adult": 3, "child": 2, "senior": 0}),
+("family of 3", {"adult": 2, "child": 1, "senior": 0}),
+("family of 6", {"adult": 3, "child": 3, "senior": 0}),
+("we are a family of 4", {"adult": 2, "child": 2, "senior": 0}),
+("coming as a family of 5", {"adult": 3, "child": 2, "senior": 0}),
     ]
     for text, value in ticket_templates:
         examples.append({
@@ -138,7 +193,7 @@ def generate_examples():
             "value": json.dumps(value)
         })
 
-    # ── Date examples ─────────────────────────────────────────
+    # ── Date examples ─────────────────────────────────────────────────────────
     for word, date_val in DATE_WORDS.items():
         if date_val:
             for template in [
@@ -148,6 +203,12 @@ def generate_examples():
                 f"booking for {word}",
                 f"{word} please",
                 f"can we come {word}",
+                f"the upcoming {word}",
+                f"the upcoming {word} would work",
+                f"the upcoming {word} would work for me",
+                f"how about {word}",
+                f"{word} works for me",
+                f"I prefer {word}",
             ]:
                 examples.append({
                     "text": template,
@@ -155,7 +216,6 @@ def generate_examples():
                     "value": date_val
                 })
 
-    # Random date examples
     for d in DATES[:10]:
         formatted = datetime.strptime(d, "%Y-%m-%d").strftime("%d %B")
         for template in [
@@ -170,7 +230,7 @@ def generate_examples():
                 "value": d
             })
 
-    # ── Time slot examples ────────────────────────────────────
+    # ── Time slot examples ────────────────────────────────────────────────────
     for word, slot in TIME_WORDS.items():
         for template in [
             f"at {word}",
@@ -187,8 +247,7 @@ def generate_examples():
                 "value": slot
             })
 
-    # ── Confirmation examples ─────────────────────────────────
-    # ── Confirmation examples ─────────────────────────────────────
+    # ── Confirmation examples ─────────────────────────────────────────────────
     confirm_texts = [
         "yes", "confirm", "ok", "okay", "sure", "proceed",
         "book it", "go ahead", "confirmed", "yes please",
@@ -204,7 +263,33 @@ def generate_examples():
         "yes confirm booking", "ok proceed to payment",
         "looks good", "that's fine", "all good", "perfect book it",
         "yes that's correct", "go for it", "do it",
-    ]
+        "yes that works", "perfect that's right", "yeah go ahead",
+        "sure thing", "of course", "definitely", "100%", "approved",
+        "i agree", "that looks right", "correct proceed",
+        "ok let's go", "yes let's book", "please finalize",
+        "submit", "pay now", "proceed to pay", "take my booking",
+        "yes book it for me", "please go ahead and book",
+        "confirm my booking", "yes i want to book",
+        "that's correct book it", "yes all details are correct",
+        "ok finalize my booking", "yes please confirm",
+        "i'm ready to pay", "ready to pay",
+        "take me to payment", "proceed to checkout",
+        "yes checkout", "i want to pay now",
+        "book and pay", "yes submit my booking",
+        "all good confirm", "everything looks good",
+        "yes that's my booking", "lock it in",
+        "i'm satisfied confirm", "yes proceed with booking",
+        "finalize the booking",
+        "finalize my booking",
+        "please finalize the booking",
+        "yes finalize the booking",
+        "finalize it",
+        "finalize and pay",
+        "ok finalize",
+        "let's finalize",
+        "i want to finalize",
+        "finalize now",
+        ]
     for text in confirm_texts:
         examples.append({
             "text": text,
@@ -212,20 +297,46 @@ def generate_examples():
             "value": "true"
         })
 
-    # ── Other/unknown examples ────────────────────────────────
+    # ── Other/unknown examples ────────────────────────────────────────────────
     other_texts = [
-    "hello", "hi", "thanks", "thank you", "bye", "goodbye",
-    "what museums do you have", "tell me more", "cancel",
-    "I changed my mind", "start over", "reset",
-    "what are the prices", "how much does it cost",
-    "is it open today", "what time do you close",
-    "help", "what can you do", "i need help",
-    "which museum is best", "recommend something",
-    "what exhibitions are on", "any discounts",
+    # greetings
+    "hello", "hi", "hey", "hi there", "hello there", "good morning",
+    "good afternoon", "good evening", "hiya", "howdy",
+    # thanks / bye
+    "thanks", "thank you", "thanks a lot", "bye", "goodbye", "see you",
+    "thank you so much", "much appreciated", "cheers",
+    # questions
+    "what museums do you have", "tell me more", "what can you do",
+    "i need help", "help me", "help", "what is this",
+    "which museum is best", "recommend something", "any suggestions",
+    "what exhibitions are on", "any discounts", "student discount",
     "do you have student tickets", "is parking available",
-    "how do i get there", "what is the address",
-    "can i cancel my booking", "refund policy",
-    "i want to change my booking", "modify booking",
+    "how do i get there", "what is the address", "where is it",
+    "how far is it", "is it accessible", "wheelchair access",
+    # cancellation / changes
+    "cancel", "i changed my mind", "start over", "reset",
+    "can i cancel my booking", "refund policy", "i want a refund",
+    "i want to change my booking", "modify booking", "reschedule",
+    # prices
+    "what are the prices", "how much does it cost", "pricing",
+    "how much is it", "what does it cost", "tell me the price",
+    # timings
+    "is it open today", "what time do you close", "opening hours",
+    "when do you open", "are you open on sunday", "closed today",
+    # misc
+    "okay cool", "sounds interesting", "not sure", "maybe",
+    "let me think", "give me a moment", "one second",
+    "what else", "anything else", "never mind", "forget it",
+    "what are the timings of shows",
+    "what are the show timings",
+    "what are the timings",
+    "timings of shows",
+    "show timings please",
+    "what time are the shows",
+    "tell me the timings",
+    "when are the shows",
+    "what time does it start",
+    "show schedule",
 ]
     for text in other_texts:
         examples.append({
@@ -246,8 +357,7 @@ if __name__ == "__main__":
 
     print(f"✅ Generated {len(examples)} training examples")
 
-    # Count by label
     from collections import Counter
     counts = Counter(e["label"] for e in examples)
-    for label, count in counts.items():
+    for label, count in sorted(counts.items()):
         print(f"   {label}: {count} examples")
