@@ -45,6 +45,7 @@ async def signup(data: dict) -> dict:
         "location": data["location"],
         "password": hash_password(data["password"]),
         "is_verified": False,
+        "isProfileComplete": False, 
         "otp": otp,
         "otp_expiry": expiry,
         "reset_otp": None,
@@ -99,7 +100,8 @@ async def login(email: str, password: str) -> dict:
             "email": museum["email"],
             "phone": museum["phone"],
             "location": museum["location"],
-            "is_verified": museum["is_verified"]
+            "is_verified": museum["is_verified"],
+            "isProfileComplete": museum.get("isProfileComplete", False)
         }
     }
 

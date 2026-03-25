@@ -39,11 +39,19 @@ const passwordRef = useRef();
       }
     );
 
+        const museum = res.data.museum;
+
     localStorage.setItem("museumToken", res.data.accessToken);
+    localStorage.setItem("museum", JSON.stringify(museum));
 
     alert("Login successful");
 
-    window.location.href = "/dashboard";
+    // ✅ CORRECT REDIRECT LOGIC
+    if (!museum.isProfileComplete) {
+      window.location.href = "/museum-onboarding";
+    } else {
+      window.location.href = "/museum-dashboard";
+    }
 
   } catch (err) {
 

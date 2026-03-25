@@ -8,6 +8,7 @@ from app.core.config import settings
 from app.core.logger import get_logger
 from app.db.database import connect_db, close_db
 from app.api import auth, museum_auth
+from app.api.onboarding_routes import router as onboarding_router
 
 logger = get_logger(__name__)
 
@@ -22,11 +23,8 @@ app = FastAPI(title=settings.APP_NAME, lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://localhost:3000",
-        settings.FRONTEND_URL,
-    ],
+    allow_origins=["*"],
+    
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -51,6 +49,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
 app.include_router(auth.router,        prefix="/api/users",   tags=["User Auth"])
 app.include_router(museum_auth.router, prefix="/api/museums", tags=["Museum Auth"])
+app.include_router(onboarding_router)
 
 @app.get("/")
 async def root():

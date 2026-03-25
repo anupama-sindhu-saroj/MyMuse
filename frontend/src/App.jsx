@@ -25,6 +25,8 @@ import TicketPage from "./pages/TicketPage";
 import MuseumSignup from "./pages/MuseumSignup";
 import MuseumLogin from "./pages/MuseumLogin";
 import MuseumForgotPassword from "./pages/MuseumForgotPassword";
+import MuseumOnboarding from "./pages/MuseumOnboarding";
+import MuseumDashboard from "./pages/MuseumDashboard";
 
 function App() {
 
@@ -106,11 +108,13 @@ function App() {
             }
           />
 
+
+          <Route path="/museum-dashboard" element={<MuseumDashboard />} />
           <Route path="/userauth" element={<UserAuth />} />
           <Route path="/user-forgot-password" element={<UserForgotPassword />} />
 
           <Route path="/dashboard" element={<Dashboard />} />
-
+          <Route path="/museum-onboarding" element={<MuseumOnboarding />} />
           {/* Hidden Admin */}
           <Route path="/admin" element={<AdminGateway />} />
 
