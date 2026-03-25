@@ -1,9 +1,9 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import "../styles/Dashboard.css";
-
+import { useNavigate } from "react-router-dom";
 function Dashboard() {
-
+  const navigate = useNavigate();
   return (
     <>
       <Navbar />
@@ -45,7 +45,21 @@ function Dashboard() {
           </div>
 
         </div>
-
+        <div className="animate" style={{ animationDelay: "0.6s", marginTop: "2rem" }}>
+          <button
+            onClick={() => navigate("/explore")}
+            className="px-6 py-3 bg-black text-white dark:bg-white dark:text-black rounded-full font-bold tracking-widest text-xs uppercase"
+          >
+            🔍 Explore Museums
+          </button>
+          <button
+            onClick={() => navigate("/book")}
+            style={{ marginLeft: "1rem" }}
+            className="px-6 py-3 border border-black dark:border-white rounded-full font-bold tracking-widest text-xs uppercase"
+          >
+            🎟 Book Tickets
+          </button>
+        </div>
         <p className="section-title animate" style={{ animationDelay: "0.3s" }}>
           Current Booking
         </p>

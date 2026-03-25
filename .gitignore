@@ -4,6 +4,11 @@ backend/node_modules/
 dist/
 .env
 .DS_Store
+<<<<<<< HEAD
+=======
+credentials/
+*.json
+>>>>>>> 06f6cd4ebdb9e0274581a63c648834dbe43266b7
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

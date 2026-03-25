@@ -136,6 +136,7 @@ const UserAuth = () => {
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", accessToken);
 
       alert("Login successful");
 
