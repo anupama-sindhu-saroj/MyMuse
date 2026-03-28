@@ -43,6 +43,7 @@ async def create_booking(
         "time_slot": data.time_slot,
         "tickets": data.tickets,
         "total_amount": data.total_amount,
+        "status": "pending_payment",
         "payment_status": "pending",
         "created_at": datetime.utcnow()
     }

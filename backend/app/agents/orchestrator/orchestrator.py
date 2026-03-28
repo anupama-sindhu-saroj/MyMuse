@@ -12,7 +12,16 @@ async def handle_message(user_id: str, user_message: str) -> dict:
     # YOUR WORK ✅
     if intent == "PAYMENT_STATUS":
         from app.agents.payment.payment_agent import handle_payment
-        response = await handle_payment(user_id, user_message, memory)
+        result = await handle_payment(user_id, user_message, memory)
+        memory.add_ai_message(result["response"])  # ✅ only store text
+        return {
+            "intent": intent,
+            "response": result["response"],      # ✅ text for chat bubble
+            "order_id": result.get("order_id"),  # ✅ for Razorpay popup
+            "amount": result.get("amount"),      # ✅ for Razorpay popup
+            "booking_id": result.get("booking_id")  # ✅ for verify call
+        }
+
 
     # YOUR WORK ✅
     elif intent == "GREETING":

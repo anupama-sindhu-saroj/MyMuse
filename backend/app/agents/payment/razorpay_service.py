@@ -6,9 +6,9 @@ client = razorpay.Client(
 )
 
 def create_order(amount: int, booking_id: str) -> dict:
-    """amount in paise (multiply rupees x 100)"""
+    """amount in RUPEES — this function converts to paise internally"""
     order = client.order.create({
-        "amount": amount * 100,
+        "amount": amount * 100,  
         "currency": "INR",
         "receipt": booking_id,
         "notes": {"booking_id": booking_id}

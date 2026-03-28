@@ -7,6 +7,7 @@ from contextlib import asynccontextmanager
 from app.core.config import settings
 from app.core.logger import get_logger
 from app.db.database import connect_db, close_db
+from app.api.payment import router as payment_router
 
 logger = get_logger(__name__)
 
