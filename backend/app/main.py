@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 from app.core.config import settings
 from app.core.logger import get_logger
 from app.db.database import connect_db, close_db
-from app.api import auth, museum_auth
+from app.api import auth, museum_auth,admin_auth
 
 logger = get_logger(__name__)
 
@@ -51,6 +51,8 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
 app.include_router(auth.router,        prefix="/api/users",   tags=["User Auth"])
 app.include_router(museum_auth.router, prefix="/api/museums", tags=["Museum Auth"])
+app.include_router(admin_auth.router,  prefix="/api/admin",   tags=["Admin Auth"])  
+
 
 @app.get("/")
 async def root():

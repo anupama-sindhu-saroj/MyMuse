@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import Navbar from "../components/Navbar";
 import "../styles/adminGateway.css";
 
 export default function AdminGateway() {
   const cardRef = useRef(null);
   const containerRef = useRef(null);
-
+  const [secretKey, setSecretKey] = useState("");
   const [isLogin, setIsLogin] = useState(true);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     const container = containerRef.current;
@@ -31,6 +35,42 @@ export default function AdminGateway() {
     };
   }, []);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (isLogin) {
+        // ── LOGIN ──────────────────────────────────────────
+        const res = await axios.post(
+          "http://localhost:8000/api/admin/login",
+          { email, password }
+        );
+
+        localStorage.setItem("adminToken", res.data.accessToken);
+        localStorage.setItem("adminRefreshToken", res.data.refreshToken);
+
+        alert("Access authorized");
+        window.location.href = "/dashboard";
+
+      } else {
+        // ── SIGNUP ─────────────────────────────────────────
+        await axios.post(
+        "http://localhost:8000/api/admin/signup",
+        { name, email, password, secret_key: secretKey }
+        );
+
+        alert("Admin registered. Please login.");
+        setIsLogin(true);
+        setName("");
+        setEmail("");
+        setPassword("");
+      }
+
+    } catch (err) {
+      alert(err.response?.data?.message || "Authentication failed");
+    }
+  };
+
   return (
     <>
       <Navbar minimal={true} />
@@ -49,25 +89,55 @@ export default function AdminGateway() {
               {isLogin ? "Secure Access" : "Initial Setup"}
             </h3>
 
-            <form>
+            <form onSubmit={handleSubmit}>
               {!isLogin && (
-                <div className="input-container">
-                  <label>Registry Name</label>
-                  <input type="text" placeholder="Authorized User" />
-                </div>
-              )}
+              <>
+              <div className="input-container">
+              <label>Registry Name</label>
+              <input
+              type="text"
+              placeholder="Authorized User"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              />
+            </div>
+    <div className="input-container">
+      <label>Authorization Key</label>
+      <input
+        type="password"
+        placeholder="••••••••••••"
+        value={secretKey}
+        onChange={(e) => setSecretKey(e.target.value)}
+        required
+      />
+    </div>
+  </>
+)}
 
               <div className="input-container">
                 <label>Digital ID</label>
-                <input type="email" placeholder="admin@museo.cloud" required />
+                <input
+                  type="email"
+                  placeholder="admin@museo.cloud"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
               </div>
 
               <div className="input-container">
                 <label>Encrypted Key</label>
-                <input type="password" placeholder="••••••••••••" required />
+                <input
+                  type="password"
+                  placeholder="••••••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
               </div>
 
-              <button className="btn-glitch">
+              <button type="submit" className="btn-glitch">
                 {isLogin ? "Authorize" : "Initialize"}
               </button>
             </form>

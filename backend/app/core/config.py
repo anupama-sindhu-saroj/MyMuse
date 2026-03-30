@@ -32,6 +32,7 @@ class Settings(BaseSettings):
     FROM_EMAIL: str = ""
     EMAIL_USER: str = ""
     EMAIL_PASS: str = ""
+    ADMIN_SECRET_KEY: str = ""
 
     # Twilio / WhatsApp
     TWILIO_ACCOUNT_SID: str = ""
