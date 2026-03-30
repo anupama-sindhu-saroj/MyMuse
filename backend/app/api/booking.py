@@ -11,6 +11,8 @@ router = APIRouter()
 logger = get_logger(__name__)
 
 
+# -------------------- MODELS --------------------
+
 class BookingRequest(BaseModel):
     show_id: Optional[str] = None
     show_name: str
@@ -26,7 +28,13 @@ class BookingResponse(BaseModel):
     message: str
 
 
-@router.post("/api/bookings/create", response_model=BookingResponse)
+class FinalizeBookingRequest(BaseModel):
+    session_id: str
+
+
+# -------------------- CREATE BOOKING --------------------
+
+@router.post("/create", response_model=BookingResponse)
 async def create_booking(
     data: BookingRequest,
     current_user: dict = Depends(get_current_user)
@@ -34,7 +42,7 @@ async def create_booking(
     db = get_db()
 
     booking = {
-        "user_id": current_user["id"],
+        "user_id": str(current_user["id"]),    # ✅ always store as string
         "user_email": current_user["email"],
         "user_name": current_user.get("name", ""),
         "show_name": data.show_name,
@@ -45,11 +53,13 @@ async def create_booking(
         "total_amount": data.total_amount,
         "status": "pending_payment",
         "payment_status": "pending",
-        "created_at": datetime.utcnow()
+        "created_at": datetime.utcnow(),
+        "updated_at": datetime.utcnow(),
     }
 
     result = await db.bookings.insert_one(booking)
     booking_id = str(result.inserted_id)
+
     logger.info(f"Booking created: {booking_id} for user {current_user['email']}")
 
     return BookingResponse(
@@ -58,76 +68,113 @@ async def create_booking(
     )
 
 
-@router.get("/api/bookings/my")
+# -------------------- MY BOOKINGS --------------------
+
+@router.get("/my")
 async def my_bookings(current_user: dict = Depends(get_current_user)):
     db = get_db()
+
     cursor = db.bookings.find(
-        {"user_id": current_user["id"]}
+        {"user_id": str(current_user["id"])}    # ✅ match as string
     ).sort("created_at", -1)
 
     bookings = []
     async for b in cursor:
         b["id"] = str(b["_id"])
         del b["_id"]
+        # ✅ serialize any ObjectId values left in the document
+        for key, val in b.items():
+            if isinstance(val, ObjectId):
+                b[key] = str(val)
         bookings.append(b)
+
+    paid_count = len([
+        b for b in bookings
+        if b.get("payment_status") == "paid"
+    ])
 
     return {
         "bookings": bookings,
         "total": len(bookings),
-        "paid": len([b for b in bookings if b["payment_status"] == "paid"])
+        "paid": paid_count,
     }
 
 
-@router.get("/api/bookings/upcoming")
+# -------------------- UPCOMING BOOKING --------------------
+
+@router.get("/upcoming")
 async def upcoming_booking(current_user: dict = Depends(get_current_user)):
     db = get_db()
+
     today = datetime.utcnow().strftime("%Y-%m-%d")
+
     booking = await db.bookings.find_one(
         {
-            "user_id": current_user["id"],
+            "user_id": str(current_user["id"]),  # ✅ match as string
             "visit_date": {"$gte": today},
-            "payment_status": "paid"
+            "payment_status": "paid",
         },
         sort=[("visit_date", 1)]
     )
+
     if booking:
         booking["id"] = str(booking["_id"])
         del booking["_id"]
+        for key, val in booking.items():
+            if isinstance(val, ObjectId):
+                booking[key] = str(val)
+
     return {"booking": booking}
 
 
-@router.get("/api/bookings/{booking_id}")
+# -------------------- GET SINGLE BOOKING --------------------
+
+@router.get("/{booking_id}")
 async def get_booking(
     booking_id: str,
     current_user: dict = Depends(get_current_user)
 ):
     db = get_db()
-    booking = await db.bookings.find_one({"_id": ObjectId(booking_id)})
+
+    try:
+        booking = await db.bookings.find_one({"_id": ObjectId(booking_id)})
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid booking ID format")
+
     if not booking:
-        raise HTTPException(404, "Booking not found")
-    if booking["user_id"] != current_user["id"]:
-        raise HTTPException(403, "Not your booking")
+        raise HTTPException(status_code=404, detail="Booking not found")
+
+    if str(booking["user_id"]) != str(current_user["id"]):
+        raise HTTPException(status_code=403, detail="Not your booking")
+
     booking["id"] = str(booking["_id"])
     del booking["_id"]
+    for key, val in booking.items():
+        if isinstance(val, ObjectId):
+            booking[key] = str(val)
+
     return booking
 
-class FinalizeBookingRequest(BaseModel):
-    session_id: str
 
+# -------------------- FINALIZE BOOKING --------------------
 
-@router.post("/api/bookings/finalize")
+@router.post("/finalize")
 async def finalize_booking(
     data: FinalizeBookingRequest,
     current_user: dict = Depends(get_current_user)
 ):
-    from app.agents.booking.booking_agent import get_session, delete_session, save_booking_to_db
+    from app.agents.booking.booking_agent import (
+        get_session,
+        delete_session,
+        save_booking_to_db,
+    )
 
     booking = await get_session(data.session_id)
 
     if not booking:
-        raise HTTPException(400, "No active booking session")
+        raise HTTPException(status_code=400, detail="No active booking session")
 
-    booking_id = await save_booking_to_db(booking, current_user["id"])
+    booking_id = await save_booking_to_db(booking, str(current_user["id"]))
 
     await delete_session(data.session_id)
 
