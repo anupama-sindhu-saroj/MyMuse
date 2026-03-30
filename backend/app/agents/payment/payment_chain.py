@@ -4,7 +4,7 @@ from app.core.config import settings
 from app.agents.payment.prompts import PAYMENT_CONFIRMATION_PROMPT
 
 llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash",
+    model="gemini-2.5-flash",
     google_api_key=settings.GEMINI_API_KEY,
     temperature=0
 )

@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     # Database
     MONGO_URI: str
     MONGO_DB_NAME: str = "museumDB"
+    
+    #encryption
+    ENCRYPTION_KEY: str
 
     # JWT
     JWT_SECRET: str = "secret"

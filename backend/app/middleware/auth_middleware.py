@@ -1,17 +1,32 @@
-from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from app.core.security import decode_access_token
+from fastapi import HTTPException, Header
+from typing import Optional
+from jose import jwt, JWTError
+from app.core.config import settings
 
-bearer_scheme = HTTPBearer()
 
-async def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme)
-) -> str:
-    token = credentials.credentials
-    payload = decode_access_token(token)
-    if not payload:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid or expired token"
+async def get_current_user(authorization: Optional[str] = Header(None)) -> dict:
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    
+    token = authorization.split(" ")[1]
+    
+    try:
+        payload = jwt.decode(token, settings.JWT_SECRET, algorithms=["HS256"])
+        
+        # Handle different token structures
+        user_id = (
+            payload.get("id") or 
+            payload.get("user_id") or 
+            payload.get("sub") or 
+            payload.get("_id") or ""
         )
-    return payload.get("id")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid token: no user ID")
+
+        return {
+            "id": str(user_id),
+            "email": payload.get("email", ""),
+            "name": payload.get("name", "")
+        }
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
