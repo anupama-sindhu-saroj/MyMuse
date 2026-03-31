@@ -28,37 +28,42 @@ function Dashboard() {
     }
 
     const fetchDashboard = async () => {
-      try {
-        const url = `http://localhost:8000/api/dashboard/user/${user_id}`;
-        console.log("[Dashboard] fetching:", url);
-
-        const res = await fetch(url);
-        const contentType = res.headers.get("content-type") || "";
-
-        let data;
-        if (contentType.includes("application/json")) {
-          data = await res.json();
-        } else {
-          const text = await res.text();
-          throw new Error(`Server error ${res.status}: ${text}`);
-        }
-
-        console.log("[Dashboard] API response:", data);
-
-        if (!res.ok) {
-          throw new Error(
-            data?.message || data?.detail || `Request failed: ${res.status}`
-          );
-        }
-
-        setStats(data);
-      } catch (err) {
-        console.error("[Dashboard] fetch error:", err);
-        setError(err.message || "Failed to fetch dashboard data");
-      } finally {
-        setLoading(false);
+  try {
+    const url = `http://localhost:8000/api/dashboard/user/${user_id}`;
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
       }
-    };
+    });
+
+    if (!res.ok) {
+      // ← Don't crash — just show empty dashboard
+      setStats({
+        ticketsBooked: 0,
+        museumsVisited: 0,
+        upcomingCount: 0,
+        currentBooking: null,
+      });
+      setLoading(false);
+      return;
+    }
+
+    const data = await res.json();
+    setStats(data);
+
+  } catch (err) {
+    // ← Network error — show empty dashboard instead of error screen
+    console.error("[Dashboard] fetch error:", err);
+    setStats({
+      ticketsBooked: 0,
+      museumsVisited: 0,
+      upcomingCount: 0,
+      currentBooking: null,
+    });
+  } finally {
+    setLoading(false);
+  }
+};
 
     fetchDashboard();
   }, [navigate]);
