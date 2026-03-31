@@ -65,12 +65,13 @@ app.add_middleware(
 
 
 # ✅ Include routers
+app.include_router(admin_auth.router, prefix="/api/admin", tags=["Admin Auth"])
 app.include_router(auth.router, prefix="/api/users", tags=["User Auth"])
 app.include_router(museum_auth.router, prefix="/api/museums", tags=["Museum Auth"])
 app.include_router(onboarding_router)
-app.include_router(chat_router, prefix="/api", tags=["Chat"])
-app.include_router(booking_router, prefix="/api/bookings", tags=["Booking"])
-app.include_router(museums_router, prefix="/api/museums", tags=["Museums"])
+app.include_router(chat_router)
+app.include_router(booking_router)
+app.include_router(museums_router)
 app.include_router(dashboard_router)
 
 if has_payment and payment_router:
@@ -97,11 +98,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     return JSONResponse(
         status_code=400,
         content={"message": message},
-    )
-
-app.include_router(auth.router,        prefix="/api/users",   tags=["User Auth"])
-app.include_router(museum_auth.router, prefix="/api/museums", tags=["Museum Auth"])
-app.include_router(admin_auth.router,  prefix="/api/admin",   tags=["Admin Auth"])  
+    ) 
 
 
 # ✅ Translation route

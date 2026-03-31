@@ -56,14 +56,50 @@ def get_fallback_image(category: str, index: int = 0) -> str:
     return imgs[index % len(imgs)]
 
 
+async def fetch_wikipedia_image(museum_name: str) -> str:
+    """Fetch actual museum photo from Wikipedia API."""
+    try:
+        async with httpx.AsyncClient() as client:
+            # Try exact name first
+            res = await client.get(
+                "https://en.wikipedia.org/w/api.php",
+                params={
+                    "action": "query",
+                    "titles": museum_name,
+                    "prop": "pageimages",
+                    "format": "json",
+                    "pithumbsize": 800,
+                    "pilicense": "any"
+                },
+                headers={"User-Agent": "MuseoBot/1.0 (museum discovery app)"},
+                timeout=5
+            )
+            data = res.json()
+            pages = data.get("query", {}).get("pages", {})
+            for page in pages.values():
+                img = page.get("thumbnail", {}).get("source", "")
+                if img and "svg" not in img.lower():
+                    # Get larger version
+                    img = img.replace("80px", "800px").replace("120px", "800px").replace("320px", "800px")
+                    return img
+    except Exception as e:
+        print(f"Wikipedia error for {museum_name}: {e}")
+    return ""
+
+
 async def fetch_unsplash_image(museum_name: str, city: str = "") -> str:
     """Fetch a relevant image from Unsplash for a museum."""
     try:
         async with httpx.AsyncClient() as client:
-            query = f"{museum_name} museum {city}".strip()
+            query = f"{museum_name} {city} museum building".strip()
             res = await client.get(
                 "https://api.unsplash.com/search/photos",
-                params={"query": query, "per_page": 1, "orientation": "landscape"},
+                params={
+                    "query": query,
+                    "per_page": 3,
+                    "orientation": "landscape",
+                    "content_filter": "high"
+                },
                 headers={"Authorization": f"Client-ID {settings.UNSPLASH_ACCESS_KEY}"},
                 timeout=5
             )
@@ -76,6 +112,30 @@ async def fetch_unsplash_image(museum_name: str, city: str = "") -> str:
     return ""
 
 
+async def get_best_image(museum_name: str, city: str, category: str, index: int) -> str:
+    """
+    Try images in order of quality:
+    1. Wikipedia — actual museum photo (most accurate)
+    2. Unsplash — search by museum name + city
+    3. Fallback — category-based Unsplash
+    """
+    # Try Wikipedia first
+    wiki_img = await fetch_wikipedia_image(museum_name)
+    if wiki_img:
+        print(f"📸 Wikipedia image for: {museum_name}")
+        return wiki_img
+
+    # Try Unsplash with specific museum name
+    unsplash_img = await fetch_unsplash_image(museum_name, city)
+    if unsplash_img:
+        print(f"🖼 Unsplash image for: {museum_name}")
+        return unsplash_img
+
+    # Fallback to category image
+    print(f"⚠️ Using fallback image for: {museum_name}")
+    return get_fallback_image(category, index)
+
+
 async def search_museums(query: str, location: str = None) -> list:
     """
     Search web for museums, extract structured data, fetch images.
@@ -85,7 +145,7 @@ async def search_museums(query: str, location: str = None) -> list:
     search_results = search_tool.run(search_query)
 
     extract_llm = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
+        model="gemini-2.0-flash",
         google_api_key=settings.GEMINI_API_KEY
     )
 
@@ -103,8 +163,13 @@ async def search_museums(query: str, location: str = None) -> list:
     # Fetch all images in parallel
     async def enrich(m, index):
         city = m.get("city", "").split(",")[0]
-        img = await fetch_unsplash_image(m["title"], city)
-        m["img"] = img if img else get_fallback_image(m.get("category", "culture"), index)
+        img = await get_best_image(
+            m["title"],
+            city,
+            m.get("category", "culture"),
+            index
+        )
+        m["img"] = img
         return m
 
     enriched = await asyncio.gather(*[
