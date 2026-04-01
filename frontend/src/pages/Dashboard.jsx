@@ -3,6 +3,52 @@ import Navbar from "../components/Navbar";
 import "../styles/Dashboard.css";
 import { useNavigate } from "react-router-dom";
 
+function TicketDropdown({ tickets, loading }) {
+  if (loading) {
+    return (
+      <div className="dropdown-box">
+        <p className="dropdown-empty">Loading...</p>
+      </div>
+    );
+  }
+
+  if (!tickets || tickets.length === 0) {
+    return (
+      <div className="dropdown-box">
+        <p className="dropdown-empty">No tickets found.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="dropdown-box">
+      {tickets.map((ticket, i) => (
+        <div className="dropdown-ticket" key={ticket._id || i}>
+          <div className="dropdown-ticket-left">
+            <h4 className="dropdown-museum">{ticket.museum_name || "Unknown Museum"}</h4>
+            <p className="dropdown-meta">📅 {ticket.visit_date || "No date"} &nbsp;·&nbsp; 🕐 {ticket.time_slot || "No time"}</p>
+            <p className="dropdown-meta">🎫 Qty: {ticket.num_tickets ?? ticket.quantity ?? 1} &nbsp;·&nbsp; 💰 ₹{ticket.total_amount ?? ticket.amount ?? "—"}</p>
+            <span className={`dropdown-badge ${ticket.payment_status === "paid" ? "badge-paid" : "badge-pending"}`}>
+              {ticket.payment_status?.toUpperCase() || "UNKNOWN"}
+            </span>
+          </div>
+          <div className="dropdown-ticket-right">
+            {ticket.qr_code ? (
+              <img
+                src={`data:image/png;base64,${ticket.qr_code}`}
+                alt="QR"
+                className="dropdown-qr"
+              />
+            ) : (
+              <div className="dropdown-qr-empty">No QR</div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function Dashboard() {
   const navigate = useNavigate();
 
@@ -16,25 +62,19 @@ function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // Which card is open: "tickets" | "visited" | "upcoming" | null
+  const [activeCard, setActiveCard] = useState(null);
+  const [dropdownData, setDropdownData] = useState({ tickets: [], visited: [], upcoming: [] });
+  const [dropdownLoading, setDropdownLoading] = useState({ tickets: false, visited: false, upcoming: false });
+
   useEffect(() => {
     const user_id = localStorage.getItem("user_id");
-
-    // ✅ Log so you can see exactly what user_id is being sent
-    console.log("[Dashboard] user_id from localStorage:", user_id);
-
-    if (!user_id) {
-      navigate("/login");
-      return;
-    }
+    if (!user_id) { navigate("/login"); return; }
 
     const fetchDashboard = async () => {
       try {
-        const url = `http://localhost:8000/api/dashboard/user/${user_id}`;
-        console.log("[Dashboard] fetching:", url);
-
-        const res = await fetch(url);
+        const res = await fetch(`http://localhost:8000/api/dashboard/user/${user_id}`);
         const contentType = res.headers.get("content-type") || "";
-
         let data;
         if (contentType.includes("application/json")) {
           data = await res.json();
@@ -42,18 +82,9 @@ function Dashboard() {
           const text = await res.text();
           throw new Error(`Server error ${res.status}: ${text}`);
         }
-
-        console.log("[Dashboard] API response:", data);
-
-        if (!res.ok) {
-          throw new Error(
-            data?.message || data?.detail || `Request failed: ${res.status}`
-          );
-        }
-
+        if (!res.ok) throw new Error(data?.message || data?.detail || `Request failed: ${res.status}`);
         setStats(data);
       } catch (err) {
-        console.error("[Dashboard] fetch error:", err);
         setError(err.message || "Failed to fetch dashboard data");
       } finally {
         setLoading(false);
@@ -62,6 +93,33 @@ function Dashboard() {
 
     fetchDashboard();
   }, [navigate]);
+
+  const handleCardClick = async (type) => {
+    // Toggle off if same card clicked again
+    if (activeCard === type) {
+      setActiveCard(null);
+      return;
+    }
+
+    setActiveCard(type);
+
+    // Don't refetch if already loaded
+    if (dropdownData[type].length > 0) return;
+
+    const user_id = localStorage.getItem("user_id");
+
+    setDropdownLoading((prev) => ({ ...prev, [type]: true }));
+
+    try {
+      const res = await fetch(`http://localhost:8000/api/dashboard/user/${user_id}/${type}`);
+      const data = await res.json();
+      setDropdownData((prev) => ({ ...prev, [type]: data.tickets || [] }));
+    } catch (err) {
+      console.error("[Dropdown] fetch error:", err);
+    } finally {
+      setDropdownLoading((prev) => ({ ...prev, [type]: false }));
+    }
+  };
 
   if (loading) {
     return (
@@ -74,27 +132,12 @@ function Dashboard() {
   if (error) {
     return (
       <div style={{ padding: "3rem" }}>
-        <p style={{ color: "red", fontWeight: "bold" }}>
-          Dashboard failed to load
-        </p>
-        <pre
-          style={{
-            fontSize: "0.75rem",
-            background: "#fef2f2",
-            padding: "1rem",
-            borderRadius: "8px",
-            whiteSpace: "pre-wrap",
-            color: "#991b1b",
-            marginTop: "0.5rem",
-          }}
-        >
+        <p style={{ color: "red", fontWeight: "bold" }}>Dashboard failed to load</p>
+        <pre style={{ fontSize: "0.75rem", background: "#fef2f2", padding: "1rem", borderRadius: "8px", whiteSpace: "pre-wrap", color: "#991b1b", marginTop: "0.5rem" }}>
           {error}
         </pre>
-        <button
-          onClick={() => window.location.reload()}
-          style={{ marginTop: "1rem" }}
-          className="px-6 py-3 bg-black text-white rounded-full font-bold tracking-widest text-xs uppercase"
-        >
+        <button onClick={() => window.location.reload()} style={{ marginTop: "1rem" }}
+          className="px-6 py-3 bg-black text-white rounded-full font-bold tracking-widest text-xs uppercase">
           Retry
         </button>
       </div>
@@ -103,12 +146,17 @@ function Dashboard() {
 
   const currentBooking = stats?.currentBooking;
 
+  const cards = [
+    { key: "tickets",  icon: "🎟", label: "Tickets Booked",  count: stats.ticketsBooked  },
+    { key: "visited",  icon: "🏛", label: "Museums Visited", count: stats.museumsVisited },
+    { key: "upcoming", icon: "📅", label: "Upcoming",        count: stats.upcomingCount  },
+  ];
+
   return (
     <>
       <Navbar />
 
       <div className="wrapper">
-
         <h1 className="font-serif text-5xl md:text-6xl leading-tight mb-12 animate">
           The world's greatest legacies,<br />
           <span className="text-neutral-400 dark:text-neutral-500">
@@ -116,42 +164,43 @@ function Dashboard() {
           </span>
         </h1>
 
-        {/* STATS */}
-        <div
-          className="stats-container animate"
-          style={{ animationDelay: "0.2s" }}
-        >
-          <div className="stat-card">
-            <span>🎟</span>
-            <p>Tickets Booked</p>
-            <h4>{stats.ticketsBooked}</h4>
-          </div>
+        {/* STATS + DROPDOWNS */}
+        <div className="stats-section animate" style={{ animationDelay: "0.2s" }}>
+          <div className="stats-container">
+            {cards.map(({ key, icon, label, count }) => (
+              <div key={key} className="stat-card-wrapper">
 
-          <div className="stat-card">
-            <span>🏛</span>
-            <p>Museums Visited</p>
-            <h4>{stats.museumsVisited}</h4>
-          </div>
+                {/* Clickable card */}
+                <div
+                  className={`stat-card clickable ${activeCard === key ? "active" : ""}`}
+                  onClick={() => handleCardClick(key)}
+                >
+                  <span>{icon}</span>
+                  <p>{label}</p>
+                  <h4>{count}</h4>
+                  <span className="dropdown-arrow">{activeCard === key ? "▲" : "▼"}</span>
+                </div>
 
-          <div className="stat-card">
-            <span>📅</span>
-            <p>Upcoming</p>
-            <h4>{stats.upcomingCount}</h4>
+                {/* Dropdown slides open below its own card */}
+                {activeCard === key && (
+                  <TicketDropdown
+                    tickets={dropdownData[key]}
+                    loading={dropdownLoading[key]}
+                  />
+                )}
+              </div>
+            ))}
           </div>
         </div>
 
         {/* BUTTONS */}
-        <div
-          className="animate"
-          style={{ animationDelay: "0.6s", marginTop: "2rem" }}
-        >
+        <div className="animate" style={{ animationDelay: "0.6s", marginTop: "2rem" }}>
           <button
             onClick={() => navigate("/explore")}
             className="px-6 py-3 bg-black text-white dark:bg-white dark:text-black rounded-full font-bold tracking-widest text-xs uppercase"
           >
             🔍 Explore Museums
           </button>
-
           <button
             onClick={() => navigate("/book")}
             style={{ marginLeft: "1rem" }}
@@ -162,46 +211,31 @@ function Dashboard() {
         </div>
 
         {/* CURRENT BOOKING */}
-        <p
-          className="section-title animate"
-          style={{ animationDelay: "0.3s" }}
-        >
+        <p className="section-title animate" style={{ animationDelay: "0.3s" }}>
           Current Booking
         </p>
 
         {currentBooking ? (
-          <div
-            className="ticket-visual animate"
-            style={{ animationDelay: "0.4s" }}
-          >
+          <div className="ticket-visual animate" style={{ animationDelay: "0.4s" }}>
             <div className="ticket-data">
-
               <div className="ticket-info">
                 <h2>{currentBooking.museum_name || "No Museum"}</h2>
                 <p style={{ fontSize: "0.7rem", color: "#fff", opacity: "0.8" }}>
-                  {currentBooking.visit_date || "No Date"} &bull;{" "}
-                  {currentBooking.time_slot || "No Time"}
+                  {currentBooking.visit_date || "No Date"} &bull; {currentBooking.time_slot || "No Time"}
                 </p>
               </div>
-
               <div className="qr-small">
                 {currentBooking.qr_code ? (
-                  <img
-                    src={`data:image/png;base64,${currentBooking.qr_code}`}
-                    style={{ width: "60px" }}
-                    alt="QR Code"
-                  />
+                  <img src={`data:image/png;base64,${currentBooking.qr_code}`} style={{ width: "60px" }} alt="QR Code" />
                 ) : (
                   <p style={{ fontSize: "10px", opacity: "0.6" }}>No QR</p>
                 )}
               </div>
-
             </div>
           </div>
         ) : (
           <p style={{ opacity: "0.6" }}>No confirmed bookings yet</p>
         )}
-
       </div>
     </>
   );

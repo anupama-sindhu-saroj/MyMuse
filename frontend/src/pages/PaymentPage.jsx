@@ -7,17 +7,14 @@ import AIChatBubble from "../components/AIChatBubble";
 import AIVerification from "../components/AIVerification";
 import AIStatusBar from "../components/AIStatusBar";
 import AIPaymentRecovery from "../components/AIPaymentRecovery";
-
 const PaymentPage = () => {
   const [selectedMethod, setSelectedMethod] = useState("upi");
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentFailed, setPaymentFailed] = useState(false);
-  const [bookingData, setBookingData] = useState(null); // ✅ store booking info
-
+  const [bookingData, setBookingData] = useState(null); 
   useEffect(() => {
   const bookingId = localStorage.getItem("pending_booking_id")
   if (!bookingId) return;
-
   fetch(`http://localhost:8000/api/payment/summary?booking_id=${bookingId}`, {
     headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
   })
@@ -43,8 +40,6 @@ const PaymentPage = () => {
           booking_id: localStorage.getItem("pending_booking_id")
         })
       });
-
-      // ✅ Check for server errors before parsing
       if (!orderRes.ok) {
         const err = await orderRes.json().catch(() => ({}));
         console.error("Order creation failed:", err);
@@ -52,9 +47,8 @@ const PaymentPage = () => {
         setIsProcessing(false);
         return;
       }
-
       const orderData = await orderRes.json();
-      setBookingData(orderData); // ✅ update summary with latest data
+      setBookingData(orderData); 
       console.log("Razorpay Key:", import.meta.env.VITE_RAZORPAY_KEY_ID);
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
@@ -64,7 +58,6 @@ const PaymentPage = () => {
         name: "Museo",
         description: "Museum Ticket Booking",
         theme: { color: "#000000" },
-
         handler: async (response) => {
           const verifyRes = await fetch("http://localhost:8000/api/payment/verify", {
             method: "POST",
@@ -79,11 +72,8 @@ const PaymentPage = () => {
               razorpay_signature: response.razorpay_signature
             })
           });
-
           const verifyData = await verifyRes.json();
-
           if (verifyData.success) {
-            // Save full booking data so TicketPage can read it
             localStorage.setItem("last_booking", JSON.stringify({
                 show_name: verifyData.show_name,
                 museum_name: verifyData.museum_name,
@@ -92,14 +82,12 @@ const PaymentPage = () => {
                 tickets: verifyData.tickets,
                 total_amount: verifyData.total_amount
             }));
-
             window.location.href = `/ticket?booking_id=${verifyData.ticket_id}&qr=${verifyData.ticket_id}`;
         } else {
             setPaymentFailed(true);
             setIsProcessing(false);
           }
         },
-
         modal: {
           ondismiss: () => {
             setPaymentFailed(true);
@@ -107,28 +95,21 @@ const PaymentPage = () => {
           }
         }
       };
-
       const rzp = new window.Razorpay(options);
-
       rzp.on("payment.failed", function () {
         setPaymentFailed(true);
         setIsProcessing(false);
       });
-
       rzp.open();
-
     } catch (err) {
       console.error("Payment error:", err);
       setPaymentFailed(true);
       setIsProcessing(false);
     }
   };
-
-  // ✅ Format amount from paise → rupees for display
   const displayAmount = bookingData?.amount
     ? `₹${(bookingData.amount / 100).toFixed(2)}`
     : "₹0.00";
-
   return (
     <>
       <Navbar />
@@ -139,16 +120,13 @@ const PaymentPage = () => {
               Finalize <br />
               <span className="text-neutral-400 dark:text-neutral-500">Booking.</span>
             </h1>
-
             <AIChatBubble
               selectedMethod={selectedMethod}
               onMethodRecommended={(method) => setSelectedMethod(method)}
             />
-
             <p className="font-sans text-xs uppercase tracking-[0.35em] text-neutral-400 mb-6">
               Select Method
             </p>
-
             <PaymentMethods
               selected={selectedMethod}
               onSelect={setSelectedMethod}
@@ -158,7 +136,7 @@ const PaymentPage = () => {
               <PayButton
                 onClick={handlePayment}
                 isLoading={isProcessing}
-                amount={displayAmount} // ✅ real amount from API
+                amount={displayAmount} 
               />
             </div>
             <AIStatusBar active={isProcessing} />
@@ -172,7 +150,6 @@ const PaymentPage = () => {
               }}
             />
           </div>
-
           <div className="lg:col-span-5 space-y-8">
             <div className="relative rounded-2xl overflow-hidden shadow-xl">
               <img
@@ -186,7 +163,7 @@ const PaymentPage = () => {
               </div>
             </div>
             <div className="sticky top-32">
-              {/* ✅ Pass bookingData as props to BookingSummary */}
+              {}
               <BookingSummary bookingData={bookingData} />
             </div>
           </div>
@@ -195,5 +172,4 @@ const PaymentPage = () => {
     </>
   );
 };
-
 export default PaymentPage;
