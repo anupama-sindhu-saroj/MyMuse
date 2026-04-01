@@ -145,7 +145,7 @@ async def search_museums(query: str, location: str = None) -> list:
     search_results = search_tool.run(search_query)
 
     extract_llm = ChatGoogleGenerativeAI(
-        model="gemini-2.0-flash",
+        model="gemini-2.5-flash",
         google_api_key=settings.GEMINI_API_KEY
     )
 
