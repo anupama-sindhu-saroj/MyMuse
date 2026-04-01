@@ -91,92 +91,51 @@ const UserAuth = () => {
 
   /* ---------------- LOGIN ---------------- */
 
-  const handleLogin = async (e) => {
-
-    e.preventDefault();
-
-    try {
-
-      const res = await axios.post(`${API}/login`, {
-        email,
-        password
-      });
-      const handleLogin = async (e) => {
-
+ const handleLogin = async (e) => {
   e.preventDefault();
 
   try {
+    const res = await axios.post(`${API}/login`, {
+      email,
+      password,
+    });
 
-    const res = await axios.post(
-      "http://localhost:8000/api/users/login",
-      { email, password }
-    );
+    console.log("LOGIN RESPONSE:", res.data);
 
-    console.log("LOGIN RESPONSE:", res.data);   // ADD THIS
+    const { accessToken, refreshToken, user } = res.data;
 
-    localStorage.setItem("accessToken", res.data.accessToken);
-    localStorage.setItem("refreshToken", res.data.refreshToken);
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("user_id", user.id); 
 
-    localStorage.setItem("user", JSON.stringify(res.data.user));
+    alert("Login successful");
 
-    navigate("/dashboard");
+    navigate("/dashboard");   // ✅ THIS WILL WORK NOW
 
   } catch (err) {
-
-    alert(err.response?.data?.message);
-
+    alert(err.response?.data?.message || "Login failed");
   }
-
 };
-
-      const { accessToken, refreshToken, user } = res.data;
-
-      /* SAVE AUTH DATA */
-
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", accessToken);
-
-      alert("Login successful");
-
-      navigate("/dashboard");
-
-    } catch (err) {
-
-      alert(err.response?.data?.message || "Login failed");
-
-    }
-
-  };
-
 
   /* ---------------- GOOGLE LOGIN ---------------- */
 
-  const handleGoogleLogin = async (credentialResponse) => {
-
+ const handleGoogleLogin = async (credentialResponse) => {
   try {
-
     const res = await axios.post(
       "http://localhost:8000/api/users/google-login",
       { token: credentialResponse.credential }
     );
 
-    console.log("GOOGLE LOGIN RESPONSE:", res.data);
-
     localStorage.setItem("accessToken", res.data.accessToken);
     localStorage.setItem("refreshToken", res.data.refreshToken);
-
-    localStorage.setItem("user", JSON.stringify(res.data.user));
+    // ← No user object from Google login yet
 
     navigate("/dashboard");
 
   } catch (error) {
-
     alert("Google login failed");
-
   }
-
 };
 
   return (

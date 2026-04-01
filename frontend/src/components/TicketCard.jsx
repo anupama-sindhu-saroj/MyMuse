@@ -71,8 +71,18 @@ const TicketCard = ({ ticket }) => {
       {/* QR + helper text */}
       <div className="flex flex-col items-center gap-4">
         <div className="bg-white p-4 rounded-xl shadow-sm">
+        {ticket.qrCode ? (
+          <img
+            src={`data:image/png;base64,${ticket.qrCode}`}
+            alt="QR Code"
+            width={180}
+            height={180}
+            className="rounded"
+          />
+        ) : (
           <QRCodeCanvas value={ticket.ticketId} size={180} bgColor="#ffffff" fgColor="#000000" />
-        </div>
+        )}
+      </div>
         <p className="text-xs text-neutral-500 dark:text-neutral-400">
           Present this QR code at the entrance. Valid for the selected date and time.
         </p>

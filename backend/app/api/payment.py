@@ -193,30 +193,30 @@ async def verify_payment_endpoint(
     }
 
 
-# ─── POST /api/payment/recommend-method ───────────────────
-
 @router.post("/recommend-method")
 async def recommend_method(body: dict):
     amount = body.get("amount", 0)
     user_message = body.get("user_message", "")
 
-    if amount > 5000:
-        method = "card"
-        reason = "For amounts above ₹5000, card payments are more reliable."
-    else:
-        method = "upi"
-        reason = "UPI is fastest for amounts under ₹5000."
-
     response = await run_payment_chain(
-        booking_details=f"Amount: ₹{amount}",
-        payment_status="Recommending payment method",
+        booking_details=f"Amount: ₹{amount}, Platform: India, Time: {datetime.utcnow().strftime('%H:%M')}",
+        payment_status="Awaiting payment method recommendation",
         chat_history="",
         user_message=user_message
     )
 
+    # ✅ Gemini decides — we just detect its recommendation
+    response_lower = (response or "").lower()
+    if "net banking" in response_lower or "netbanking" in response_lower:
+        method = "netbanking"
+    elif "card" in response_lower or "credit" in response_lower or "debit" in response_lower:
+        method = "card"
+    else:
+        method = "upi"
+
     return {
         "recommended_method": method,
-        "message": response or reason
+        "message": response
     }
 
 

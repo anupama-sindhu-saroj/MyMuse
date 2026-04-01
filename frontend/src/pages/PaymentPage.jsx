@@ -16,7 +16,7 @@ const PaymentPage = () => {
   const bookingId = localStorage.getItem("pending_booking_id")
   if (!bookingId) return;
   fetch(`http://localhost:8000/api/payment/summary?booking_id=${bookingId}`, {
-    headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+    headers: { "Authorization": `Bearer ${localStorage.getItem("accessToken") || localStorage.getItem("token")}` }
   })
     .then(res => res.ok ? res.json() : Promise.reject(res.status))
     .then(data => setBookingData(data))
@@ -28,13 +28,13 @@ const PaymentPage = () => {
 
   const handlePayment = async () => {
     setIsProcessing(true);
-
+    const token = localStorage.getItem("accessToken") || localStorage.getItem("token");
     try {
       const orderRes = await fetch("http://localhost:8000/api/payment/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
           booking_id: localStorage.getItem("pending_booking_id")
@@ -63,7 +63,7 @@ const PaymentPage = () => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${localStorage.getItem("token")}`
+              "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
               booking_id: orderData.booking_id,
@@ -80,7 +80,8 @@ const PaymentPage = () => {
                 visit_date: verifyData.visit_date,
                 time_slot: verifyData.time_slot,
                 tickets: verifyData.tickets,
-                total_amount: verifyData.total_amount
+                total_amount: verifyData.total_amount,
+                qr_code: verifyData.qr_code
             }));
             window.location.href = `/ticket?booking_id=${verifyData.ticket_id}&qr=${verifyData.ticket_id}`;
         } else {
@@ -108,8 +109,11 @@ const PaymentPage = () => {
     }
   };
   const displayAmount = bookingData?.amount
-    ? `₹${(bookingData.amount / 100).toFixed(2)}`
-    : "₹0.00";
+  ? `₹${(bookingData.amount / 100).toFixed(2)}`
+  : bookingData?.total_amount
+  ? `₹${bookingData.total_amount.toFixed(2)}`
+  : "₹0.00";
+
   return (
     <>
       <Navbar />
@@ -139,7 +143,7 @@ const PaymentPage = () => {
                 amount={displayAmount} 
               />
             </div>
-            <AIStatusBar active={isProcessing} />
+            <AIStatusBar active={isProcessing} recommendedMethod={selectedMethod} />
 
             <AIPaymentRecovery
               visible={paymentFailed}

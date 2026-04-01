@@ -21,7 +21,7 @@ const TicketPage = () => {
     date: bookingData.visit_date || "—",
     time: bookingData.time_slot || "—",
     ticketId: bookingId,
-    qrCode: qrCode  // ✅ real QR from backend
+    qrCode: bookingData.qr_code  // ✅ real QR from backend
   };
 
   return (
