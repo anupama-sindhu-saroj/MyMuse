@@ -27,6 +27,8 @@ import MuseumLogin from "./pages/MuseumLogin";
 import MuseumForgotPassword from "./pages/MuseumForgotPassword";
 import MuseumOnboarding from "./pages/MuseumOnboarding";
 import MuseumDashboard from "./pages/MuseumDashboard";
+import VerifyTicket from "./pages/VerifyTicket";
+
 
 function App() {
   const location = useLocation();
@@ -100,6 +102,7 @@ function App() {
           <Route path="/book" element={<BookTicket />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/ticket" element={<TicketPage />} />
+          <Route path="/verify-ticket" element={<VerifyTicket />} />
         </Routes>
 
         {location.pathname !== "/museum-signup" &&

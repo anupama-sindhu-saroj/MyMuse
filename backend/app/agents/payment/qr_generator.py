@@ -3,6 +3,7 @@ import base64
 from io import BytesIO
 
 def generate_qr(booking_id: str, user_name: str, show_name: str, date: str) -> str:
+    qr_data = f"http://localhost:5173/verify-ticket?id={booking_id}"
     """Returns QR code as base64 string"""
     
     qr_data = f"""
