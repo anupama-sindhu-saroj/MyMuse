@@ -164,7 +164,7 @@ const PaymentPage = () => {
                 amount={displayAmount} // ✅ real amount from API
               />
             </div>
-            <AIStatusBar active={isProcessing} />
+            <AIStatusBar active={isProcessing} recommendedMethod={selectedMethod} />
 
             <AIPaymentRecovery
               visible={paymentFailed}

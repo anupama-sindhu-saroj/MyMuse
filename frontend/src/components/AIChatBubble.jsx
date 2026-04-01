@@ -8,21 +8,31 @@ const AIChatBubble = ({ selectedMethod, onMethodRecommended }) => {
   useEffect(() => {
     const getRecommendation = async () => {
       try {
-        const cached = JSON.parse(localStorage.getItem("last_booking") || "{}");
+        // ✅ Get real amount from booking summary
+        const bookingId = localStorage.getItem("pending_booking_id");
+        const token = localStorage.getItem("accessToken") || localStorage.getItem("token");
+        
+        let rawAmount = 400; // fallback
 
-        const rawAmount = cached.amount
-          ? cached.amount / 100
-          : cached.total_amount || 400;
+        if (bookingId) {
+          const summaryRes = await fetch(
+            `http://localhost:8000/api/payment/summary?booking_id=${bookingId}`,
+            { headers: { "Authorization": `Bearer ${token}` } }
+          );
+          if (summaryRes.ok) {
+            const summary = await summaryRes.json();
+            rawAmount = summary.amount / 100; // paise → rupees
+          }
+        }
 
-        // ✅ 10s timeout — won't hang if Gemini is rate limited
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 10000);
 
         const res = await fetch("http://localhost:8000/api/payment/recommend-method", {
           method: "POST",
-          headers: { 
+          headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
             user_message: userMessage,
@@ -32,23 +42,29 @@ const AIChatBubble = ({ selectedMethod, onMethodRecommended }) => {
         });
 
         clearTimeout(timeout);
-
         if (!res.ok) throw new Error(`Server error: ${res.status}`);
 
         const data = await res.json();
         setAiMessage(data.message);
-        onMethodRecommended(data.recommended_method);
+        onMethodRecommended(data.recommended_method); // ✅ highlights correct box
 
       } catch (err) {
         console.error("AI recommendation failed:", err);
-        // ✅ Friendly fallback based on amount
-        const cached = JSON.parse(localStorage.getItem("last_booking") || "{}");
-        const amount = cached.total_amount || 0;
+        const bookingId = localStorage.getItem("pending_booking_id");
+        const token = localStorage.getItem("accessToken") || localStorage.getItem("token");
+        let amount = 400;
+        try {
+          const res = await fetch(
+            `http://localhost:8000/api/payment/summary?booking_id=${bookingId}`,
+            { headers: { "Authorization": `Bearer ${token}` } }
+          );
+          if (res.ok) { const d = await res.json(); amount = d.amount / 100; }
+        } catch {}
+        
         const fallbackMsg = amount > 5000
-          ? "Card payment recommended for amounts above ₹5000."
+          ? "Net Banking recommended for large amounts above ₹5000."
           : "UPI is recommended for fastest and most secure checkout.";
-        const fallbackMethod = amount > 5000 ? "card" : "upi";
-
+        const fallbackMethod = amount > 5000 ? "net" : "upi";
         setAiMessage(fallbackMsg);
         onMethodRecommended(fallbackMethod);
       } finally {
