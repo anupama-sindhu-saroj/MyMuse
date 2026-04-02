@@ -347,3 +347,39 @@ body {
   font-size: 0.55rem;
   color: #999;
 }
+/* ── Add these to your existing Dashboard.css ── */
+
+/* Wraps the Adult/Child/Senior badges in a row */
+.ticket-breakdown {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+/* Each individual badge e.g. "🧑 Adult ×2" */
+.ticket-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(0, 0, 0, 0.07);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  white-space: nowrap;
+  color: inherit;
+}
+
+/* Dark mode badge */
+.dark .ticket-type-badge {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Row that holds the breakdown inside dropdown cards */
+.breakdown-row {
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
