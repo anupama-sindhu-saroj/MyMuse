@@ -14,6 +14,7 @@ class ChatRequest(BaseModel):
     user_id: Optional[str] = None
     location: Optional[str] = None
     mode: Optional[str] = "explore"
+    user_data: Optional[dict] = None
 
 
 class ChatResponse(BaseModel):
@@ -53,7 +54,8 @@ async def chat(request: ChatRequest):
             from app.agents.orchestrator.orchestrator import handle_message
             result = await handle_message(
                 user_id=session_id,
-                user_message=request.message
+                user_message=request.message,
+                user_data=getattr(request, "user_data", None)
             )
             reply = result.get("response") or result.get("reply", "")
             return ChatResponse(
