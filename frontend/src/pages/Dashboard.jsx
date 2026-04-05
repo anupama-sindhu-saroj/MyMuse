@@ -43,7 +43,7 @@ function getTotalTickets(booking) {
   return booking?.num_tickets ?? booking?.quantity ?? 1;
 }
 
-// ─── Confirm cancel modal ─────────────────────────────────
+// ─── Shared Cancel Confirm Modal ──────────────────────────
 function CancelModal({ ticket, onConfirm, onClose, cancelling }) {
   return (
     <div style={styles.modalOverlay}>
@@ -68,11 +68,38 @@ function CancelModal({ ticket, onConfirm, onClose, cancelling }) {
   );
 }
 
+// ─── Shared Refund Success Modal ──────────────────────────
+function RefundModal({ ticket, onClose }) {
+  return (
+    <div style={styles.modalOverlay}>
+      <div style={styles.modalBox}>
+        <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>✅</div>
+        <h3 style={styles.modalTitle}>Booking Cancelled</h3>
+        <p style={styles.modalSub}>
+          <strong>{ticket.museum_name}</strong><br />
+          📅 {ticket.visit_date} · 🕐 {ticket.time_slot}
+        </p>
+        <p style={{ fontSize: "0.85rem", color: "#065f46", background: "#d1fae5", borderRadius: "10px", padding: "10px 16px", marginBottom: "1rem" }}>
+          💰 Refund of <strong>₹{ticket.total_amount}</strong> will be credited to your original payment method within <strong>5–7 business days</strong>.
+        </p>
+        <button
+          style={{ ...styles.btnKeep, width: "100%" }}
+          onClick={onClose}
+        >
+          Got it
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ─── Dropdown ticket list ─────────────────────────────────
+// All modal state is local here — dropdown is NOT inside overflow:hidden
 function TicketDropdown({ tickets, loading, type, onCancelSuccess }) {
   const [confirmTicket, setConfirmTicket] = useState(null);
   const [cancelling, setCancelling]       = useState(false);
   const [cancelledIds, setCancelledIds]   = useState([]);
+  const [refundTicket, setRefundTicket]   = useState(null);
 
   if (loading) {
     return <div className="dropdown-box"><p className="dropdown-empty">Loading...</p></div>;
@@ -87,9 +114,15 @@ function TicketDropdown({ tickets, loading, type, onCancelSuccess }) {
     try {
       const res = await fetch(
         `http://localhost:8000/api/bookings/${confirmTicket._id}/cancel`,
-        { method: "PATCH" }
+        {
+          method: "PATCH",
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("accessToken") || localStorage.getItem("token")}`
+          }
+        }
       );
       if (res.ok) {
+        setRefundTicket(confirmTicket);
         setCancelledIds((prev) => [...prev, confirmTicket._id]);
         onCancelSuccess && onCancelSuccess(confirmTicket._id);
       } else {
@@ -167,6 +200,7 @@ function TicketDropdown({ tickets, loading, type, onCancelSuccess }) {
           })}
       </div>
 
+      {/* Modals render here — dropdown is NOT clipped so these show fine */}
       {confirmTicket && (
         <CancelModal
           ticket={confirmTicket}
@@ -175,30 +209,33 @@ function TicketDropdown({ tickets, loading, type, onCancelSuccess }) {
           cancelling={cancelling}
         />
       )}
+
+      {refundTicket && (
+        <RefundModal
+          ticket={refundTicket}
+          onClose={() => setRefundTicket(null)}
+        />
+      )}
     </>
   );
 }
 
 // ─── Upcoming Tickets Carousel ────────────────────────────
-function UpcomingCarousel({ tickets, onCancelSuccess }) {
+// NO modal state here — modals are lifted to Dashboard to avoid overflow:hidden clipping
+function UpcomingCarousel({ tickets, onRequestCancel, cancelledIds }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [sliding, setSliding] = useState(false);
-  const [direction, setDirection] = useState("next"); // "next" | "prev"
-  const [confirmTicket, setConfirmTicket] = useState(null);
-  const [cancelling, setCancelling] = useState(false);
-  const [cancelledIds, setCancelledIds] = useState([]);
+  const [direction, setDirection] = useState("next");
 
   const visible = tickets.filter((t) => !cancelledIds.includes(t._id));
   const total = visible.length;
 
-  // Auto-advance every 5 seconds
   useEffect(() => {
     if (total <= 1) return;
     const timer = setInterval(() => goTo("next"), 5000);
     return () => clearInterval(timer);
-  }, [total, currentIndex, cancelledIds]);
+  }, [total, currentIndex]);
 
-  // Clamp index if tickets shrink
   useEffect(() => {
     if (currentIndex >= total && total > 0) {
       setCurrentIndex(total - 1);
@@ -216,28 +253,6 @@ function UpcomingCarousel({ tickets, onCancelSuccess }) {
       setSliding(false);
     }, 350);
   }, [total, sliding]);
-
-  const handleCancel = async () => {
-    if (!confirmTicket) return;
-    setCancelling(true);
-    try {
-      const res = await fetch(
-        `http://localhost:8000/api/bookings/${confirmTicket._id}/cancel`,
-        { method: "PATCH" }
-      );
-      if (res.ok) {
-        setCancelledIds((prev) => [...prev, confirmTicket._id]);
-        onCancelSuccess && onCancelSuccess(confirmTicket._id);
-      } else {
-        alert("Cancellation failed. Please try again.");
-      }
-    } catch (err) {
-      alert("Network error. Please try again.");
-    } finally {
-      setCancelling(false);
-      setConfirmTicket(null);
-    }
-  };
 
   if (total === 0) {
     return (
@@ -262,8 +277,6 @@ function UpcomingCarousel({ tickets, onCancelSuccess }) {
   return (
     <>
       <div style={styles.carouselWrapper}>
-
-        {/* ── Slide area ── */}
         <div style={styles.carouselViewport}>
           <div
             key={ticket._id || currentIndex}
@@ -272,23 +285,22 @@ function UpcomingCarousel({ tickets, onCancelSuccess }) {
               animation: sliding
                 ? `slide-out-${direction} 0.35s ease forwards`
                 : `slide-in-${direction} 0.35s ease forwards`,
+              ...(ticket.image_url && {
+                backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.88) 40%, rgba(0,0,0,0.25) 100%), url(${ticket.image_url})`,
+              }),
             }}
           >
-            {/* Left: info */}
             <div style={styles.carouselInfo}>
               <p style={styles.carouselMuseumName}>
                 {ticket.museum_name || "Unknown Museum"}
               </p>
-
               <p style={styles.carouselMeta}>
                 📅 {ticket.visit_date || "No date"} &nbsp;·&nbsp; 🕐 {ticket.time_slot || "No time"}
               </p>
-
               <p style={styles.carouselMeta}>
                 🎫 Total: {totalTickets}
                 {ticket.total_amount && <> &nbsp;·&nbsp; 💰 ₹{ticket.total_amount}</>}
               </p>
-
               {hasBreakdown && (
                 <p style={{ ...styles.carouselMeta, marginTop: "4px" }}>
                   {TICKET_TYPES.filter(({ key }) => ticket.tickets[key] > 0).map(({ key, label, emoji }) => (
@@ -298,14 +310,12 @@ function UpcomingCarousel({ tickets, onCancelSuccess }) {
                   ))}
                 </p>
               )}
-
               <div style={{ display: "flex", gap: "8px", alignItems: "center", marginTop: "10px", flexWrap: "wrap" }}>
                 <span style={styles.paidBadge}>✔ PAID</span>
-
                 {ticket.payment_status === "paid" && (
                   <button
-                    onClick={() => setConfirmTicket(ticket)}
-                    style={styles.cancelBtn}
+                    onClick={(e) => { e.stopPropagation(); onRequestCancel(ticket); }}
+                    style={{ ...styles.cancelBtn, position: "relative", zIndex: 10 }}
                     onMouseEnter={(e) => (e.currentTarget.style.background = "#b91c1c")}
                     onMouseLeave={(e) => (e.currentTarget.style.background = "#dc2626")}
                   >
@@ -315,7 +325,6 @@ function UpcomingCarousel({ tickets, onCancelSuccess }) {
               </div>
             </div>
 
-            {/* Right: QR */}
             <div style={styles.carouselQR}>
               {ticket.qr_code ? (
                 <img
@@ -330,7 +339,6 @@ function UpcomingCarousel({ tickets, onCancelSuccess }) {
           </div>
         </div>
 
-        {/* ── Controls ── */}
         {total > 1 && (
           <div style={styles.carouselControls}>
             <button
@@ -338,11 +346,7 @@ function UpcomingCarousel({ tickets, onCancelSuccess }) {
               onClick={() => goTo("prev")}
               onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
               onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.6")}
-            >
-              ‹
-            </button>
-
-            {/* Dots */}
+            >‹</button>
             <div style={styles.dots}>
               {visible.map((_, i) => (
                 <button
@@ -361,19 +365,15 @@ function UpcomingCarousel({ tickets, onCancelSuccess }) {
                 />
               ))}
             </div>
-
             <button
               style={styles.navBtn}
               onClick={() => goTo("next")}
               onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
               onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.6")}
-            >
-              ›
-            </button>
+            >›</button>
           </div>
         )}
 
-        {/* ── Counter badge ── */}
         {total > 1 && (
           <div style={styles.counterBadge}>
             {currentIndex + 1} / {total}
@@ -381,22 +381,12 @@ function UpcomingCarousel({ tickets, onCancelSuccess }) {
         )}
       </div>
 
-      {/* Slide keyframes injected once */}
       <style>{`
         @keyframes slide-in-next  { from { opacity: 0; transform: translateX(60px);  } to { opacity: 1; transform: translateX(0); } }
         @keyframes slide-out-next { from { opacity: 1; transform: translateX(0);     } to { opacity: 0; transform: translateX(-60px); } }
         @keyframes slide-in-prev  { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes slide-out-prev { from { opacity: 1; transform: translateX(0);     } to { opacity: 0; transform: translateX(60px); } }
       `}</style>
-
-      {confirmTicket && (
-        <CancelModal
-          ticket={confirmTicket}
-          onConfirm={handleCancel}
-          onClose={() => setConfirmTicket(null)}
-          cancelling={cancelling}
-        />
-      )}
     </>
   );
 }
@@ -425,9 +415,14 @@ function Dashboard() {
     upcoming: false,
   });
 
-  // ── NEW: upcoming tickets for the bottom carousel ──
   const [upcomingTickets, setUpcomingTickets] = useState([]);
   const [upcomingPanelLoading, setUpcomingPanelLoading] = useState(true);
+
+  // ── Carousel modal state lives HERE (outside overflow:hidden) ──
+  const [carouselCancelledIds, setCarouselCancelledIds] = useState([]);
+  const [carouselConfirmTicket, setCarouselConfirmTicket] = useState(null);
+  const [carouselCancelling, setCarouselCancelling] = useState(false);
+  const [carouselRefundTicket, setCarouselRefundTicket] = useState(null);
 
   const fetchDashboard = async () => {
     const user_id = localStorage.getItem("user_id");
@@ -461,7 +456,6 @@ function Dashboard() {
   useEffect(() => {
     const user_id = localStorage.getItem("user_id");
     if (!user_id) { navigate("/login"); return; }
-
     const init = async () => {
       await Promise.all([fetchDashboard(), fetchUpcomingPanel()]);
       setLoading(false);
@@ -473,7 +467,6 @@ function Dashboard() {
     if (activeCard === type) { setActiveCard(null); return; }
     setActiveCard(type);
     if (dropdownData[type].length > 0) return;
-
     const user_id = localStorage.getItem("user_id");
     setDropdownLoading((prev) => ({ ...prev, [type]: true }));
     try {
@@ -487,7 +480,6 @@ function Dashboard() {
     }
   };
 
-  // After cancel: refresh stats + remove from all lists
   const handleCancelSuccess = async (cancelledId) => {
     await fetchDashboard();
     setDropdownData((prev) => ({
@@ -496,6 +488,35 @@ function Dashboard() {
       upcoming: prev.upcoming.filter((t) => t._id !== cancelledId),
     }));
     setUpcomingTickets((prev) => prev.filter((t) => t._id !== cancelledId));
+  };
+
+  // ── Carousel cancel: API call happens here, modal renders here ──
+  const handleCarouselConfirmCancel = async () => {
+    if (!carouselConfirmTicket) return;
+    setCarouselCancelling(true);
+    try {
+      const res = await fetch(
+        `http://localhost:8000/api/bookings/${carouselConfirmTicket._id}/cancel`,
+        {
+          method: "PATCH",
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("accessToken") || localStorage.getItem("token")}`
+          }
+        }
+      );
+      if (res.ok) {
+        setCarouselRefundTicket(carouselConfirmTicket);
+        setCarouselCancelledIds((prev) => [...prev, carouselConfirmTicket._id]);
+        handleCancelSuccess(carouselConfirmTicket._id);
+      } else {
+        alert("Cancellation failed. Please try again.");
+      }
+    } catch (err) {
+      alert("Network error. Please try again.");
+    } finally {
+      setCarouselCancelling(false);
+      setCarouselConfirmTicket(null);
+    }
   };
 
   if (loading) {
@@ -570,7 +591,7 @@ function Dashboard() {
           </button>
         </div>
 
-        {/* ── UPCOMING BOOKINGS CAROUSEL PANEL ── */}
+        {/* UPCOMING BOOKINGS CAROUSEL PANEL */}
         <p className="section-title animate" style={{ animationDelay: "0.3s" }}>
           Upcoming Bookings
           {upcomingTickets.length > 0 && (
@@ -583,14 +604,35 @@ function Dashboard() {
             <p style={{ opacity: 0.5, fontSize: "0.85rem" }}>Loading upcoming tickets...</p>
           </div>
         ) : (
-          <div className="ticket-visual animate" style={{ animationDelay: "0.4s", overflow: "hidden" }}>
+          <div
+            className="ticket-visual animate"
+            style={{ animationDelay: "0.4s", height: "280px", padding: 0 }}
+          >
             <UpcomingCarousel
               tickets={upcomingTickets}
-              onCancelSuccess={handleCancelSuccess}
+              cancelledIds={carouselCancelledIds}
+              onRequestCancel={setCarouselConfirmTicket}
             />
           </div>
         )}
       </div>
+
+      {/* ── Carousel modals rendered at root level — never clipped ── */}
+      {carouselConfirmTicket && (
+        <CancelModal
+          ticket={carouselConfirmTicket}
+          onConfirm={handleCarouselConfirmCancel}
+          onClose={() => setCarouselConfirmTicket(null)}
+          cancelling={carouselCancelling}
+        />
+      )}
+
+      {carouselRefundTicket && (
+        <RefundModal
+          ticket={carouselRefundTicket}
+          onClose={() => setCarouselRefundTicket(null)}
+        />
+      )}
     </>
   );
 }
@@ -674,21 +716,32 @@ const styles = {
   carouselWrapper: {
     position: "relative",
     width: "100%",
-    padding: "0.5rem 0",
+    height: "100%",
   },
   carouselViewport: {
     overflow: "hidden",
     width: "100%",
+    height: "100%",
   },
   carouselSlide: {
     display: "flex",
-    alignItems: "center",
+    alignItems: "flex-end",
     justifyContent: "space-between",
     gap: "1rem",
-    padding: "0.25rem 0",
+    padding: "1.5rem",
+    height: "100%",
+    minHeight: "260px",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    boxSizing: "border-box",
   },
   carouselInfo: {
-    flex: 1,  
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    position: "relative",
+    zIndex: 10,
   },
   carouselMuseumName: {
     fontSize: "1.05rem",

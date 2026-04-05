@@ -99,7 +99,9 @@ body {
     border-radius: 20px;
     overflow: hidden;
 
-    background: url('https://images.unsplash.com/photo-1544601281-9705973b0635?auto=format&fit=crop&w=1200') center/cover;
+    background: #1a1a1a center/cover; /* ✅ fallback only — real image set by inline style */
+    background-size: cover;
+    background-position: center;
 
     display: flex;
     align-items: flex-end;

@@ -155,7 +155,44 @@ async def get_booking(
 
     return booking
 
+# -------------------- CANCEL BOOKING --------------------
 
+
+@router.patch("/{booking_id}/cancel")
+async def cancel_booking(
+    booking_id: str,
+    current_user: dict = Depends(get_current_user)
+):
+    db = get_db()
+
+    try:
+        booking = await db.bookings.find_one({"_id": ObjectId(booking_id)})
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid booking ID format")
+
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking not found")
+
+    if str(booking["user_id"]) != str(current_user["id"]):
+        raise HTTPException(status_code=403, detail="Not your booking")
+
+    if booking.get("payment_status") != "paid":
+        raise HTTPException(status_code=400, detail="Only paid bookings can be cancelled")
+
+    if booking.get("status") == "cancelled":
+        raise HTTPException(status_code=400, detail="Booking already cancelled")
+
+    await db.bookings.update_one(
+        {"_id": ObjectId(booking_id)},
+        {"$set": {
+            "status": "cancelled",
+            "payment_status": "cancelled",
+            "cancelled_at": datetime.utcnow(),
+            "updated_at": datetime.utcnow(),
+        }}
+    )
+
+    return {"success": True, "message": "Booking cancelled successfully"}
 # -------------------- FINALIZE BOOKING --------------------
 
 @router.post("/finalize")
