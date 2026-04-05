@@ -447,11 +447,39 @@ async def booking_agent(message: str, session_id: str, user_data: dict) -> dict:
     if field_type in ("date", "other"):
         date = extract_date(message)
         if date:
+            # Reject past dates
+            try:
+                visit_dt = datetime.strptime(date, "%Y-%m-%d").date()
+                today_date = datetime.now().date()
+                if visit_dt < today_date:
+                    await save_session(session_id, booking)
+                    return {
+                        "reply": f"Sorry, {date} has already passed! Please choose a future date.",
+                        "booking_data": {k: v for k, v in booking.items() if not k.startswith("_")},
+                        "booking_id": None,
+                    }
+            except:
+                pass
             booking["visit_date"] = date
 
     if field_type in ("time_slot", "other"):
         time = extract_time(message)
         if time:
+            # If booking is for today, reject past time slots
+            if booking.get("visit_date") == datetime.now().strftime("%Y-%m-%d"):
+                now = datetime.now()
+                slot_hour = {
+                    "9:00 AM": 9, "10:00 AM": 10, "11:00 AM": 11,
+                    "12:00 PM": 12, "1:00 PM": 13, "2:00 PM": 14,
+                    "3:00 PM": 15, "4:00 PM": 16, "5:00 PM": 17
+                }.get(time, 23)
+                if slot_hour <= now.hour:
+                    await save_session(session_id, booking)
+                    return {
+                        "reply": f"Sorry, {time} has already passed for today! Please choose a later time slot.",
+                        "booking_data": {k: v for k, v in booking.items() if not k.startswith("_")},
+                        "booking_id": None,
+                    }
             booking["time_slot"] = time
 
     if field_type == "confirm" or is_confirmation(message):
