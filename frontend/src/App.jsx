@@ -17,6 +17,8 @@ import UserForgotPassword from "./pages/user/UserForgotPassword";
 import AdminGateway from "./pages/AdminGateway";
 import Dashboard from "./pages/Dashboard";
 
+import AdminDashboard from "./pages/admin/AdminDashboard";
+
 import Explore from "./pages/Explore";
 import BookTicket from "./pages/BookTicket";
 import PaymentPage from "./pages/PaymentPage";
@@ -28,7 +30,6 @@ import MuseumForgotPassword from "./pages/MuseumForgotPassword";
 import MuseumOnboarding from "./pages/MuseumOnboarding";
 import MuseumDashboard from "./pages/MuseumDashboard";
 import VerifyTicket from "./pages/VerifyTicket";
-
 
 function App() {
   const location = useLocation();
@@ -65,15 +66,28 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // Pages where Navbar should be hidden
+  const hideNavbar =
+    location.pathname !== "/explore" &&
+    location.pathname !== "/book" &&
+    !location.pathname.startsWith("/admin-dashboard");
+
+  // Pages where Footer should be hidden
+  const hideFooter =
+    location.pathname !== "/museum-signup" &&
+    location.pathname !== "/museum-login" &&
+    location.pathname !== "/museum-forgot-password" &&
+    !location.pathname.startsWith("/admin-dashboard");
+
   return (
     <ThemeProvider>
       <div id="google_translate_element" style={{ display: "none" }}></div>
       <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-500">
 
-        {location.pathname !== "/explore" &&
-         location.pathname !== "/book" && <Navbar />}
+        {hideNavbar && <Navbar />}
 
         <Routes>
+          {/* ── Home ── */}
           <Route path="/" element={
             <>
               <Hero />
@@ -82,32 +96,37 @@ function App() {
             </>
           } />
 
-          {/* User */}
+          {/* ── User ── */}
           <Route path="/userauth" element={<UserAuth />} />
           <Route path="/user-forgot-password" element={<UserForgotPassword />} />
           <Route path="/dashboard" element={<Dashboard />} />
 
-          {/* Museum */}
+          {/* ── Museum ── */}
           <Route path="/museum-signup" element={<MuseumSignup />} />
           <Route path="/museum-login" element={<MuseumLogin />} />
           <Route path="/museum-forgot-password" element={<MuseumForgotPassword />} />
           <Route path="/museum-onboarding" element={<MuseumOnboarding />} />
           <Route path="/museum-dashboard" element={<MuseumDashboard />} />
 
-          {/* Admin */}
+          {/* ── Admin Gateway (your existing login page) ── */}
           <Route path="/admin" element={<AdminGateway />} />
 
-          {/* Explore & Booking */}
+          {/* ── Admin Dashboard Shell + nested pages ── */}
+          {/* After admin logs in via AdminGateway, navigate to /admin-dashboard */}
+          <Route path="/admin-dashboard" element={<AdminDashboard />}>
+            
+          </Route>
+
+          {/* ── Explore & Booking ── */}
           <Route path="/explore" element={<Explore />} />
           <Route path="/book" element={<BookTicket />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/ticket" element={<TicketPage />} />
           <Route path="/verify-ticket" element={<VerifyTicket />} />
+
         </Routes>
 
-        {location.pathname !== "/museum-signup" &&
-         location.pathname !== "/museum-login" &&
-         location.pathname !== "/museum-forgot-password" && <Footer />}
+        {hideFooter && <Footer />}
 
       </div>
     </ThemeProvider>

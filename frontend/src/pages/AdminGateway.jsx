@@ -50,7 +50,7 @@ export default function AdminGateway() {
         localStorage.setItem("adminRefreshToken", res.data.refreshToken);
 
         alert("Access authorized");
-        window.location.href = "/dashboard";
+        window.location.href = "/admin-dashboard";
 
       } else {
         // ── SIGNUP ─────────────────────────────────────────

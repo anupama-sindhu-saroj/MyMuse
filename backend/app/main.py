@@ -1,6 +1,9 @@
 import traceback
 from contextlib import asynccontextmanager
 
+from app.api.analytics import router as analytics_router
+
+
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -74,6 +77,7 @@ app.include_router(booking_router, prefix="/api/bookings", tags=["Bookings"])
 app.include_router(museums_router)
 app.include_router(dashboard_router)
 app.include_router(ticket_router, prefix="/api/ticket", tags=["Ticket"])
+app.include_router(analytics_router)  
 
 if has_payment and payment_router:
     app.include_router(payment_router, prefix="/api/payment", tags=["Payment"])
