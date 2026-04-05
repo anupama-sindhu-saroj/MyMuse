@@ -358,7 +358,17 @@ function Dashboard() {
         </p>
 
         {currentBooking ? (
-          <div className="ticket-visual animate" style={{ animationDelay: "0.4s" }}>
+          <div
+            className="ticket-visual animate"
+            style={{
+              animationDelay: "0.4s",
+              backgroundImage: currentBooking?.image_url
+                ? `linear-gradient(to top, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.2) 100%), url(${currentBooking.image_url})`
+                : undefined,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
             <div className="ticket-data">
               <div className="ticket-info">
                 <h2>{currentBooking.museum_name || "No Museum"}</h2>

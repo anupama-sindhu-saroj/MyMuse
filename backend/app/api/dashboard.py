@@ -39,6 +39,16 @@ def serialize_booking(booking: dict) -> dict:
     return booking
 
 
+async def enrich_with_image(booking: dict, db) -> dict:
+    """Fetch museum image_url and add to booking dict."""
+    museum = await db["museums"].find_one(
+        {"museumName": booking.get("museum_name")},
+        {"image_url": 1}
+    )
+    booking["image_url"] = museum.get("image_url") if museum else None
+    return booking
+
+
 def get_query_conditions(user_id: str) -> list:
     conditions = [{"user_id": user_id}]
     try:
@@ -150,6 +160,7 @@ async def get_user_dashboard(user_id: str):
                 reverse=True,
             )[0]
             current_booking = serialize_booking(latest)
+            current_booking = await enrich_with_image(current_booking, db)
 
         return {
             "ticketsBooked": tickets_booked,   # ✅ visited + upcoming
@@ -185,9 +196,11 @@ async def get_all_tickets(user_id: str):
             key=lambda x: x.get("created_at", datetime.min), reverse=True
         )
 
+        serialized = [serialize_booking(b) for b in paid_bookings]
+        enriched = [await enrich_with_image(b, db) for b in serialized]
         return {
-            "total": len(paid_bookings),
-            "tickets": [serialize_booking(b) for b in paid_bookings],
+            "total": len(enriched),
+            "tickets": enriched,
         }
 
     except RuntimeError as e:
@@ -227,10 +240,9 @@ async def get_visited_tickets(user_id: str):
             key=lambda x: parse_visit_date(x) or datetime.min.date(), reverse=True
         )
 
-        return {
-            "total": len(visited),
-            "tickets": [serialize_booking(b) for b in visited],
-        }
+        serialized = [serialize_booking(b) for b in visited]
+        enriched = [await enrich_with_image(b, db) for b in serialized]
+        return {"total": len(enriched), "tickets": enriched}
 
     except RuntimeError as e:
         raise HTTPException(status_code=503, detail="Database not available")
@@ -269,10 +281,9 @@ async def get_upcoming_tickets(user_id: str):
             key=lambda x: parse_visit_date(x) or datetime.max.date()
         )
 
-        return {
-            "total": len(upcoming),
-            "tickets": [serialize_booking(b) for b in upcoming],
-        }
+        serialized = [serialize_booking(b) for b in upcoming]
+        enriched = [await enrich_with_image(b, db) for b in serialized]
+        return {"total": len(enriched), "tickets": enriched}
 
     except RuntimeError as e:
         raise HTTPException(status_code=503, detail="Database not available")

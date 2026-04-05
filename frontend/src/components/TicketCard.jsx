@@ -98,7 +98,7 @@ const TicketCard = ({ ticket }) => {
         </button>
 
         <button
-          onClick={() => (window.location.href = "/")}
+          onClick={() => (window.location.href = "/dashboard")}
           className="flex-1 border border-neutral-200 dark:border-neutral-700 py-3 rounded-lg text-sm font-semibold tracking-[0.3em] uppercase text-neutral-700 dark:text-neutral-300"
         >
           Back to Home

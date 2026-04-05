@@ -53,6 +53,11 @@ async def get_payment_summary(
 
     if not booking:
         raise HTTPException(status_code=404, detail="Booking not found")
+    museum = await db["museums"].find_one(
+        {"museumName": booking.get("museum_name")},
+        {"image_url": 1}
+    )
+    image_url = museum.get("image_url") if museum else None
 
     return {
         "booking_id": booking_id,
@@ -61,7 +66,8 @@ async def get_payment_summary(
         "visit_date": booking.get("visit_date"),
         "time_slot": booking.get("time_slot"),
         "tickets": booking.get("tickets", {}),
-        "amount": booking.get("total_amount", 0) * 100  # paise
+        "amount": booking.get("total_amount", 0) * 100,  # paise
+        "image_url": image_url
     }
 
 
@@ -196,31 +202,36 @@ async def verify_payment_endpoint(
 @router.post("/recommend-method")
 async def recommend_method(body: dict):
     amount = body.get("amount", 0)
-    user_message = body.get("user_message", "")
+    fallback_method = "card" if amount > 5000 else "upi"
+    fallback_msg = f"{'Card recommended' if amount > 5000 else 'UPI is fastest'} for ₹{amount}."
 
-    response = await run_payment_chain(
-        booking_details=f"Amount: ₹{amount}, Platform: India, Time: {datetime.utcnow().strftime('%H:%M')}",
-        payment_status="Awaiting payment method recommendation",
-        chat_history="",
-        user_message=user_message
-    )
+    try:
+        response = await run_payment_chain(
+            booking_details=f"Amount: ₹{amount}, Platform: India, Time: {datetime.utcnow().strftime('%H:%M')}",
+            payment_status="Awaiting payment method recommendation",
+            chat_history="",
+            user_message=body.get("user_message", "")
+        )
+        response_lower = (response or "").lower()
 
-    # ✅ Gemini decides — we just detect its recommendation
-    response_lower = (response or "").lower()
-    if "net banking" in response_lower or "netbanking" in response_lower:
-        method = "netbanking"
-    elif "card" in response_lower or "credit" in response_lower or "debit" in response_lower:
-        method = "card"
-    else:
-        method = "upi"
+        # ✅ UPI checked first to avoid false "card" keyword matches
+        if "upi" in response_lower or "google pay" in response_lower or "phonepe" in response_lower:
+            method = "upi"
+        elif "net banking" in response_lower or "netbanking" in response_lower:
+            method = "netbanking"
+        elif "card" in response_lower or "credit" in response_lower or "debit" in response_lower:
+            method = "card"
+        else:
+            method = fallback_method
 
-    return {
-        "recommended_method": method,
-        "message": response
-    }
+        message = response or fallback_msg
 
+    except Exception:
+        method = fallback_method
+        message = fallback_msg
 
-# ─── POST /api/payment/analyze-failure ────────────────────
+    return {"recommended_method": method, "message": message}
+
 
 @router.post("/analyze-failure")
 async def analyze_failure(body: dict):
@@ -228,16 +239,21 @@ async def analyze_failure(body: dict):
     reason = body.get("reason", "Payment failed")
     suggested = "card" if failed_method == "upi" else "upi"
     success_rates = {"card": "91%", "upi": "87%", "netbanking": "82%"}
+    fallback_msg = f"{failed_method} failed. Try {suggested} instead."
 
-    response = await run_payment_chain(
-        booking_details="",
-        payment_status=f"Payment failed via {failed_method}. Reason: {reason}",
-        chat_history="",
-        user_message="What should I do now?"
-    )
+    try:
+        response = await run_payment_chain(
+            booking_details="",
+            payment_status=f"Payment failed via {failed_method}. Reason: {reason}",
+            chat_history="",
+            user_message="What should I do now?"
+        )
+        message = response or fallback_msg
+    except Exception:
+        message = fallback_msg  # ✅ won't crash on Gemini quota
 
     return {
-        "message": response or f"{failed_method} failed. Try {suggested}.",
+        "message": message,
         "suggested_method": suggested,
         "success_rate": success_rates.get(suggested, "85%")
     }

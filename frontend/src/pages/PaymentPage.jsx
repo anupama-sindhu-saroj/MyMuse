@@ -19,7 +19,10 @@ const PaymentPage = () => {
     headers: { "Authorization": `Bearer ${localStorage.getItem("accessToken") || localStorage.getItem("token")}` }
   })
     .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .then(data => setBookingData(data))
+    .then(data => {
+      setBookingData(data);
+      localStorage.setItem("last_booking", JSON.stringify(data));
+    })
     .catch(() => {
       const cached = localStorage.getItem("last_booking");
       if (cached) setBookingData(JSON.parse(cached));
@@ -157,13 +160,17 @@ const PaymentPage = () => {
           <div className="lg:col-span-5 space-y-8">
             <div className="relative rounded-2xl overflow-hidden shadow-xl">
               <img
-                src="/src/assets/color.png"
+                src={bookingData?.image_url || "/src/assets/color.png"}
                 alt="Artwork"
                 className="w-full h-[350px] object-cover"
               />
               <div className="absolute bottom-4 left-4 right-4 bg-white/30 backdrop-blur-md p-4 rounded-xl text-white">
-                <p className="text-xs uppercase tracking-widest">CURATION ALPHA</p>
-                <p className="font-serif text-xl italic">The Modern Wing</p>
+                <p className="text-xs uppercase tracking-widest">
+                  {bookingData?.show_name || "CURATION ALPHA"}
+                </p>
+                <p className="font-serif text-xl italic">
+                  {bookingData?.museum_name || "The Modern Wing"}
+                </p>
               </div>
             </div>
             <div className="sticky top-32">
