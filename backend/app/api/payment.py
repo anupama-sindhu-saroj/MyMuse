@@ -95,15 +95,12 @@ async def get_payment_summary(
         raise HTTPException(status_code=400, detail="Invalid booking ID")
     if not booking:
         raise HTTPException(status_code=404, detail="Booking not found")
-<<<<<<< HEAD
     museum = await db["museums"].find_one(
         {"museumName": booking.get("museum_name")},
         {"image_url": 1}
     )
     image_url = museum.get("image_url") if museum else None
 
-=======
->>>>>>> 32119445995e0d01e108b0004d0a9fa05b8ea8d1
     return {
         "booking_id": booking_id,
         "show_name": booking.get("show_name"),
@@ -111,12 +108,8 @@ async def get_payment_summary(
         "visit_date": booking.get("visit_date"),
         "time_slot": booking.get("time_slot"),
         "tickets": booking.get("tickets", {}),
-<<<<<<< HEAD
         "amount": booking.get("total_amount", 0) * 100,  # paise
         "image_url": image_url
-=======
-        "amount": booking.get("total_amount", 0) * 100
->>>>>>> 32119445995e0d01e108b0004d0a9fa05b8ea8d1
     }
 
 
@@ -253,7 +246,6 @@ async def verify_payment_endpoint(
 @router.post("/recommend-method")
 async def recommend_method(body: dict):
     amount = body.get("amount", 0)
-<<<<<<< HEAD
     fallback_method = "card" if amount > 5000 else "upi"
     fallback_msg = f"{'Card recommended' if amount > 5000 else 'UPI is fastest'} for ₹{amount}."
 
@@ -284,24 +276,6 @@ async def recommend_method(body: dict):
 
     return {"recommended_method": method, "message": message}
 
-=======
-    user_message = body.get("user_message", "")
-    response = await run_payment_chain(
-        booking_details=f"Amount: ₹{amount}, Platform: India, Time: {datetime.utcnow().strftime('%H:%M')}",
-        payment_status="Awaiting payment method recommendation",
-        chat_history="",
-        user_message=user_message
-    )
-    response_lower = (response or "").lower()
-    if "net banking" in response_lower or "netbanking" in response_lower:
-        method = "netbanking"
-    elif "card" in response_lower or "credit" in response_lower or "debit" in response_lower:
-        method = "card"
-    else:
-        method = "upi"
-    return {"recommended_method": method, "message": response}
-
->>>>>>> 32119445995e0d01e108b0004d0a9fa05b8ea8d1
 
 @router.post("/analyze-failure")
 async def analyze_failure(body: dict):
@@ -309,7 +283,6 @@ async def analyze_failure(body: dict):
     reason = body.get("reason", "Payment failed")
     suggested = "card" if failed_method == "upi" else "upi"
     success_rates = {"card": "91%", "upi": "87%", "netbanking": "82%"}
-<<<<<<< HEAD
     fallback_msg = f"{failed_method} failed. Try {suggested} instead."
 
     try:
@@ -323,14 +296,6 @@ async def analyze_failure(body: dict):
     except Exception:
         message = fallback_msg  # ✅ won't crash on Gemini quota
 
-=======
-    response = await run_payment_chain(
-        booking_details="",
-        payment_status=f"Payment failed via {failed_method}. Reason: {reason}",
-        chat_history="",
-        user_message="What should I do now?"
-    )
->>>>>>> 32119445995e0d01e108b0004d0a9fa05b8ea8d1
     return {
         "message": message,
         "suggested_method": suggested,
