@@ -4,8 +4,43 @@ import TicketSummary from "../components/TicketSummary";
 import BookingChat from "../components/BookingChat";
 import "../styles/bookticket.css";
 
-export default function BookTicket() {
+// ── Helper: get a valid (fresh) token ────────────────────────────────────────
+async function getFreshToken() {
+  // 1. Try accessToken first
+  const accessToken = localStorage.getItem("accessToken");
 
+  // 2. Check if it's expired
+  if (accessToken) {
+    try {
+      const payload = JSON.parse(atob(accessToken.split(".")[1]));
+      const isExpired = payload.exp * 1000 < Date.now();
+      if (!isExpired) return accessToken; // still valid
+    } catch {}
+  }
+
+  // 3. Expired or missing — refresh it
+  const refreshToken = localStorage.getItem("refreshToken") || localStorage.getItem("refresh_token");
+  if (!refreshToken) return localStorage.getItem("token") || null;
+
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/refresh`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refresh_token: refreshToken }),
+    });
+    const data = await res.json();
+    if (data.accessToken) {
+      localStorage.setItem("accessToken", data.accessToken); // save fresh token
+      return data.accessToken;
+    }
+  } catch (e) {
+    console.error("Token refresh failed:", e);
+  }
+
+  return localStorage.getItem("token") || null;
+}
+
+export default function BookTicket() {
   const [show, setShow] = useState("General Admittance");
   const [price, setPrice] = useState(0);
   const [bookingData, setBookingData] = useState(null);
@@ -19,53 +54,71 @@ export default function BookTicket() {
       setChatInput("");
     }
   };
+
   const finalizeBooking = async () => {
     try {
-      const token = localStorage.getItem("accessToken") || localStorage.getItem("token");
-  
+      // ✅ Always get a fresh token before calling finalize
+      const token = await getFreshToken();
+
+      if (!token) {
+        alert("You are not logged in. Please log in first.");
+        return;
+      }
+
+      const session_id =
+        localStorage.getItem("booking_session_id") ||
+        localStorage.getItem("session_id") ||
+        bookingData?.session_id ||
+        localStorage.getItem("user_id");
+
+      if (!session_id) {
+        alert("No active booking session. Please start a booking first.");
+        return;
+      }
+
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/bookings/finalize`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...(token && { Authorization: `Bearer ${token}` })
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          session_id: localStorage.getItem("user_id") || "guest"
-        })
+        body: JSON.stringify({ session_id }),
       });
-  
+
+      if (res.status === 401) {
+        alert("Session expired. Please log in again.");
+        return;
+      }
+
       const data = await res.json();
-  
+
       if (data.booking_id) {
         localStorage.setItem("pending_booking_id", data.booking_id);
         window.location.href = "/payment";
+      } else {
+        alert(data.detail || "Failed to finalize booking.");
       }
-  
+
     } catch (err) {
       console.error("Finalize booking error:", err);
     }
   };
+
   return (
     <div className="bg-white text-black dark:bg-[#0a0a0a] dark:text-white min-h-screen">
-
       <TicketNavbar />
-
       <main className="max-w-[1400px] mx-auto px-6 md:px-12 pt-10">
-
         <div className="mb-10">
           <p className="text-[10px] tracking-[0.5em] font-bold text-zinc-400 mb-4 uppercase">
             Procurement / 2026 Infrastructure
           </p>
           <h2 className="text-6xl md:text-8xl serif leading-[0.9]">
             Secure <br />
-            <span className="italic font-light opacity-30">
-              Admittance.
-            </span>
+            <span className="italic font-light opacity-30">Admittance.</span>
           </h2>
         </div>
 
         <div className="grid grid-cols-12 gap-12 items-start">
-
           <div className="col-span-12 lg:col-span-4">
             <TicketSummary
               show={show}
@@ -74,7 +127,6 @@ export default function BookTicket() {
               finalizeBooking={finalizeBooking}
             />
           </div>
-
           <div className="col-span-12 lg:col-span-8 lg:pl-12">
             <div id="chat-scroll-container" className="custom-scrollbar">
               <BookingChat
@@ -87,7 +139,6 @@ export default function BookTicket() {
               />
             </div>
           </div>
-
         </div>
 
         {/* Fixed bottom input */}
@@ -116,7 +167,6 @@ export default function BookTicket() {
             </form>
           </div>
         </div>
-
       </main>
     </div>
   );

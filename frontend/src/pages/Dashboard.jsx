@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Navbar from "../components/Navbar";
 import "../styles/Dashboard.css";
 import { useNavigate } from "react-router-dom";
@@ -13,12 +13,9 @@ const TICKET_TYPES = [
 // ─── Helper: render ticket breakdown ─────────────────────
 function TicketBreakdown({ tickets }) {
   if (!tickets || typeof tickets !== "object") return null;
-
   const entries = TICKET_TYPES.filter(({ key }) => tickets[key] > 0);
   const fallback = Object.entries(tickets).filter(([, v]) => v > 0);
-
   if (entries.length === 0 && fallback.length === 0) return null;
-
   return (
     <span className="ticket-breakdown">
       {entries.length > 0
@@ -57,9 +54,7 @@ function CancelModal({ ticket, onConfirm, onClose, cancelling }) {
           <br />
           📅 {ticket.visit_date} &nbsp;·&nbsp; 🕐 {ticket.time_slot}
         </p>
-        <p style={styles.modalWarn}>
-          ⚠️ This action cannot be undone.
-        </p>
+        <p style={styles.modalWarn}>⚠️ This action cannot be undone.</p>
         <div style={styles.modalActions}>
           <button style={styles.btnKeep} onClick={onClose} disabled={cancelling}>
             Keep Booking
@@ -119,8 +114,6 @@ function TicketDropdown({ tickets, loading, type, onCancelSuccess }) {
               ticket.tickets &&
               typeof ticket.tickets === "object" &&
               Object.values(ticket.tickets).some((v) => v > 0);
-
-            // ✅ Cancel button ONLY in upcoming dropdown
             const canCancel = type === "upcoming";
 
             return (
@@ -129,33 +122,23 @@ function TicketDropdown({ tickets, loading, type, onCancelSuccess }) {
                   <h4 className="dropdown-museum">
                     {ticket.museum_name || "Unknown Museum"}
                   </h4>
-
                   <p className="dropdown-meta">
                     📅 {ticket.visit_date || "No date"}&nbsp;·&nbsp;
                     🕐 {ticket.time_slot || "No time"}
                   </p>
-
                   <p className="dropdown-meta">
                     🎫 Total: {total}&nbsp;·&nbsp;
                     💰 ₹{ticket.total_amount ?? ticket.amount ?? "—"}
                   </p>
-
                   {hasBreakdown && (
                     <p className="dropdown-meta breakdown-row">
                       <TicketBreakdown tickets={ticket.tickets} />
                     </p>
                   )}
-
                   <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "6px", flexWrap: "wrap" }}>
-                    <span
-                      className={`dropdown-badge ${
-                        ticket.payment_status === "paid" ? "badge-paid" : "badge-pending"
-                      }`}
-                    >
+                    <span className={`dropdown-badge ${ticket.payment_status === "paid" ? "badge-paid" : "badge-pending"}`}>
                       {ticket.payment_status?.toUpperCase() || "UNKNOWN"}
                     </span>
-
-                    {/* ✅ Red cancel button — upcoming only */}
                     {canCancel && ticket.payment_status === "paid" && (
                       <button
                         onClick={() => setConfirmTicket(ticket)}
@@ -168,7 +151,6 @@ function TicketDropdown({ tickets, loading, type, onCancelSuccess }) {
                     )}
                   </div>
                 </div>
-
                 <div className="dropdown-ticket-right">
                   {ticket.qr_code ? (
                     <img
@@ -184,6 +166,228 @@ function TicketDropdown({ tickets, loading, type, onCancelSuccess }) {
             );
           })}
       </div>
+
+      {confirmTicket && (
+        <CancelModal
+          ticket={confirmTicket}
+          onConfirm={handleCancel}
+          onClose={() => setConfirmTicket(null)}
+          cancelling={cancelling}
+        />
+      )}
+    </>
+  );
+}
+
+// ─── Upcoming Tickets Carousel ────────────────────────────
+function UpcomingCarousel({ tickets, onCancelSuccess }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [sliding, setSliding] = useState(false);
+  const [direction, setDirection] = useState("next"); // "next" | "prev"
+  const [confirmTicket, setConfirmTicket] = useState(null);
+  const [cancelling, setCancelling] = useState(false);
+  const [cancelledIds, setCancelledIds] = useState([]);
+
+  const visible = tickets.filter((t) => !cancelledIds.includes(t._id));
+  const total = visible.length;
+
+  // Auto-advance every 5 seconds
+  useEffect(() => {
+    if (total <= 1) return;
+    const timer = setInterval(() => goTo("next"), 5000);
+    return () => clearInterval(timer);
+  }, [total, currentIndex, cancelledIds]);
+
+  // Clamp index if tickets shrink
+  useEffect(() => {
+    if (currentIndex >= total && total > 0) {
+      setCurrentIndex(total - 1);
+    }
+  }, [total]);
+
+  const goTo = useCallback((dir) => {
+    if (total <= 1 || sliding) return;
+    setDirection(dir);
+    setSliding(true);
+    setTimeout(() => {
+      setCurrentIndex((prev) =>
+        dir === "next" ? (prev + 1) % total : (prev - 1 + total) % total
+      );
+      setSliding(false);
+    }, 350);
+  }, [total, sliding]);
+
+  const handleCancel = async () => {
+    if (!confirmTicket) return;
+    setCancelling(true);
+    try {
+      const res = await fetch(
+        `http://localhost:8000/api/bookings/${confirmTicket._id}/cancel`,
+        { method: "PATCH" }
+      );
+      if (res.ok) {
+        setCancelledIds((prev) => [...prev, confirmTicket._id]);
+        onCancelSuccess && onCancelSuccess(confirmTicket._id);
+      } else {
+        alert("Cancellation failed. Please try again.");
+      }
+    } catch (err) {
+      alert("Network error. Please try again.");
+    } finally {
+      setCancelling(false);
+      setConfirmTicket(null);
+    }
+  };
+
+  if (total === 0) {
+    return (
+      <div style={styles.carouselEmpty}>
+        <span style={{ fontSize: "2rem" }}>🎟</span>
+        <p style={{ margin: "0.5rem 0 0", opacity: 0.5, fontSize: "0.85rem" }}>
+          No upcoming bookings
+        </p>
+      </div>
+    );
+  }
+
+  const ticket = visible[currentIndex];
+  if (!ticket) return null;
+
+  const totalTickets = getTotalTickets(ticket);
+  const hasBreakdown =
+    ticket.tickets &&
+    typeof ticket.tickets === "object" &&
+    Object.values(ticket.tickets).some((v) => v > 0);
+
+  return (
+    <>
+      <div style={styles.carouselWrapper}>
+
+        {/* ── Slide area ── */}
+        <div style={styles.carouselViewport}>
+          <div
+            key={ticket._id || currentIndex}
+            style={{
+              ...styles.carouselSlide,
+              animation: sliding
+                ? `slide-out-${direction} 0.35s ease forwards`
+                : `slide-in-${direction} 0.35s ease forwards`,
+            }}
+          >
+            {/* Left: info */}
+            <div style={styles.carouselInfo}>
+              <p style={styles.carouselMuseumName}>
+                {ticket.museum_name || "Unknown Museum"}
+              </p>
+
+              <p style={styles.carouselMeta}>
+                📅 {ticket.visit_date || "No date"} &nbsp;·&nbsp; 🕐 {ticket.time_slot || "No time"}
+              </p>
+
+              <p style={styles.carouselMeta}>
+                🎫 Total: {totalTickets}
+                {ticket.total_amount && <> &nbsp;·&nbsp; 💰 ₹{ticket.total_amount}</>}
+              </p>
+
+              {hasBreakdown && (
+                <p style={{ ...styles.carouselMeta, marginTop: "4px" }}>
+                  {TICKET_TYPES.filter(({ key }) => ticket.tickets[key] > 0).map(({ key, label, emoji }) => (
+                    <span key={key} style={{ marginRight: "8px" }}>
+                      {emoji} {label} ×{ticket.tickets[key]}
+                    </span>
+                  ))}
+                </p>
+              )}
+
+              <div style={{ display: "flex", gap: "8px", alignItems: "center", marginTop: "10px", flexWrap: "wrap" }}>
+                <span style={styles.paidBadge}>✔ PAID</span>
+
+                {ticket.payment_status === "paid" && (
+                  <button
+                    onClick={() => setConfirmTicket(ticket)}
+                    style={styles.cancelBtn}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "#b91c1c")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "#dc2626")}
+                  >
+                    ✕ Cancel
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Right: QR */}
+            <div style={styles.carouselQR}>
+              {ticket.qr_code ? (
+                <img
+                  src={`data:image/png;base64,${ticket.qr_code}`}
+                  style={{ width: "70px", height: "70px", borderRadius: "8px" }}
+                  alt="QR Code"
+                />
+              ) : (
+                <div style={styles.noQR}>No QR</div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Controls ── */}
+        {total > 1 && (
+          <div style={styles.carouselControls}>
+            <button
+              style={styles.navBtn}
+              onClick={() => goTo("prev")}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.6")}
+            >
+              ‹
+            </button>
+
+            {/* Dots */}
+            <div style={styles.dots}>
+              {visible.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    if (i === currentIndex || sliding) return;
+                    setDirection(i > currentIndex ? "next" : "prev");
+                    setSliding(true);
+                    setTimeout(() => { setCurrentIndex(i); setSliding(false); }, 350);
+                  }}
+                  style={{
+                    ...styles.dot,
+                    background: i === currentIndex ? "#fff" : "rgba(255,255,255,0.3)",
+                    transform: i === currentIndex ? "scale(1.3)" : "scale(1)",
+                  }}
+                />
+              ))}
+            </div>
+
+            <button
+              style={styles.navBtn}
+              onClick={() => goTo("next")}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.6")}
+            >
+              ›
+            </button>
+          </div>
+        )}
+
+        {/* ── Counter badge ── */}
+        {total > 1 && (
+          <div style={styles.counterBadge}>
+            {currentIndex + 1} / {total}
+          </div>
+        )}
+      </div>
+
+      {/* Slide keyframes injected once */}
+      <style>{`
+        @keyframes slide-in-next  { from { opacity: 0; transform: translateX(60px);  } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slide-out-next { from { opacity: 1; transform: translateX(0);     } to { opacity: 0; transform: translateX(-60px); } }
+        @keyframes slide-in-prev  { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slide-out-prev { from { opacity: 1; transform: translateX(0);     } to { opacity: 0; transform: translateX(60px); } }
+      `}</style>
 
       {confirmTicket && (
         <CancelModal
@@ -221,6 +425,10 @@ function Dashboard() {
     upcoming: false,
   });
 
+  // ── NEW: upcoming tickets for the bottom carousel ──
+  const [upcomingTickets, setUpcomingTickets] = useState([]);
+  const [upcomingPanelLoading, setUpcomingPanelLoading] = useState(true);
+
   const fetchDashboard = async () => {
     const user_id = localStorage.getItem("user_id");
     if (!user_id) return;
@@ -234,12 +442,28 @@ function Dashboard() {
     }
   };
 
+  const fetchUpcomingPanel = async () => {
+    const user_id = localStorage.getItem("user_id");
+    if (!user_id) return;
+    setUpcomingPanelLoading(true);
+    try {
+      const res = await fetch(`http://localhost:8000/api/dashboard/user/${user_id}/upcoming`);
+      if (!res.ok) return;
+      const data = await res.json();
+      setUpcomingTickets(data.tickets || []);
+    } catch (err) {
+      console.error("[UpcomingPanel] fetch error:", err);
+    } finally {
+      setUpcomingPanelLoading(false);
+    }
+  };
+
   useEffect(() => {
     const user_id = localStorage.getItem("user_id");
     if (!user_id) { navigate("/login"); return; }
 
     const init = async () => {
-      await fetchDashboard();
+      await Promise.all([fetchDashboard(), fetchUpcomingPanel()]);
       setLoading(false);
     };
     init();
@@ -263,7 +487,7 @@ function Dashboard() {
     }
   };
 
-  // After cancel: refresh stats + remove ticket from all dropdowns
+  // After cancel: refresh stats + remove from all lists
   const handleCancelSuccess = async (cancelledId) => {
     await fetchDashboard();
     setDropdownData((prev) => ({
@@ -271,6 +495,7 @@ function Dashboard() {
       visited:  prev.visited.filter((t) => t._id !== cancelledId),
       upcoming: prev.upcoming.filter((t) => t._id !== cancelledId),
     }));
+    setUpcomingTickets((prev) => prev.filter((t) => t._id !== cancelledId));
   };
 
   if (loading) {
@@ -280,13 +505,6 @@ function Dashboard() {
       </div>
     );
   }
-
-  const currentBooking      = stats?.currentBooking;
-  const currentTotal        = getTotalTickets(currentBooking);
-  const currentHasBreakdown =
-    currentBooking?.tickets &&
-    typeof currentBooking.tickets === "object" &&
-    Object.values(currentBooking.tickets).some((v) => v > 0);
 
   const cards = [
     { key: "tickets",  icon: "🎟", label: "Tickets Booked", count: stats.ticketsBooked },
@@ -352,61 +570,25 @@ function Dashboard() {
           </button>
         </div>
 
-        {/* CURRENT BOOKING */}
+        {/* ── UPCOMING BOOKINGS CAROUSEL PANEL ── */}
         <p className="section-title animate" style={{ animationDelay: "0.3s" }}>
-          Current Booking
+          Upcoming Bookings
+          {upcomingTickets.length > 0 && (
+            <span style={styles.upcomingCount}>{upcomingTickets.length}</span>
+          )}
         </p>
 
-        {currentBooking ? (
-          <div
-            className="ticket-visual animate"
-            style={{
-              animationDelay: "0.4s",
-              backgroundImage: currentBooking?.image_url
-                ? `linear-gradient(to top, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.2) 100%), url(${currentBooking.image_url})`
-                : undefined,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            <div className="ticket-data">
-              <div className="ticket-info">
-                <h2>{currentBooking.museum_name || "No Museum"}</h2>
-                <p style={{ fontSize: "0.7rem", color: "#fff", opacity: "0.8" }}>
-                  {currentBooking.visit_date || "No Date"} &bull;{" "}
-                  {currentBooking.time_slot || "No Time"}
-                </p>
-                <p style={{ fontSize: "0.7rem", color: "#fff", opacity: "0.9", marginTop: "4px" }}>
-                  🎫 Total: {currentTotal}
-                  {currentBooking.total_amount && (
-                    <> &nbsp;·&nbsp; 💰 ₹{currentBooking.total_amount}</>
-                  )}
-                </p>
-                {currentHasBreakdown && (
-                  <p style={{ fontSize: "0.65rem", color: "#fff", opacity: "0.85", marginTop: "4px" }}>
-                    {TICKET_TYPES.filter(({ key }) => currentBooking.tickets[key] > 0).map(({ key, label, emoji }) => (
-                      <span key={key} style={{ marginRight: "8px" }}>
-                        {emoji} {label} ×{currentBooking.tickets[key]}
-                      </span>
-                    ))}
-                  </p>
-                )}
-              </div>
-              <div className="qr-small">
-                {currentBooking.qr_code ? (
-                  <img
-                    src={`data:image/png;base64,${currentBooking.qr_code}`}
-                    style={{ width: "60px" }}
-                    alt="QR Code"
-                  />
-                ) : (
-                  <p style={{ fontSize: "10px", opacity: "0.6" }}>No QR</p>
-                )}
-              </div>
-            </div>
+        {upcomingPanelLoading ? (
+          <div className="ticket-visual animate" style={{ animationDelay: "0.4s", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <p style={{ opacity: 0.5, fontSize: "0.85rem" }}>Loading upcoming tickets...</p>
           </div>
         ) : (
-          <p style={{ opacity: "0.6" }}>No confirmed bookings yet</p>
+          <div className="ticket-visual animate" style={{ animationDelay: "0.4s", overflow: "hidden" }}>
+            <UpcomingCarousel
+              tickets={upcomingTickets}
+              onCancelSuccess={handleCancelSuccess}
+            />
+          </div>
         )}
       </div>
     </>
@@ -486,6 +668,125 @@ const styles = {
     fontWeight: "600",
     cursor: "pointer",
     fontSize: "0.82rem",
+  },
+
+  // ── Carousel ──
+  carouselWrapper: {
+    position: "relative",
+    width: "100%",
+    padding: "0.5rem 0",
+  },
+  carouselViewport: {
+    overflow: "hidden",
+    width: "100%",
+  },
+  carouselSlide: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "1rem",
+    padding: "0.25rem 0",
+  },
+  carouselInfo: {
+    flex: 1,  
+  },
+  carouselMuseumName: {
+    fontSize: "1.05rem",
+    fontWeight: "700",
+    color: "#fff",
+    margin: "0 0 6px",
+    letterSpacing: "-0.01em",
+  },
+  carouselMeta: {
+    fontSize: "0.7rem",
+    color: "#fff",
+    opacity: 0.85,
+    margin: "2px 0",
+  },
+  carouselQR: {
+    flexShrink: 0,
+  },
+  noQR: {
+    width: "70px",
+    height: "70px",
+    borderRadius: "8px",
+    background: "rgba(255,255,255,0.1)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "10px",
+    opacity: 0.5,
+    color: "#fff",
+  },
+  carouselControls: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "12px",
+    marginTop: "14px",
+  },
+  navBtn: {
+    background: "none",
+    border: "none",
+    color: "#fff",
+    fontSize: "1.6rem",
+    cursor: "pointer",
+    padding: "0 4px",
+    lineHeight: 1,
+    opacity: 0.6,
+    transition: "opacity 0.15s",
+  },
+  dots: {
+    display: "flex",
+    gap: "6px",
+    alignItems: "center",
+  },
+  dot: {
+    width: "7px",
+    height: "7px",
+    borderRadius: "50%",
+    border: "none",
+    cursor: "pointer",
+    padding: 0,
+    transition: "background 0.2s, transform 0.2s",
+  },
+  counterBadge: {
+    position: "absolute",
+    top: "4px",
+    right: "0",
+    fontSize: "0.65rem",
+    color: "rgba(255,255,255,0.55)",
+    fontWeight: "600",
+    letterSpacing: "0.05em",
+  },
+  paidBadge: {
+    fontSize: "0.65rem",
+    fontWeight: "700",
+    background: "rgba(34,197,94,0.25)",
+    color: "#86efac",
+    borderRadius: "20px",
+    padding: "2px 10px",
+    letterSpacing: "0.06em",
+  },
+  carouselEmpty: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "1.5rem",
+    color: "#fff",
+  },
+  upcomingCount: {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "rgba(255,255,255,0.15)",
+    borderRadius: "20px",
+    fontSize: "0.7rem",
+    fontWeight: "700",
+    padding: "1px 9px",
+    marginLeft: "8px",
+    verticalAlign: "middle",
   },
 };
 
