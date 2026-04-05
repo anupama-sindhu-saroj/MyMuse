@@ -64,7 +64,7 @@ const AIChatBubble = ({ selectedMethod, onMethodRecommended }) => {
         const fallbackMsg = amount > 5000
           ? "Net Banking recommended for large amounts above ₹5000."
           : "UPI is recommended for fastest and most secure checkout.";
-        const fallbackMethod = amount > 5000 ? "net" : "upi";
+        const fallbackMethod = amount > 5000 ? "netbanking" : "upi";
         setAiMessage(fallbackMsg);
         onMethodRecommended(fallbackMethod);
       } finally {

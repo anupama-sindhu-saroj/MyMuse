@@ -88,10 +88,22 @@ export default function TicketSummary({ show, price, bookingData, finalizeBookin
         </div>
 
       </div>
-
+      {(!bookingData?.visit_date || !bookingData?.time_slot) && (
+    <p className="mt-4 text-center text-xs text-zinc-400 uppercase tracking-widest">
+        ↑ {!bookingData?.visit_date ? "Pick a visit date" : "Choose a time slot"}
+    </p>
+)}
       <button
         onClick={finalizeBooking}
-        disabled={!bookingData || !bookingData.total_amount}
+        disabled={
+          !bookingData ||
+          !bookingData.museum_name ||
+          !bookingData.show_name ||
+          !bookingData.visit_date ||
+          !bookingData.time_slot ||
+          !bookingData.total_amount ||
+          guestCount === 0
+      }
         className="w-full mt-6 py-6 bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.4em] rounded-[24px] shadow-2xl disabled:opacity-40 disabled:cursor-not-allowed hover:opacity-80 transition"
       >
         Finalize & Pay

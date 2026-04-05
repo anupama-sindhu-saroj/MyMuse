@@ -4,7 +4,7 @@ const PaymentMethods = ({ selected, onSelect }) => {
   const methods = [
     { id: "upi", title: "UPI / Google Pay", desc: "Instant authorization" },
     { id: "card", title: "Credit / Debit Card", desc: "Visa, Mastercard, RuPay" },
-    { id: "net", title: "Net Banking", desc: "All major Indian banks" }
+    { id: "netbanking", title: "Net Banking", desc: "All major Indian banks" }
   ];
 
   return (

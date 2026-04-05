@@ -1,6 +1,6 @@
 import base64
 import traceback
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 from bson import ObjectId
 from fastapi import APIRouter, HTTPException
@@ -8,6 +8,14 @@ from fastapi import APIRouter, HTTPException
 from app.db.database import get_db
 
 router = APIRouter(prefix="/api/dashboard", tags=["Dashboard"])
+
+# ✅ IST = UTC+5:30
+IST = timezone(timedelta(hours=5, minutes=30))
+
+
+def get_today_ist():
+    """Returns today's date in IST (India Standard Time)."""
+    return datetime.now(IST).date()
 
 
 def serialize_booking(booking: dict) -> dict:
@@ -17,17 +25,13 @@ def serialize_booking(booking: dict) -> dict:
     if "_id" in booking:
         booking["_id"] = str(booking["_id"])
 
-    # Serialize all ObjectId fields
     for key, val in booking.items():
         if isinstance(val, ObjectId):
             booking[key] = str(val)
 
-    # qr_code is stored as base64 string in your payment.py (generate_qr returns base64)
-    # so no bytes conversion needed — but handle bytes just in case
     if isinstance(booking.get("qr_code"), bytes):
         booking["qr_code"] = base64.b64encode(booking["qr_code"]).decode("utf-8")
 
-    # Serialize datetime fields
     for field in ["created_at", "updated_at", "paid_at"]:
         if isinstance(booking.get(field), datetime):
             booking[field] = booking[field].isoformat()
@@ -35,8 +39,17 @@ def serialize_booking(booking: dict) -> dict:
     return booking
 
 
+async def enrich_with_image(booking: dict, db) -> dict:
+    """Fetch museum image_url and add to booking dict."""
+    museum = await db["museums"].find_one(
+        {"museumName": booking.get("museum_name")},
+        {"image_url": 1}
+    )
+    booking["image_url"] = museum.get("image_url") if museum else None
+    return booking
+
+
 def get_query_conditions(user_id: str) -> list:
-    """Build query conditions to match user_id as string or ObjectId."""
     conditions = [{"user_id": user_id}]
     try:
         conditions.append({"user_id": ObjectId(user_id)})
@@ -53,7 +66,6 @@ def is_paid(booking: dict) -> bool:
 
 
 def parse_visit_date(booking: dict):
-    """Returns a date object or None."""
     try:
         visit_date_str = booking.get("visit_date")
         if visit_date_str:
@@ -69,29 +81,36 @@ def parse_visit_date(booking: dict):
 
 @router.get("/debug/{user_id}")
 async def debug_dashboard(user_id: str):
-    """Temporary debug route — remove before production"""
     db = get_db()
+    today_ist = get_today_ist()
     all_bookings = await db.bookings.find({}).to_list(length=50)
     result = []
     for b in all_bookings:
+        vd = parse_visit_date(b)
         result.append({
             "_id": str(b.get("_id")),
             "user_id": str(b.get("user_id", "MISSING")),
-            "user_id_type": type(b.get("user_id")).__name__,
             "payment_status": b.get("payment_status", "MISSING"),
-            "status": b.get("status", "MISSING"),
             "museum_name": b.get("museum_name"),
             "visit_date": b.get("visit_date"),
+            "visit_date_parsed": str(vd) if vd else None,
+            # ✅ today <= today → visited
+            "category": (
+                "upcoming" if vd and vd > today_ist else
+                "visited"  if vd and vd <= today_ist else
+                "no_date"
+            ),
         })
     return {
         "queried_user_id": user_id,
+        "today_ist": str(today_ist),
         "total_bookings_in_db": len(result),
         "bookings": result,
     }
 
 
 # ─────────────────────────────────────────────
-# SUMMARY ROUTE  (existing, unchanged logic)
+# SUMMARY ROUTE
 # ─────────────────────────────────────────────
 
 @router.get("/user/{user_id}")
@@ -103,41 +122,35 @@ async def get_user_dashboard(user_id: str):
             {"$or": get_query_conditions(user_id)}
         ).to_list(length=None)
 
-        print(f"[Dashboard] Found {len(bookings)} total bookings for user_id={user_id}")
-
         if not bookings:
             return {
                 "ticketsBooked": 0,
-                "museumsVisited": 0,
+                "visitedCount": 0,
                 "upcomingCount": 0,
                 "currentBooking": None,
             }
 
         paid_bookings = [b for b in bookings if is_paid(b)]
 
-        print(f"[Dashboard] Paid: {len(paid_bookings)} | Statuses: {[b.get('payment_status') for b in bookings]}")
+        today = get_today_ist()  # ✅ IST date
 
-        tickets_booked = len(paid_bookings)
+        visited_list  = []
+        upcoming_list = []
 
-        museums_visited = len({
-            b.get("museum_name")
-            for b in paid_bookings
-            if b.get("museum_name")
-        })
-
-        today = datetime.utcnow().date()
-        upcoming_count = 0
         for b in paid_bookings:
             visit_date = parse_visit_date(b)
-            if visit_date and visit_date > today:        # strictly after today
-                upcoming_count += 1
+            if visit_date is None:
+                upcoming_list.append(b)        # no date → upcoming
+            elif visit_date <= today:
+                visited_list.append(b)         # ✅ today OR past → visited
+            else:
+                upcoming_list.append(b)        # ✅ strictly future → upcoming
 
-        # Count visited (visit_date <= today)
-        visited_count = 0
-        for b in paid_bookings:
-            visit_date = parse_visit_date(b)
-            if visit_date and visit_date <= today:       # today counts as visited
-                visited_count += 1
+        visited_count  = len(visited_list)
+        upcoming_count = len(upcoming_list)
+        tickets_booked = visited_count + upcoming_count  # always equal to len(paid_bookings)
+
+        print(f"[Dashboard] today_IST={today} | visited={visited_count} | upcoming={upcoming_count} | total={tickets_booked}")
 
         current_booking = None
         if paid_bookings:
@@ -147,19 +160,18 @@ async def get_user_dashboard(user_id: str):
                 reverse=True,
             )[0]
             current_booking = serialize_booking(latest)
+            current_booking = await enrich_with_image(current_booking, db)
 
         return {
-            "ticketsBooked": tickets_booked,
-            "museumsVisited": museums_visited,
-            "visitedCount": visited_count,
-            "upcomingCount": upcoming_count,
+            "ticketsBooked": tickets_booked,   # ✅ visited + upcoming
+            "visitedCount":  visited_count,    # ✅ visit_date <= today (IST)
+            "upcomingCount": upcoming_count,   # ✅ visit_date > today (IST)
             "currentBooking": current_booking,
         }
 
     except RuntimeError as e:
         print("DASHBOARD DB ERROR:", str(e))
         raise HTTPException(status_code=503, detail="Database not available")
-
     except Exception as e:
         print("DASHBOARD ERROR:", str(e))
         traceback.print_exc()
@@ -172,27 +184,23 @@ async def get_user_dashboard(user_id: str):
 
 @router.get("/user/{user_id}/tickets")
 async def get_all_tickets(user_id: str):
-    """
-    Returns all paid bookings for the user.
-    Called when the user clicks on 'Tickets Booked'.
-    """
+    """Returns ALL paid bookings = visited + upcoming."""
     try:
         db = get_db()
-
         bookings = await db.bookings.find(
             {"$or": get_query_conditions(user_id)}
         ).to_list(length=None)
 
         paid_bookings = [b for b in bookings if is_paid(b)]
-
-        # Sort newest first
         paid_bookings.sort(
             key=lambda x: x.get("created_at", datetime.min), reverse=True
         )
 
+        serialized = [serialize_booking(b) for b in paid_bookings]
+        enriched = [await enrich_with_image(b, db) for b in serialized]
         return {
-            "total": len(paid_bookings),
-            "tickets": [serialize_booking(b) for b in paid_bookings],
+            "total": len(enriched),
+            "tickets": enriched,
         }
 
     except RuntimeError as e:
@@ -209,12 +217,12 @@ async def get_all_tickets(user_id: str):
 @router.get("/user/{user_id}/visited")
 async def get_visited_tickets(user_id: str):
     """
-    Returns paid bookings where visit_date is strictly before today.
-    Called when the user clicks on 'Museums Visited'.
+    ✅ visit_date <= today (IST)
+    TODAY counts as visited. Past dates also visited.
     """
     try:
         db = get_db()
-        today = datetime.utcnow().date()
+        today = get_today_ist()
 
         bookings = await db.bookings.find(
             {"$or": get_query_conditions(user_id)}
@@ -225,18 +233,16 @@ async def get_visited_tickets(user_id: str):
             if not is_paid(b):
                 continue
             visit_date = parse_visit_date(b)
-            if visit_date and visit_date <= today:      # today counts as visited
+            if visit_date and visit_date <= today:   # ✅ today + past
                 visited.append(b)
 
-        # Sort by visit_date descending (most recently visited first)
         visited.sort(
             key=lambda x: parse_visit_date(x) or datetime.min.date(), reverse=True
         )
 
-        return {
-            "total": len(visited),
-            "tickets": [serialize_booking(b) for b in visited],
-        }
+        serialized = [serialize_booking(b) for b in visited]
+        enriched = [await enrich_with_image(b, db) for b in serialized]
+        return {"total": len(enriched), "tickets": enriched}
 
     except RuntimeError as e:
         raise HTTPException(status_code=503, detail="Database not available")
@@ -252,12 +258,12 @@ async def get_visited_tickets(user_id: str):
 @router.get("/user/{user_id}/upcoming")
 async def get_upcoming_tickets(user_id: str):
     """
-    Returns paid bookings where visit_date >= today.
-    Called when the user clicks on 'Upcoming'.
+    ✅ visit_date > today (IST)
+    STRICTLY future only. Today is NOT upcoming.
     """
     try:
         db = get_db()
-        today = datetime.utcnow().date()
+        today = get_today_ist()
 
         bookings = await db.bookings.find(
             {"$or": get_query_conditions(user_id)}
@@ -268,18 +274,16 @@ async def get_upcoming_tickets(user_id: str):
             if not is_paid(b):
                 continue
             visit_date = parse_visit_date(b)
-            if visit_date and visit_date > today:       # strictly after today
+            if visit_date and visit_date > today:    # ✅ strictly future
                 upcoming.append(b)
 
-        # Sort by visit_date ascending (soonest first)
         upcoming.sort(
             key=lambda x: parse_visit_date(x) or datetime.max.date()
         )
 
-        return {
-            "total": len(upcoming),
-            "tickets": [serialize_booking(b) for b in upcoming],
-        }
+        serialized = [serialize_booking(b) for b in upcoming]
+        enriched = [await enrich_with_image(b, db) for b in serialized]
+        return {"total": len(enriched), "tickets": enriched}
 
     except RuntimeError as e:
         raise HTTPException(status_code=503, detail="Database not available")
