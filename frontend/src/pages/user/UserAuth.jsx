@@ -126,7 +126,7 @@ const UserAuth = () => {
       "http://localhost:8000/api/users/google-login",
       { token: credentialResponse.credential }
     );
-
+    localStorage.setItem("user", JSON.stringify(res.data.user));
     localStorage.setItem("accessToken", res.data.accessToken);
     localStorage.setItem("refreshToken", res.data.refreshToken);
     // ← No user object from Google login yet
