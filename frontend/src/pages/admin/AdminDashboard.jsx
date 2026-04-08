@@ -219,6 +219,19 @@ export default function AdminDashboard() {
             {admin?.name?.[0]?.toUpperCase() || "A"}
           </div>
           <span style={{ ...sans, fontSize: 11, color: "#444" }}>{admin?.name || "Admin"}</span>
+          <button
+    onClick={() => alert("Notifications — coming soon")}
+    style={{ background: "none", border: "0.5px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "5px 10px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}
+    onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"}
+    onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"}
+    title="Notifications"
+  >
+    <svg width="14" height="14" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/>
+    </svg>
+    {/* Red dot for unread — remove this div when no notifications */}
+    <div style={{ position: "absolute", top: 4, right: 4, width: 5, height: 5, borderRadius: "50%", background: "#f87171" }} />
+  </button>
           <button onClick={logout} style={{ background: "none", border: "0.5px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "5px 12px", ...sans, fontSize: 10, color: "#444", cursor: "pointer", letterSpacing: "0.1em", textTransform: "uppercase" }}>
             Sign out
           </button>
