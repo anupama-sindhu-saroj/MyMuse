@@ -60,7 +60,7 @@ const UserForgotPassword = () => {
 
     alert("Password reset successful");
 
-    window.location.href = "/user-login";
+    window.location.href = "/userauth";
 
   } catch (err) {
 
@@ -171,12 +171,9 @@ const UserForgotPassword = () => {
 </form>
 )}
 
-            <Link
-              to="/user-login"
-              className="text-[11px] text-gray-500 uppercase tracking-widest block mt-8"
-            >
-              Back to Login
-            </Link>
+            <Link to="/userauth" className="text-[11px] text-gray-500 uppercase tracking-widest block mt-8">
+  Back to Login
+</Link>
 
           </motion.div>
 

@@ -178,6 +178,8 @@ async def reset_password(email: str, new_password: str) -> dict:
 
 # ── google login ──────────────────────────────────────────────────────────────
 
+# ── google login ──────────────────────────────────────────────────────────────
+
 async def google_login(token: str) -> dict:
     from google.oauth2 import id_token
     from google.auth.transport import requests as grequests
@@ -188,7 +190,7 @@ async def google_login(token: str) -> dict:
             token,
             grequests.Request(),
             settings.GOOGLE_CLIENT_ID,
-            clock_skew_in_seconds=10   # ← add this line
+            clock_skew_in_seconds=10
         )
     except Exception as e:
         print(f"GOOGLE ERROR: {e}")
@@ -214,12 +216,27 @@ async def google_login(token: str) -> dict:
             "created_at": _now()
         })
         uid = str(result.inserted_id)
+        user_doc = {
+            "id": uid,
+            "name": name,
+            "email": email,
+            "is_verified": True,
+            "google_user": True
+        }
     else:
         uid = str(user["_id"])
+        user_doc = {
+            "id": uid,
+            "name": user["name"],
+            "email": user["email"],
+            "is_verified": user["is_verified"],
+            "google_user": user["google_user"]
+        }
 
     return {
         "accessToken": create_access_token({"id": uid}),
-        "refreshToken": create_refresh_token({"id": uid})
+        "refreshToken": create_refresh_token({"id": uid}),
+        "user": user_doc
     }
 
 # ── get profile ───────────────────────────────────────────────────────────────

@@ -126,13 +126,15 @@ const UserAuth = () => {
       "http://localhost:8000/api/users/google-login",
       { token: credentialResponse.credential }
     );
-    localStorage.setItem("user", JSON.stringify(res.data.user));
-    localStorage.setItem("accessToken", res.data.accessToken);
-    localStorage.setItem("refreshToken", res.data.refreshToken);
-    // ← No user object from Google login yet
+
+    const { accessToken, refreshToken, user } = res.data;
+
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("user_id", user.id);
 
     navigate("/dashboard");
-
   } catch (error) {
     alert("Google login failed");
   }
