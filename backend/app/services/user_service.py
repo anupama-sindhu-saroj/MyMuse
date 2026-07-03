@@ -187,10 +187,11 @@ async def google_login(token: str) -> dict:
         payload = id_token.verify_oauth2_token(
             token,
             grequests.Request(),
-            settings.GOOGLE_CLIENT_ID
+            settings.GOOGLE_CLIENT_ID,
+            clock_skew_in_seconds=10   # ← add this line
         )
     except Exception as e:
-        print(f"GOOGLE ERROR: {e}")        # ← shows exact reason
+        print(f"GOOGLE ERROR: {e}")
         raise ValueError("Invalid Google token")
 
     email = payload["email"]

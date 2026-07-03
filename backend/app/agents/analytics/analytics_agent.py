@@ -155,7 +155,10 @@ Revenue by Day (last 7 days): {data['revenue_by_day']}
     })
 
     try:
-        clean = raw.strip().replace("json", "").replace("", "")
+        clean = raw.strip()
+        if clean.startswith("```"):
+            clean = clean.strip("`")
+            clean = clean.replace("json", "", 1).strip()  # remove leading "json" tag only
         return json.loads(clean)
     except json.JSONDecodeError:
         return {
@@ -200,11 +203,6 @@ async def run_analytics_agent(museum_id: str, days: int = 30) -> dict:
 
 
 async def run_platform_analytics(days: int = 30) -> dict:
-    """
-    Platform-wide totals across ALL museums.
-    Called by GET /api/analytics/platform
-    Used on the admin overview page.
-    """
     db = get_db()
     since = datetime.utcnow() - timedelta(days=days)
 
@@ -214,7 +212,6 @@ async def run_platform_analytics(days: int = 30) -> dict:
 
     total_revenue = sum(b.get("total_amount", 0) for b in paid_bookings)
 
-    # Per-museum breakdown
     museum_breakdown = {}
     for b in all_bookings:
         mname = b.get("museum_name", "Unknown")
@@ -223,6 +220,21 @@ async def run_platform_analytics(days: int = 30) -> dict:
         if b.get("payment_status") == "paid":
             museum_breakdown[mname]["revenue"] += b.get("total_amount", 0)
 
+    summary_data = {
+        "summary": {
+            "total_museums":  len(museums),
+            "total_bookings": len(all_bookings),
+            "paid_bookings":  len(paid_bookings),
+            "total_revenue":  round(total_revenue, 2),
+            "unique_users":   len(set(b.get("user_id", "") for b in all_bookings)),
+        },
+        "bookings_by_show":  {},       # not applicable platform-wide, keep empty
+        "hour_distribution": {},
+        "revenue_trend":     {},
+        "revenue_by_day":    {},
+    }
+    ai = await generate_insights("the platform (all museums)", summary_data)
+
     return {
         "total_museums":    len(museums),
         "total_revenue":    round(total_revenue, 2),
@@ -230,4 +242,5 @@ async def run_platform_analytics(days: int = 30) -> dict:
         "paid_bookings":    len(paid_bookings),
         "unique_users":     len(set(b.get("user_id", "") for b in all_bookings)),
         "museum_breakdown": museum_breakdown,
+        "ai":               ai,
     }

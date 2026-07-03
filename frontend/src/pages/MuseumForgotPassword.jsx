@@ -1,7 +1,5 @@
 import axios from "axios";
-import { useRef } from "react";
-
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "../styles/museumSignup.css";
@@ -11,9 +9,11 @@ export default function ForgotPassword() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showRecovery, setShowRecovery] = useState(false);
   const [email, setEmail] = useState("");
+
   const emailRef = useRef();
-const otpRef = useRef();
-const newPasswordRef = useRef();
+  const passwordRef = useRef();       // ← NEW: for "New Password" field
+  const newPasswordRef = useRef();    // now used for "Confirm Password"
+  const otpInputs = useRef([]);
 
   const images = [
     "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1200",
@@ -42,65 +42,63 @@ const newPasswordRef = useRef();
       alert("Please provide your institutional email.");
     }
   };
+
   const sendResetOTP = async () => {
+    try {
+      await axios.post(
+        "http://localhost:8000/api/museums/forgot-password",
+        { email: emailRef.current.value }
+      );
+      alert("OTP sent to your email");
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to send OTP");
+    }
+  };
 
-  try {
+  const resetPassword = async () => {
+    const newPassword = passwordRef.current.value;
+    const confirmPassword = newPasswordRef.current.value;
 
-    await axios.post(
-      "http://localhost:8000/api/museums/forgot-password",
-      { email: emailRef.current.value }
-    );
+    if (!newPassword || !confirmPassword) {
+      alert("Please fill both password fields.");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
 
-    alert("OTP sent to your email");
+    try {
+      const otp = otpInputs.current.map(input => input.value).join("");
 
-  } catch (err) {
-
-    alert(err.response?.data?.message || "Failed to send OTP");
-
-  }
-
-};
-const verifyResetOTP = async () => {
-  try {
-    const otp = otpInputs.current.map(input => input.value).join(""); // ← join all 4
-    await axios.post(
-      "http://localhost:8000/api/museums/verify-reset-otp",
-      {
-        email: emailRef.current.value,
-        otp: otp                    // ← use joined otp
+      if (otp.length !== 4) {
+        alert("Please enter the complete 4-digit OTP");
+        return;
       }
-    );
-    alert("OTP verified");
-  } catch (err) {
-    alert(err.response?.data?.message || "Invalid OTP");
-  }
-};
-const resetPassword = async () => {
-  try {
-    const otp = otpInputs.current.map(input => input.value).join("");
-    
-    // First verify OTP
-    await axios.post(
-      "http://localhost:8000/api/museums/verify-reset-otp",
-      { email: emailRef.current.value, otp }
-    );
 
-    // Then reset password
-    await axios.post(
-      "http://localhost:8000/api/museums/reset-password",
-      {
-        email: emailRef.current.value,
-        newPassword: newPasswordRef.current.value
-      }
-    );
+      // Verify OTP first
+      await axios.post(
+        "http://localhost:8000/api/museums/verify-reset-otp",
+        { email: emailRef.current.value, otp }
+      );
 
-    alert("Password reset successful");
-    window.location.href = "/museum-login";
+      // Then reset password
+      await axios.post(
+        "http://localhost:8000/api/museums/reset-password",
+        {
+          email: emailRef.current.value,
+          newPassword: newPassword   // ← now correctly reads the "New Password" field
+        }
+      );
 
-  } catch (err) {
-    alert(err.response?.data?.message || "Reset failed");
-  }
-};
+      alert("Password reset successful");
+      window.location.href = "/museum-login";
+
+    } catch (err) {
+      alert(err.response?.data?.message || "Reset failed");
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col overflow-hidden">
 
@@ -129,7 +127,7 @@ const resetPassword = async () => {
             </h1>
           </div>
 
-          <form className="max-w-xl space-y-5 pt-2">
+          <form className="max-w-xl space-y-5 pt-2" onSubmit={(e) => e.preventDefault()}>
 
             {/* EMAIL */}
 
@@ -154,10 +152,9 @@ const resetPassword = async () => {
             <button
               type="button"
               onClick={() => {
-  initiateRecovery();
-  sendResetOTP();
-}}
-              
+                initiateRecovery();
+                sendResetOTP();
+              }}
               className="w-full py-4 border border-black text-black dark:border-white dark:text-white text-[10px] font-bold uppercase tracking-[0.3em] rounded-full hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"
             >
               Send Verification Code
@@ -177,6 +174,7 @@ const resetPassword = async () => {
 
                     <button
                       type="button"
+                      onClick={sendResetOTP}
                       className="text-[9px] underline uppercase tracking-widest font-bold"
                     >
                       Resend OTP
@@ -184,24 +182,20 @@ const resetPassword = async () => {
                   </div>
 
                   <div className="flex gap-4 justify-center">
-
-                    const otpInputs = useRef([]);
-
-{[...Array(4)].map((_, i) => (
-  <input
-    key={i}
-    type="text"
-    maxLength="1"
-    ref={el => otpInputs.current[i] = el}
-    onInput={(e) => {
-      if (e.target.value.length === 1 && i < 3) {
-        otpInputs.current[i + 1]?.focus();
-      }
-    }}
-    className="otp-box bg-transparent"
-  />
-))}
-
+                    {[...Array(4)].map((_, i) => (
+                      <input
+                        key={i}
+                        type="text"
+                        maxLength="1"
+                        ref={el => otpInputs.current[i] = el}
+                        onInput={(e) => {
+                          if (e.target.value.length === 1 && i < 3) {
+                            otpInputs.current[i + 1]?.focus();
+                          }
+                        }}
+                        className="otp-box bg-transparent"
+                      />
+                    ))}
                   </div>
                 </div>
 
@@ -210,6 +204,7 @@ const resetPassword = async () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                   <input
+                    ref={passwordRef}
                     type="password"
                     placeholder="New Password"
                     className="museo-input w-full px-6 py-4 rounded-xl text-sm dark:bg-neutral-900 dark:border-neutral-700"
@@ -226,7 +221,7 @@ const resetPassword = async () => {
 
                 <button
                   type="button"
-onClick={resetPassword}
+                  onClick={resetPassword}
                   className="w-full py-5 bg-black text-white dark:bg-white dark:text-black text-[11px] font-bold uppercase tracking-[0.4em] rounded-full shadow-2xl hover:scale-[1.01] transition-all"
                 >
                   Update Credentials & Login
@@ -240,11 +235,9 @@ onClick={resetPassword}
             <div className="pt-6 border-t border-neutral-100 flex flex-col items-center gap-4">
 
               <Link to="/museum-login" className="group flex flex-col items-center">
-
                 <span className="text-[11px] uppercase tracking-[0.2em] font-black border-b border-black/10 dark:border-white/20 group-hover:border-black dark:group-hover:border-white transition">
                   Return to Login
                 </span>
-
               </Link>
 
             </div>
@@ -262,7 +255,6 @@ onClick={resetPassword}
           <div className="relative w-full max-w-[500px] aspect-[3/4] rounded-[2rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)]">
 
             <div className="image-container w-full h-full relative">
-
               {images.map((img, i) => (
                 <img
                   key={i}
@@ -270,21 +262,16 @@ onClick={resetPassword}
                   className={i === currentIndex ? "active" : ""}
                 />
               ))}
-
             </div>
 
             <div className="absolute bottom-8 left-8 right-8 bg-white/40 backdrop-blur-xl border border-white/40 p-8 rounded-2xl shadow-sm">
-
               <p className="text-[10px] uppercase tracking-[0.4em] text-black font-bold opacity-60">
                 Security Protocol
               </p>
-
               <h3 className="font-serif text-3xl italic mt-2">
                 {titles[currentIndex]}
               </h3>
-
               <div className="mt-4 flex gap-2">
-
                 {images.map((_, i) => (
                   <span
                     key={i}
@@ -293,9 +280,7 @@ onClick={resetPassword}
                     }`}
                   />
                 ))}
-
               </div>
-
             </div>
 
           </div>

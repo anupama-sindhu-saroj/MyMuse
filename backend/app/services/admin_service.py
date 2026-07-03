@@ -25,8 +25,10 @@ async def signup(name: str, email: str, password: str, secret_key: str) -> dict:
     # ← Only people who know this key can register as admin
     if secret_key != settings.ADMIN_SECRET_KEY:
         raise ValueError("Invalid secret key")
+    print(f"DEBUG SIGNUP: email={email!r}")
 
     existing = await db.admins.find_one({"email": email})
+    print(f"DEBUG SIGNUP: existing={existing}")
     if existing:
         raise ValueError("Admin already exists")
 

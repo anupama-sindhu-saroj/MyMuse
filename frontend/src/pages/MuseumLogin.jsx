@@ -126,9 +126,12 @@ export default function MuseumLogin() {
                   Remember Me
                 </span>
               </label>
-              <span className="text-[10px] uppercase tracking-widest font-bold opacity-40 underline underline-offset-4">
-                Forgot Password?
-              </span>
+              <Link
+  to="/museum-forgot-password"
+  className="text-[10px] uppercase tracking-widest font-bold opacity-40 underline underline-offset-4"
+>
+  Forgot Password?
+</Link>
             </div>
 
             {/* LOGIN BUTTON */}
